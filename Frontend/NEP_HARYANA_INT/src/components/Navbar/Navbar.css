@@ -1,0 +1,620 @@
+/* ============================================
+   Government Portal Navbar — Full Styles
+   ============================================ */
+
+/* ---------- Design Tokens ---------- */
+:root {
+  --navy-deep: #0b1724;
+  --navy-primary: #0d1b2a;
+  --navy-light: #1b2a3d;
+  --saffron: #e8791d;
+  --saffron-hover: #d16a14;
+  --saffron-glow: rgba(232, 121, 29, 0.25);
+  --white: #ffffff;
+  --off-white: #f7f8fa;
+  --text-light: #c8d6e5;
+  --text-muted: #9bb0c9;
+  --border-subtle: rgba(255, 255, 255, 0.15);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.14);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-pill: 50px;
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s ease;
+  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* ---------- Reset for Navbar Scope ---------- */
+.govt-navbar *,
+.govt-navbar *::before,
+.govt-navbar *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.govt-navbar {
+  font-family: var(--font-body);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+}
+
+/* ===================================================
+   TIER 1 — Utility Bar
+   =================================================== */
+.utility-bar {
+  background: linear-gradient(180deg, var(--navy-deep) 0%, var(--navy-primary) 100%);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0;
+}
+
+.utility-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 38px;
+}
+
+.utility-left,
+.utility-right {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.utility-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  color: var(--text-light);
+  text-decoration: none;
+  padding: 6px 10px;
+  transition: color var(--transition-fast);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.utility-item:hover {
+  color: var(--white);
+}
+
+.utility-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.utility-divider {
+  color: var(--border-subtle);
+  font-size: 0.7rem;
+  user-select: none;
+  padding: 0 2px;
+}
+
+.utility-govt-name {
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* --- Skip Link --- */
+.skip-link {
+  font-size: 0.7rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+.skip-link:hover,
+.skip-link:focus {
+  opacity: 1;
+  color: var(--saffron);
+}
+
+/* --- Text Size Controls --- */
+.text-size-controls {
+  gap: 4px;
+}
+
+.text-size-label {
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-right: 2px;
+}
+
+.text-size-btn {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-light);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+  line-height: 1.3;
+}
+
+.text-size-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* --- Contrast Toggle --- */
+.contrast-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* --- Language Switcher --- */
+.language-switcher {
+  gap: 0;
+}
+
+.lang-btn {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-light);
+  font-size: 0.72rem;
+  padding: 2px 10px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+.lang-btn:first-child {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  border-right: none;
+}
+
+.lang-btn:last-child {
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.lang-btn.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white);
+  font-weight: 600;
+}
+
+.lang-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+}
+
+/* ===================================================
+   TIER 2 — Header / Branding
+   =================================================== */
+.header-bar {
+  background: var(--white);
+  border-bottom: 1px solid #e3e8ef;
+  padding: 0;
+}
+
+.header-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0.85rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+/* --- Left: Emblem + Text --- */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.emblem-wrapper {
+  flex-shrink: 0;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8f1e4 0%, #f0e0c0 100%);
+  border: 2.5px solid #d4a843;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(212, 168, 67, 0.25);
+}
+
+.emblem-img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.branding-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.branding-department {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--navy-primary);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.branding-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--navy-primary);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.branding-subtitle {
+  font-size: 0.76rem;
+  color: #5a6e82;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+/* --- Right: Search + Sign In --- */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  width: 16px;
+  height: 16px;
+  color: #8899aa;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 240px;
+  height: 40px;
+  padding: 0 16px 0 40px;
+  border: 1.5px solid #d1d9e2;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: #1a2332;
+  background: var(--off-white);
+  outline: none;
+  transition: all var(--transition-base);
+}
+
+.search-input::placeholder {
+  color: #9aabba;
+}
+
+.search-input:focus {
+  border-color: var(--saffron);
+  box-shadow: 0 0 0 3px var(--saffron-glow);
+  background: var(--white);
+}
+
+.signin-btn {
+  height: 40px;
+  padding: 0 28px;
+  background: linear-gradient(135deg, var(--saffron) 0%, #d97515 100%);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 8px rgba(232, 121, 29, 0.3);
+  white-space: nowrap;
+}
+
+.signin-btn:hover {
+  background: linear-gradient(135deg, #d97515 0%, #c06610 100%);
+  box-shadow: 0 4px 16px rgba(232, 121, 29, 0.4);
+  transform: translateY(-1px);
+}
+
+.signin-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(232, 121, 29, 0.3);
+}
+
+/* ===================================================
+   TIER 3 — Primary Navigation
+   =================================================== */
+.primary-nav {
+  background: linear-gradient(180deg, var(--navy-primary) 0%, var(--navy-deep) 100%);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.nav-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  display: flex;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 22px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-light);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  position: relative;
+  transition: all var(--transition-base);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 60%;
+  height: 3px;
+  background: var(--saffron);
+  border-radius: 3px 3px 0 0;
+  transition: transform var(--transition-base);
+}
+
+.nav-link:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-link:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.nav-link.active {
+  color: var(--white);
+  background: var(--saffron);
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.15);
+}
+
+.nav-link.active::after {
+  display: none;
+}
+
+/* --- Hamburger (mobile) --- */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: auto;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2.5px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all var(--transition-base);
+}
+
+/* ===================================================
+   HIGH CONTRAST MODE
+   =================================================== */
+.govt-navbar.high-contrast .utility-bar {
+  background: #000;
+}
+
+.govt-navbar.high-contrast .header-bar {
+  background: #fff;
+  border-bottom-color: #000;
+}
+
+.govt-navbar.high-contrast .branding-title {
+  color: #000;
+}
+
+.govt-navbar.high-contrast .primary-nav {
+  background: #000;
+}
+
+.govt-navbar.high-contrast .nav-link {
+  color: #fff;
+}
+
+.govt-navbar.high-contrast .nav-link.active {
+  background: #ff6600;
+}
+
+/* ===================================================
+   RESPONSIVE — Tablet & Mobile
+   =================================================== */
+@media (max-width: 1024px) {
+  .utility-container {
+    padding: 0 1rem;
+  }
+
+  .header-container {
+    padding: 0.75rem 1rem;
+  }
+
+  .nav-container {
+    padding: 0 1rem;
+  }
+
+  .branding-title {
+    font-size: 1.2rem;
+  }
+
+  .search-input {
+    width: 180px;
+  }
+
+  .nav-link {
+    padding: 12px 16px;
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Utility bar: stack */
+  .utility-container {
+    flex-direction: column;
+    padding: 6px 1rem;
+    gap: 4px;
+  }
+
+  .utility-left,
+  .utility-right {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Header: stack */
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .header-right {
+    width: 100%;
+  }
+
+  .search-wrapper {
+    flex: 1;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .emblem-wrapper {
+    width: 52px;
+    height: 52px;
+  }
+
+  .emblem-img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .branding-title {
+    font-size: 1.05rem;
+  }
+
+  .branding-subtitle {
+    font-size: 0.7rem;
+  }
+
+  /* Nav: show hamburger, hide links (basic toggle) */
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-list {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--navy-primary);
+    box-shadow: var(--shadow-lg);
+    z-index: 999;
+  }
+
+  .nav-list.open {
+    display: flex;
+  }
+
+  .nav-container {
+    position: relative;
+  }
+
+  .nav-link {
+    padding: 14px 1.5rem;
+    justify-content: flex-start;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+}
+
+@media (max-width: 480px) {
+  .emblem-wrapper {
+    width: 44px;
+    height: 44px;
+  }
+
+  .emblem-img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .branding-department {
+    font-size: 0.6rem;
+  }
+
+  .branding-title {
+    font-size: 0.92rem;
+  }
+
+  .signin-btn {
+    padding: 0 18px;
+    font-size: 0.82rem;
+  }
+}
