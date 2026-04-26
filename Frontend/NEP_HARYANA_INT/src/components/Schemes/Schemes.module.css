@@ -1,0 +1,451 @@
+/* ============================================
+   Schemes Section — CSS Module
+   ============================================ */
+
+/* ---------- Design Tokens ---------- */
+:root {
+  --schemes-navy: #0a1628;
+  --schemes-orange: #f97316;
+  --schemes-gold: #d97706;
+  --schemes-white: #ffffff;
+  --schemes-bg: #fafaf8;
+  --schemes-text-main: #0d1b2a;
+  --schemes-text-muted: #5a6e82;
+  --schemes-font-serif: 'Playfair Display', 'Georgia', serif;
+  --schemes-font-sans: 'DM Sans', 'Inter', system-ui, sans-serif;
+}
+
+.section {
+  background: var(--schemes-bg);
+  padding: 90px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ---------- Section Header ---------- */
+.header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.badge {
+  display: inline-block;
+  background: rgba(249, 115, 22, 0.1);
+  color: var(--schemes-orange);
+  font-family: var(--schemes-font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 6px 14px;
+  border-radius: 50px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: var(--schemes-font-serif);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--schemes-text-main);
+  margin: 0 0 16px 0;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-family: var(--schemes-font-sans);
+  font-size: 1.05rem;
+  color: var(--schemes-text-muted);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ---------- Cards Grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+/* ---------- Individual Card ---------- */
+.card {
+  background: var(--schemes-white);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.6s ease;
+  border-left: 4px solid var(--card-accent);
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.card[data-visible] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+.cardFeatured {
+  grid-column: 1 / -1;
+  --card-accent: var(--schemes-orange);
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+}
+
+.cardRegularNavy {
+  --card-accent: var(--schemes-navy);
+}
+
+.cardRegularGold {
+  --card-accent: var(--schemes-gold);
+}
+
+.cardIcon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-bottom: 24px;
+}
+
+.cardFeatured .cardIcon {
+  margin-bottom: 0;
+  width: 80px;
+  height: 80px;
+}
+
+.cardContent {
+  flex: 1;
+}
+
+.cardBadge {
+  font-family: var(--schemes-font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--schemes-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.cardTitle {
+  font-family: var(--schemes-font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--schemes-text-main);
+  margin: 0 0 16px 0;
+  line-height: 1.3;
+}
+
+.cardFeatured .cardTitle {
+  font-size: 1.8rem;
+}
+
+.cardDesc {
+  font-family: var(--schemes-font-sans);
+  font-size: 0.95rem;
+  color: var(--schemes-text-muted);
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.tag {
+  background: #f1f5f9;
+  color: var(--schemes-text-main);
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-family: var(--schemes-font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.cardFeatured .tag {
+  background: rgba(249, 115, 22, 0.08);
+  color: var(--schemes-orange);
+}
+
+.cardRegularNavy .tag {
+  background: rgba(10, 22, 40, 0.06);
+  color: var(--schemes-navy);
+}
+
+.cardRegularGold .tag {
+  background: rgba(217, 119, 6, 0.08);
+  color: var(--schemes-gold);
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.ctaBtn {
+  font-family: var(--schemes-font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ctaBtnOrange {
+  color: var(--schemes-orange);
+  border: 1px solid var(--schemes-orange);
+}
+
+.ctaBtnOrange:hover {
+  background: var(--schemes-orange);
+  color: var(--schemes-white);
+}
+
+.ctaBtnNavy {
+  color: var(--schemes-navy);
+  border: 1px solid var(--schemes-navy);
+}
+
+.ctaBtnNavy:hover {
+  background: var(--schemes-navy);
+  color: var(--schemes-white);
+}
+
+.ctaBtnGold {
+  color: var(--schemes-gold);
+  border: 1px solid var(--schemes-gold);
+}
+
+.ctaBtnGold:hover {
+  background: var(--schemes-gold);
+  color: var(--schemes-white);
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--schemes-font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--schemes-text-muted);
+}
+
+.statusDot {
+  font-size: 10px;
+}
+
+/* ---------- Tiers Visual ---------- */
+.tiersContainer {
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 40px;
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+  margin-bottom: 60px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.tiersContainer[data-visible] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tier {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+.tier:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: -15px;
+  top: 10%;
+  height: 80%;
+  width: 1px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.tierIcon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+.tierTitle {
+  font-family: var(--schemes-font-sans);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--schemes-text-main);
+  margin: 0 0 6px 0;
+}
+
+.tierDesc {
+  font-family: var(--schemes-font-sans);
+  font-size: 0.85rem;
+  color: var(--schemes-text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ---------- Bottom CTA Strip ---------- */
+.bottomCta {
+  background: var(--schemes-navy);
+  margin: 0 -2rem -90px -2rem; /* Extend to section edges */
+  padding: 60px 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.bottomCtaTitle {
+  font-family: var(--schemes-font-serif);
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--schemes-white);
+  margin: 0;
+}
+
+.bottomCtaButtons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btnFilled {
+  background: var(--schemes-orange);
+  color: var(--schemes-white);
+  font-family: var(--schemes-font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btnFilled:hover {
+  background: #ea670c;
+  transform: translateY(-2px);
+}
+
+.btnOutlined {
+  background: transparent;
+  color: var(--schemes-white);
+  font-family: var(--schemes-font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnOutlined:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--schemes-white);
+  transform: translateY(-2px);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 992px) {
+  .cardFeatured {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  
+  .tiersContainer {
+    flex-direction: column;
+    gap: 40px;
+    padding: 30px;
+  }
+  
+  .tier:not(:last-child)::after {
+    right: 10%;
+    top: auto;
+    bottom: -20px;
+    width: 80%;
+    height: 1px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cardFeatured {
+    grid-column: auto;
+  }
+  
+  .cardFooter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .bottomCta {
+    margin: 0 -2rem -60px -2rem;
+  }
+  
+  .bottomCtaTitle {
+    font-size: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .tiersContainer {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  
+  .card:hover {
+    transform: none;
+  }
+}
