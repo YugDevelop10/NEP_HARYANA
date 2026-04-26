@@ -1,0 +1,382 @@
+/* ============================================
+   Stats & News Section — CSS Module
+   ============================================ */
+
+/* ---------- Design Tokens ---------- */
+:root {
+  --sn-navy: #0a1628;
+  --sn-orange: #f97316;
+  --sn-bg-warm: #fafaf8;
+  --sn-white: #ffffff;
+  --sn-text-main: #0d1b2a;
+  --sn-text-muted: #5a6e82;
+  --sn-border: #e5e5e5;
+  --sn-hover-bg: #fff7f0;
+  --sn-font-serif: 'Playfair Display', 'Georgia', serif;
+  --sn-font-sans: 'DM Sans', 'Inter', system-ui, sans-serif;
+}
+
+/* ===================================================
+   SECTION 1 — Stats Banner
+   =================================================== */
+.statsBanner {
+  position: relative;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 2rem;
+  overflow: hidden;
+  text-align: center;
+}
+
+.statsBgImage {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 20%;
+  z-index: 0;
+}
+
+.statsOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 20, 50, 0.80);
+  z-index: 1;
+}
+
+.statsContainer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.statsLabel {
+  display: block;
+  font-family: var(--sn-font-sans);
+  color: var(--sn-orange);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
+}
+
+.statsHeading {
+  font-family: var(--sn-font-serif);
+  color: var(--sn-white);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  margin: 0 0 40px 0;
+}
+
+.statsRow {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch;
+}
+
+.statItem {
+  flex: 1;
+  position: relative;
+  padding: 0 15px;
+}
+
+.statItem:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 10%;
+  height: 80%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.statNumber {
+  font-family: var(--sn-font-heading);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: var(--sn-orange);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.statDesc {
+  font-family: var(--sn-font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--sn-white);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+/* ===================================================
+   SECTION 2 — News & Events
+   =================================================== */
+.newsSection {
+  background: var(--sn-bg-warm);
+  padding: 80px 0;
+  min-height: 600px;
+}
+
+.newsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 65% 32%;
+  gap: 3%;
+}
+
+.sectionLabel {
+  display: block;
+  font-family: var(--sn-font-sans);
+  color: var(--sn-orange);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24px;
+}
+
+.sectionHeading {
+  font-family: var(--sn-font-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--sn-text-main);
+  margin: 0;
+}
+
+.viewAll {
+  font-family: var(--sn-font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--sn-orange);
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.viewAll:hover {
+  opacity: 0.8;
+}
+
+/* ---------- Notices List ---------- */
+.noticeList {
+  display: flex;
+  flex-direction: column;
+}
+
+.noticeRow {
+  display: flex;
+  align-items: center;
+  padding: 16px 12px;
+  border-bottom: 1px solid var(--sn-border);
+  transition: background 0.3s ease;
+  cursor: pointer;
+  
+  /* Scroll Animation Defaults */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease;
+}
+
+.noticeRow[data-visible] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.noticeRow:hover {
+  background: var(--sn-hover-bg);
+}
+
+.dateBadge {
+  width: 52px;
+  height: 52px;
+  background: var(--sn-navy);
+  color: var(--sn-white);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 20px;
+}
+
+.dateDay {
+  font-family: var(--sn-font-heading);
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.dateMonth {
+  font-family: var(--sn-font-sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.noticeContent {
+  flex: 1;
+}
+
+.noticeTag {
+  font-family: var(--sn-font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--sn-orange);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.noticeText {
+  font-family: var(--sn-font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--sn-text-main);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.noticeChevron {
+  color: #a0aec0;
+  font-size: 1.2rem;
+  margin-left: 16px;
+  transition: transform 0.3s ease;
+}
+
+.noticeRow:hover .noticeChevron {
+  transform: translateX(3px);
+  color: var(--sn-orange);
+}
+
+/* ---------- Events List ---------- */
+.eventsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.eventCard {
+  background: var(--sn-white);
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  /* Scroll Animation Defaults */
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+}
+
+.eventCard[data-visible] {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.eventCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.eventCard[data-visible]:hover {
+  transform: translateY(-2px);
+}
+
+.eventBadge {
+  width: 52px;
+  height: 52px;
+  background: var(--sn-orange);
+  color: var(--sn-white);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.eventContent {
+  flex: 1;
+}
+
+.eventName {
+  font-family: var(--sn-font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--sn-navy);
+  margin: 0 0 6px 0;
+  line-height: 1.3;
+}
+
+.eventLocation {
+  font-family: var(--sn-font-sans);
+  font-size: 0.8rem;
+  color: var(--sn-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 992px) {
+  .newsContainer {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .statsRow {
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  
+  .statItem {
+    flex: 1 1 40%;
+  }
+  
+  .statItem:nth-child(2)::after {
+    display: none;
+  }
+  
+  .statItem:last-child::after {
+    display: none;
+  }
+  
+  .noticeRow {
+    padding: 16px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .noticeRow, .eventCard {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  
+  .noticeRow:hover .noticeChevron,
+  .eventCard:hover {
+    transform: none;
+  }
+}
