@@ -1,0 +1,381 @@
+/* ============================================
+   CTA Banner & Footer Section — CSS Module
+   ============================================ */
+
+/* ---------- Design Tokens ---------- */
+:root {
+  --footer-cta-bg: #0a1628;
+  --footer-main-bg: #07101f;
+  --footer-bottom-bg: #040c18;
+  --footer-orange: #f97316;
+  --footer-orange-hover: #ea6a00;
+  --footer-green: #16a34a;
+  --footer-white: #ffffff;
+  --footer-muted: #94a3b8;
+  --footer-font: 'DM Sans', 'Inter', system-ui, sans-serif;
+  --footer-max-width: 1200px;
+}
+
+/* ===================================================
+   SECTION 1 — CTA Banner
+   =================================================== */
+.ctaSection {
+  background: var(--footer-cta-bg);
+  position: relative;
+  /* Top 2px border — left half orange, right half green */
+  border-top: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--footer-orange) 50%, var(--footer-green) 50%) 1;
+}
+
+.ctaContainer {
+  max-width: var(--footer-max-width);
+  margin: 0 auto;
+  padding: 30px 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.ctaText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ctaHeading {
+  font-family: var(--footer-font);
+  font-size: 1.5rem; /* ~24px */
+  font-weight: 600;
+  color: var(--footer-white);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.ctaSubtitle {
+  font-family: var(--footer-font);
+  font-size: 0.8125rem; /* ~13px */
+  color: var(--footer-muted);
+  margin: 0;
+}
+
+.ctaButtons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.btnPrimary {
+  background: var(--footer-orange);
+  color: var(--footer-white);
+  font-family: var(--footer-font);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btnPrimary:hover {
+  background: var(--footer-orange-hover);
+  transform: translateY(-1px);
+}
+
+.btnSecondary {
+  background: transparent;
+  color: var(--footer-white);
+  font-family: var(--footer-font);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btnSecondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+/* ===================================================
+   SECTION 2 — Main Footer Body
+   =================================================== */
+.footerMain {
+  background: var(--footer-main-bg);
+  padding: 60px 0 40px 0;
+}
+
+.footerContainer {
+  max-width: var(--footer-max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 25% 20% 25% 30%; /* 4 columns */
+  /* Calculate gap based on percentages to fill exactly 100% (25+20+25+30=100) */
+  /* Actually with gap we should use 1fr or adjust percentages. Let's use 1fr syntax with custom widths */
+  grid-template-columns: 2.5fr 2fr 2.5fr 3fr;
+  gap: 48px;
+}
+
+/* --- Column 1: Brand --- */
+.brandHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.logoCircle {
+  width: 40px;
+  height: 40px;
+  background: var(--footer-white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.logoCircle img {
+  width: 100%;
+  height: auto;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandTitle {
+  font-family: var(--footer-font);
+  font-size: 1rem; /* 16px */
+  font-weight: 700;
+  color: var(--footer-white);
+  line-height: 1.2;
+}
+
+.brandSubtitle {
+  font-family: var(--footer-font);
+  font-size: 0.75rem; /* 12px */
+  color: var(--footer-muted);
+  line-height: 1.2;
+}
+
+.brandDesc {
+  font-family: var(--footer-font);
+  font-size: 0.8125rem; /* 13px */
+  color: var(--footer-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* --- Columns 2 & 3: Links --- */
+.colHeading {
+  font-family: var(--footer-font);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 700;
+  color: var(--footer-orange);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 16px 0;
+}
+
+.linkList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Breathing room, line-height handles the rest */
+}
+
+.linkItem {
+  margin: 0;
+}
+
+.footerLink {
+  font-family: var(--footer-font);
+  font-size: 0.8125rem; /* 13px */
+  color: var(--footer-white);
+  text-decoration: none;
+  line-height: 2;
+  transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.footerLink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--footer-orange);
+  transition: width 0.2s ease;
+}
+
+.footerLink:hover {
+  color: var(--footer-orange);
+}
+
+.footerLink:hover::after {
+  width: 100%;
+}
+
+.externalIcon {
+  font-size: 0.75rem;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.footerLink:hover .externalIcon {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* --- Column 4: Reach Us --- */
+.contactList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: var(--footer-font);
+  font-size: 0.875rem; /* 14px */
+  color: var(--footer-muted);
+  line-height: 1.5;
+}
+
+.contactIcon {
+  font-size: 14px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  color: var(--footer-muted);
+}
+
+.socialRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.socialLink {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--footer-white);
+  text-decoration: none;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.socialLink svg {
+  width: 14px;
+  height: 14px;
+  transition: fill 0.3s ease;
+}
+
+.socialLink:hover {
+  border-color: var(--footer-orange);
+  color: var(--footer-orange);
+}
+
+/* ===================================================
+   SECTION 3 — Footer Bottom Bar
+   =================================================== */
+.footerBottom {
+  background: var(--footer-bottom-bg);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.bottomContainer {
+  max-width: var(--footer-max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bottomText {
+  font-family: var(--footer-font);
+  font-size: 0.75rem; /* 12px */
+  color: var(--footer-muted);
+  margin: 0;
+}
+
+/* ===================================================
+   RESPONSIVE
+   =================================================== */
+@media (max-width: 1024px) {
+  .footerContainer {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ctaContainer {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+  
+  .ctaButtons {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footerContainer {
+    grid-template-columns: 1fr;
+    row-gap: 40px;
+  }
+  
+  .bottomContainer {
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 2rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ctaButtons {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .btnPrimary, .btnSecondary {
+    width: 100%;
+    text-align: center;
+  }
+}

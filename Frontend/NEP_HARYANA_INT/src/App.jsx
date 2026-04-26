@@ -4,6 +4,7 @@ import Leadership from './components/Leadership/Leadership'
 import AboutSystem from './components/AboutSystem/AboutSystem'
 import Schemes from './components/Schemes/Schemes'
 import StatsAndNews from './components/StatsAndNews/StatsAndNews'
+import Footer from './components/Footer/Footer'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Schemes />
         <StatsAndNews />
       </main>
+      <Footer />
     </>
   )
 }
