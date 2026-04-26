@@ -1,0 +1,684 @@
+/* ============================================
+   About the System — CSS Module
+   Mission · Pillars · Role Access · Stats Bar
+   ============================================ */
+
+/* ---------- Design Tokens (local) ---------- */
+:root {
+  --as-navy: #0a1628;
+  --as-navy-light: #0d1b2a;
+  --as-orange: #f97316;
+  --as-orange-glow: rgba(249, 115, 22, 0.18);
+  --as-white: #ffffff;
+  --as-gray-bg: #f5f7fa;
+  --as-gray-border: #e3e8ef;
+  --as-text-primary: #0d1b2a;
+  --as-text-secondary: #3a4d63;
+  --as-text-muted: #7a8b9e;
+  --as-font-serif: 'Playfair Display', 'Georgia', serif;
+  --as-font-sans: 'DM Sans', 'Inter', system-ui, sans-serif;
+  --as-font-heading: 'Inter', 'DM Sans', system-ui, sans-serif;
+  --as-radius: 10px;
+  --as-section-pad: 90px;
+}
+
+/* ===================================================
+   PART 1 — Mission Statement
+   =================================================== */
+.missionSection {
+  background: var(--as-white);
+  padding: var(--as-section-pad) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle background watermark */
+.missionSection::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -100px;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--as-orange-glow) 0%, transparent 70%);
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.missionInner {
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.missionAccent {
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--as-orange) 0%, #e8791d 100%);
+  border-radius: 2px;
+  margin: 0 auto 20px auto;
+}
+
+.missionHeading {
+  font-family: var(--as-font-serif);
+  font-size: clamp(1.6rem, 3vw, 2.15rem);
+  font-weight: 700;
+  color: var(--as-text-primary);
+  line-height: 1.3;
+  margin: 0 0 22px 0;
+  letter-spacing: -0.01em;
+}
+
+.missionHeadingHighlight {
+  color: var(--as-orange);
+}
+
+.missionBody {
+  font-family: var(--as-font-sans);
+  font-size: 1.02rem;
+  font-weight: 400;
+  color: var(--as-text-secondary);
+  line-height: 1.85;
+  margin: 0;
+  text-align: center;
+}
+
+/* ===================================================
+   PART 2 — Three Pillar Cards
+   =================================================== */
+.pillarsSection {
+  background: var(--as-gray-bg);
+  padding: var(--as-section-pad) 0;
+  position: relative;
+}
+
+.pillarsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.pillarCard {
+  background: var(--as-white);
+  border-radius: var(--as-radius);
+  padding: 36px 30px 34px 30px;
+  border: 1px solid var(--as-gray-border);
+  border-left: 4px solid transparent;
+  box-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.03),
+    0 6px 24px rgba(0, 0, 0, 0.02);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  /* Scroll animation initial state */
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.pillarCard[data-visible] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pillarCard::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--as-orange) 0%, #fb923c 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.pillarCard:hover {
+  border-left-color: var(--as-orange);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.06),
+    0 12px 40px rgba(0, 0, 0, 0.04);
+  transform: translateY(-4px);
+}
+
+.pillarCard[data-visible]:hover {
+  transform: translateY(-4px);
+}
+
+.pillarCard:hover::after {
+  transform: scaleX(1);
+}
+
+.pillarIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(249, 115, 22, 0.05) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.3s ease;
+}
+
+.pillarCard:hover .pillarIcon {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.18) 0%, rgba(249, 115, 22, 0.08) 100%);
+}
+
+.pillarIcon svg {
+  width: 26px;
+  height: 26px;
+  color: var(--as-orange);
+}
+
+.pillarTitle {
+  font-family: var(--as-font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--as-text-primary);
+  margin: 0;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+}
+
+.pillarText {
+  font-family: var(--as-font-sans);
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--as-text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ===================================================
+   PART 3 — Role-Based Access Visual Strip
+   =================================================== */
+.rolesSection {
+  background: var(--as-white);
+  padding: var(--as-section-pad) 0;
+  position: relative;
+}
+
+.rolesSectionHeader {
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+.rolesSectionAccent {
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--as-orange) 0%, #e8791d 100%);
+  border-radius: 2px;
+  margin: 0 auto 20px auto;
+}
+
+.rolesSectionTitle {
+  font-family: var(--as-font-heading);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--as-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.rolesSectionSubtitle {
+  font-family: var(--as-font-sans);
+  font-size: 0.92rem;
+  color: var(--as-text-muted);
+  font-weight: 400;
+  margin: 0;
+}
+
+.rolesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-radius: var(--as-radius);
+  overflow: hidden;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.05),
+    0 12px 48px rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--as-gray-border);
+  /* Scroll animation */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.rolesGrid[data-visible] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Left panel — College Portal */
+.rolePanel {
+  padding: 48px 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+}
+
+.rolePanelCollege {
+  background: linear-gradient(145deg, #0d1b30 0%, #0f2240 50%, #112848 100%);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.rolePanelAdmin {
+  background: var(--as-white);
+  border-left: 3px solid var(--as-orange);
+}
+
+.rolePanelHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.roleIconWrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rolePanelCollege .roleIconWrap {
+  background: rgba(249, 115, 22, 0.15);
+}
+
+.rolePanelAdmin .roleIconWrap {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(249, 115, 22, 0.05) 100%);
+}
+
+.roleIconWrap svg {
+  width: 28px;
+  height: 28px;
+  color: var(--as-orange);
+}
+
+.rolePanelTitle {
+  font-family: var(--as-font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.rolePanelCollege .rolePanelTitle {
+  color: var(--as-white);
+}
+
+.rolePanelAdmin .rolePanelTitle {
+  color: var(--as-text-primary);
+}
+
+.rolePanelSubtitle {
+  font-family: var(--as-font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 2px 0 0 0;
+}
+
+.rolePanelCollege .rolePanelSubtitle {
+  color: var(--as-orange);
+}
+
+.rolePanelAdmin .rolePanelSubtitle {
+  color: var(--as-orange);
+}
+
+/* Bullet list */
+.roleBullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.roleBulletItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-family: var(--as-font-sans);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.rolePanelCollege .roleBulletItem {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.rolePanelAdmin .roleBulletItem {
+  color: var(--as-text-secondary);
+}
+
+.bulletIcon {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.rolePanelCollege .bulletIcon {
+  background: rgba(249, 115, 22, 0.2);
+}
+
+.rolePanelAdmin .bulletIcon {
+  background: rgba(249, 115, 22, 0.1);
+}
+
+.bulletIcon svg {
+  width: 12px;
+  height: 12px;
+  color: var(--as-orange);
+}
+
+/* Vertical divider (rendered by pseudo-element on the grid) */
+.rolesGrid::after {
+  display: none; /* we use the border-left on admin panel instead */
+}
+
+/* ===================================================
+   PART 4 — Stats Bar
+   =================================================== */
+.statsSection {
+  background: linear-gradient(135deg, var(--as-navy) 0%, #0f2240 50%, #132c52 100%);
+  padding: 64px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative glow */
+.statsSection::before {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  left: 30%;
+  width: 500px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(249, 115, 22, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.statItem {
+  text-align: center;
+  padding: 20px 16px;
+  position: relative;
+  /* Scroll animation */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.statItem[data-visible] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Vertical separator between stats */
+.statItem + .statItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  height: 60%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.statNumber {
+  font-family: var(--as-font-heading);
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  color: var(--as-white);
+  line-height: 1.1;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.02em;
+}
+
+.statNumberAccent {
+  color: var(--as-orange);
+}
+
+.statLabel {
+  font-family: var(--as-font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ===================================================
+   SCROLL ANIMATION KEYFRAMES
+   =================================================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================================================
+   REDUCED MOTION
+   =================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .pillarCard,
+  .rolesGrid,
+  .statItem {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .pillarCard::after {
+    transition: none;
+  }
+
+  .pillarCard:hover {
+    transform: none;
+  }
+}
+
+/* ===================================================
+   RESPONSIVE — Tablet (≤ 1024px)
+   =================================================== */
+@media (max-width: 1024px) {
+  :root {
+    --as-section-pad: 70px;
+  }
+
+  .pillarsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+
+  /* Third card spans full width on tablet */
+  .pillarCard:last-child {
+    grid-column: 1 / -1;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .rolePanel {
+    padding: 38px 32px;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+}
+
+/* ===================================================
+   RESPONSIVE — Mobile (≤ 768px)
+   =================================================== */
+@media (max-width: 768px) {
+  :root {
+    --as-section-pad: 56px;
+  }
+
+  .missionHeading {
+    font-size: 1.5rem;
+  }
+
+  .missionBody {
+    font-size: 0.94rem;
+    line-height: 1.75;
+    text-align: left;
+  }
+
+  .pillarsGrid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .pillarCard:last-child {
+    max-width: 100%;
+  }
+
+  .rolesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .rolePanelAdmin {
+    border-left: none;
+    border-top: 3px solid var(--as-orange);
+  }
+
+  .rolePanel {
+    padding: 32px 24px;
+  }
+
+  .rolesSectionTitle {
+    font-size: 1.35rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
+
+  /* Add horizontal separator for 2-col stats */
+  .statItem:nth-child(n+3)::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15%;
+    width: 70%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Fix vertical separator for second column items */
+  .statItem:nth-child(3)::before {
+    display: none;
+  }
+
+  .statItem {
+    padding: 24px 16px;
+  }
+}
+
+/* ===================================================
+   RESPONSIVE — Small Mobile (≤ 480px)
+   =================================================== */
+@media (max-width: 480px) {
+  :root {
+    --as-section-pad: 44px;
+  }
+
+  .container {
+    padding: 0 1.2rem;
+  }
+
+  .missionHeading {
+    font-size: 1.3rem;
+  }
+
+  .missionBody {
+    font-size: 0.88rem;
+  }
+
+  .pillarCard {
+    padding: 28px 22px 26px 22px;
+  }
+
+  .pillarTitle {
+    font-size: 0.98rem;
+  }
+
+  .pillarText {
+    font-size: 0.85rem;
+  }
+
+  .rolesSectionTitle {
+    font-size: 1.15rem;
+    letter-spacing: 0.04em;
+  }
+
+  .rolePanelTitle {
+    font-size: 1.1rem;
+  }
+
+  .roleBulletItem {
+    font-size: 0.85rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .statNumber {
+    font-size: 2rem;
+  }
+
+  .statLabel {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+  }
+
+  .statsSection {
+    padding: 48px 0;
+  }
+}

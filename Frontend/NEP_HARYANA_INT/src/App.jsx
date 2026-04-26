@@ -1,6 +1,7 @@
 import Navbar from './components/Navbar/Navbar'
 import Hero from './components/Hero/Hero'
 import Leadership from './components/Leadership/Leadership'
+import AboutSystem from './components/AboutSystem/AboutSystem'
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <main id="main-content">
         <Hero />
         <Leadership />
+        <AboutSystem />
       </main>
     </>
   )
