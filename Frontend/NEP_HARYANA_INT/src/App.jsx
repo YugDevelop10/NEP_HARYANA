@@ -1,6 +1,6 @@
 import Navbar from './components/Navbar/Navbar'
 import Hero from './components/Hero/Hero'
-import Leadership from './components/Leadership/Leadership'
+import LeadershipPro from './components/LeadershipPro/LeadershipPro'
 import AboutSystem from './components/AboutSystem/AboutSystem'
 import Schemes from './components/Schemes/Schemes'
 import StatsAndNews from './components/StatsAndNews/StatsAndNews'
@@ -12,7 +12,7 @@ function App() {
       <Navbar />
       <main id="main-content">
         <Hero />
-        <Leadership />
+        <LeadershipPro />
         <AboutSystem />
         <Schemes />
         <StatsAndNews />
