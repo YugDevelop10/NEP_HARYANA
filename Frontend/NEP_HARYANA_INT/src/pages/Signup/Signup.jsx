@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { registerCollege, saveAuthSession } from '../../api/auth';
 import styles from './Signup.module.css';
 
 function Signup() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     collegeName: '',
     address: '',
@@ -13,6 +15,8 @@ function Signup() {
     email: '',
     password: ''
   });
+  const [status, setStatus] = useState({ type: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -21,10 +25,21 @@ function Signup() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Signup data:', formData);
-    // Submit logic goes here
+    setIsSubmitting(true);
+    setStatus({ type: '', message: '' });
+
+    try {
+      const response = await registerCollege(formData);
+      saveAuthSession(response.token, response.user);
+      setStatus({ type: 'success', message: response.message || 'Registration completed.' });
+      navigate('/dashboard');
+    } catch (error) {
+      setStatus({ type: 'error', message: error.message || 'Could not register college.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -34,6 +49,12 @@ function Signup() {
           <h2>College Registration</h2>
           <p>Join the Haryana State Higher Education Council portal</p>
         </div>
+
+        {status.message && (
+          <div className={`${styles.statusMessage} ${status.type === 'success' ? styles.statusSuccess : styles.statusError}`}>
+            {status.message}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className={styles.formGrid}>
           {/* College Name */}
@@ -150,8 +171,8 @@ function Signup() {
           </div>
 
           <div className={`${styles.formActions} ${styles.fullWidth}`}>
-            <button type="submit" className={styles.submitBtn}>
-              Register College
+            <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+              {isSubmitting ? 'Registering...' : 'Register College'}
             </button>
             <p className={styles.loginPrompt}>
               Already registered? <Link to="/signin" className={styles.loginLink}>Sign in here</Link>

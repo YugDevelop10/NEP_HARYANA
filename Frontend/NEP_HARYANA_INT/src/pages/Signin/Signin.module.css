@@ -4,7 +4,9 @@
 
 .pageContainer {
   min-height: calc(100vh - 200px); /* Adjust based on navbar/footer height */
-  background: var(--off-white, #f7f8fa);
+  background:
+    radial-gradient(circle at top left, rgba(232, 121, 29, 0.16), transparent 34%),
+    linear-gradient(180deg, #f8f2ea 0%, #eef3f7 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,11 +28,12 @@
 }
 
 .signinCard {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
   width: 100%;
   max-width: 480px;
-  border-radius: 12px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(17, 24, 39, 0.12);
   border-top: 5px solid #e8791d; /* var(--saffron) */
   padding: 40px 50px;
   position: relative;
@@ -43,7 +46,7 @@
 }
 
 .signinHeader h2 {
-  font-family: 'Playfair Display', 'Georgia', serif;
+  font-family: 'Georgia', serif;
   font-size: 2.2rem;
   font-weight: 800;
   color: #0d1b2a; /* var(--navy-primary) */
@@ -95,6 +98,27 @@
   background: #ffffff;
 }
 
+.statusMessage {
+  margin: 0 0 20px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.statusSuccess {
+  background: #ecfdf3;
+  color: #166534;
+  border: 1px solid #a7f3d0;
+}
+
+.statusError {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
 .formActions {
   margin-top: 25px;
   display: flex;
@@ -126,6 +150,12 @@
 
 .submitBtn:active {
   transform: translateY(0);
+}
+
+.submitBtn:disabled {
+  cursor: progress;
+  opacity: 0.75;
+  transform: none;
 }
 
 .signupPrompt {

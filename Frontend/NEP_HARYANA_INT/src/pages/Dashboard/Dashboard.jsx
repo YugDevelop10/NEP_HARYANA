@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './Dashboard.module.css';
 import InstitutionInfo from '../InstitutionInfo/InstitutionInfo';
 import AcademicInfo from '../AcademicInfo/AcademicInfo';
@@ -12,11 +13,21 @@ import DocsUpload from '../DocsUpload/DocsUpload';
 import ScoreEvaluation from '../ScoreEvaluation/ScoreEvaluation';
 import UserProfile from '../UserProfile/UserProfile';
 import Settings from '../Settings/Settings';
+import { AUTH_TOKEN_KEY, AUTH_USER_KEY } from '../../api/auth';
 
 function Dashboard() {
+  const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState('Dashboard');
   const [showNotifDropdown, setShowNotifDropdown] = useState(false);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem(AUTH_TOKEN_KEY);
+    localStorage.removeItem(AUTH_USER_KEY);
+    setShowNotifDropdown(false);
+    setShowProfileDropdown(false);
+    navigate('/signin');
+  };
 
   const menuItems = [
     { title: 'Dashboard', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
@@ -137,10 +148,14 @@ function Dashboard() {
                 <div className={styles.dropdownMenu}>
                   <div className={styles.dropdownItem} onClick={() => { setActiveMenu('My Profile'); setShowProfileDropdown(false); }}>My Profile</div>
                   <div className={styles.dropdownItem} onClick={() => { setActiveMenu('Settings'); setShowProfileDropdown(false); }}>Settings</div>
-                  <div className={styles.dropdownItem} onClick={() => { alert('Logging out...'); setShowProfileDropdown(false); }}>Logout</div>
+                  <button type="button" className={styles.dropdownItemButton} onClick={handleLogout}>Logout</button>
                 </div>
               )}
             </div>
+
+            <button type="button" className={styles.logoutButton} onClick={handleLogout}>
+              Logout
+            </button>
           </div>
         </header>
 
