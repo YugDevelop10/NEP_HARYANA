@@ -1,32 +1,44 @@
-/* ============================================
-   Government Portal Navbar — Full Styles
-   ============================================ */
+/* ==========================================================================
+   Haryana State Higher Education Council — Premium Government Portal Navbar
+   ========================================================================== */
 
 /* ---------- Design Tokens ---------- */
 :root {
-  --navy-deep: #0b1724;
-  --navy-primary: #0d1b2a;
-  --navy-light: #1b2a3d;
-  --saffron: #e8791d;
-  --saffron-hover: #d16a14;
-  --saffron-glow: rgba(232, 121, 29, 0.25);
+  /* Color Palette (Redesigned around the HSHEC Brand Logo) */
+  --navy-deep: #081125;         /* Authoritative dark base */
+  --navy-primary: #0f1c3f;      /* Primary slate navy */
+  --navy-light: #192a56;        /* Subtle navy accents/hovers */
+  
+  --saffron: #e77e23;           /* Primary brand saffron (logo outer ring) */
+  --saffron-hover: #cf6815;     /* Darker saffron for hover states */
+  --saffron-glow: rgba(231, 126, 35, 0.15);
+  
+  --gold-accent: #f39c12;       /* Logo sun gold accent */
+  --rose-crimson: #c03575;      /* Logo silhouettes deep magenta/rose */
+  
   --white: #ffffff;
-  --off-white: #f7f8fa;
-  --text-light: #c8d6e5;
-  --text-muted: #9bb0c9;
-  --border-subtle: rgba(255, 255, 255, 0.15);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.14);
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-pill: 50px;
-  --transition-fast: 0.2s ease;
-  --transition-base: 0.3s ease;
-  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --off-white: #f8fafd;         /* Sleek cool gray-white */
+  --cream-white: #fdfbf7;       /* Warm light cream highlight */
+  --border-light: #e2e8f0;      /* Clean divider lines */
+  --border-subtle: rgba(255, 255, 255, 0.12);
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  /* Layout & Animations */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 15px rgba(8, 17, 37, 0.05);
+  --shadow-lg: 0 10px 30px rgba(8, 17, 37, 0.08);
+  --radius-sm: 3px;
+  --radius-md: 5px;
+  --radius-lg: 8px;
+  --radius-pill: 9999px;
+  
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ---------- Reset for Navbar Scope ---------- */
+/* ---------- Scope Reset ---------- */
 .govt-navbar *,
 .govt-navbar *::before,
 .govt-navbar *::after {
@@ -36,21 +48,23 @@
 }
 
 .govt-navbar {
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
   position: sticky;
   top: 0;
   z-index: 1000;
   width: 100%;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
+  background-color: var(--white);
 }
 
-/* ===================================================
-   TIER 1 — Utility Bar
-   =================================================== */
+/* ==========================================================================
+   TIER 1 — Utility & Accessibility Bar
+   ========================================================================== */
 .utility-bar {
-  background: linear-gradient(180deg, var(--navy-deep) 0%, var(--navy-primary) 100%);
+  background: var(--navy-deep);
+  border-top: 3px solid var(--saffron);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 0;
+  color: #94a3b8;
 }
 
 .utility-container {
@@ -67,84 +81,104 @@
 .utility-right {
   display: flex;
   align-items: center;
-  gap: 0;
-  flex-wrap: wrap;
+  gap: 4px;
 }
 
 .utility-item {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.75rem;
-  color: var(--text-light);
+  gap: 6px;
+  font-size: 0.72rem;
+  color: #cbd5e1;
   text-decoration: none;
-  padding: 6px 10px;
-  transition: color var(--transition-fast);
+  padding: 6px 12px;
+  transition: color var(--transition-fast), background var(--transition-fast);
   white-space: nowrap;
-  letter-spacing: 0.02em;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
 }
 
 .utility-item:hover {
   color: var(--white);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .utility-icon {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   flex-shrink: 0;
 }
 
 .utility-divider {
-  color: var(--border-subtle);
+  color: rgba(255, 255, 255, 0.15);
   font-size: 0.7rem;
   user-select: none;
-  padding: 0 2px;
 }
 
-.utility-govt-name {
+/* --- Government of Haryana Indicator --- */
+.state-indicator {
   font-weight: 600;
-  color: var(--text-muted);
-  letter-spacing: 0.04em;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* --- Skip Link --- */
+.india-flag-stub {
+  display: inline-block;
+  width: 16px;
+  height: 10px;
+  border-radius: 1px;
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(
+    to bottom,
+    #ff9933 33.3%,
+    #ffffff 33.3%,
+    #ffffff 66.6%,
+    #128807 66.6%
+  );
+  position: relative;
+}
+
+/* --- Accessibility controls --- */
 .skip-link {
   font-size: 0.7rem;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  opacity: 0.7;
-  transition: opacity var(--transition-fast);
+  text-decoration: none;
+  font-weight: 600;
+  border: 1px dashed transparent;
+  padding: 4px 8px;
 }
 
-.skip-link:hover,
 .skip-link:focus {
-  opacity: 1;
+  border-color: var(--saffron);
+  outline: none;
   color: var(--saffron);
 }
 
-/* --- Text Size Controls --- */
 .text-size-controls {
-  gap: 4px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding-left: 6px;
 }
 
 .text-size-label {
+  font-size: 0.72rem;
   font-weight: 700;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-right: 2px;
+  color: #64748b;
+  margin-right: 4px;
 }
 
 .text-size-btn {
   background: transparent;
-  border: 1px solid var(--border-subtle);
-  color: var(--text-light);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
   font-size: 0.7rem;
   font-weight: 600;
-  padding: 2px 7px;
+  padding: 2px 8px;
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all var(--transition-fast);
-  font-family: inherit;
   line-height: 1.3;
 }
 
@@ -154,7 +188,6 @@
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* --- Contrast Toggle --- */
 .contrast-toggle {
   background: none;
   border: none;
@@ -162,16 +195,18 @@
   font-family: inherit;
 }
 
-/* --- Language Switcher --- */
+/* --- Language switcher --- */
 .language-switcher {
+  display: flex;
   gap: 0;
+  padding-left: 6px;
 }
 
 .lang-btn {
   background: transparent;
-  border: 1px solid var(--border-subtle);
-  color: var(--text-light);
-  font-size: 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  font-size: 0.7rem;
   padding: 2px 10px;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -189,102 +224,137 @@
 }
 
 .lang-btn.active {
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--saffron);
   color: var(--white);
   font-weight: 600;
+  border-color: var(--saffron);
 }
 
-.lang-btn:hover {
+.lang-btn:hover:not(.active) {
   background: rgba(255, 255, 255, 0.08);
   color: var(--white);
 }
 
-/* ===================================================
+/* ==========================================================================
    TIER 2 — Header / Branding
-   =================================================== */
+   ========================================================================== */
 .header-bar {
-  background: var(--white);
-  border-bottom: 1px solid #e3e8ef;
+  background: var(--cream-white);
+  border-bottom: 1px solid var(--border-light);
   padding: 0;
 }
 
 .header-container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0.85rem 2rem;
+  padding: 1rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
-/* --- Left: Emblem + Text --- */
+/* --- Dual Logo Branding Group --- */
 .header-left {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   flex: 1;
   min-width: 0;
 }
 
-.emblem-wrapper {
+.logos-group {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
   flex-shrink: 0;
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: linear-gradient(135deg, #f8f1e4 0%, #f0e0c0 100%);
-  border: 2.5px solid #d4a843;
+}
+
+.emblem-wrapper {
+  width: 48px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(212, 168, 67, 0.25);
 }
 
 .emblem-img {
-  width: 56px;
-  height: 56px;
+  max-height: 100%;
+  max-width: 100%;
   object-fit: contain;
 }
 
+.logo-divider {
+  width: 1px;
+  height: 40px;
+  background-color: var(--border-light);
+}
+
+.hshec-logo-wrapper {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--saffron);
+  padding: 1px;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-base);
+}
+
+.hshec-logo-wrapper:hover {
+  transform: rotate(5deg) scale(1.03);
+}
+
+.hshec-logo-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* --- Brand Typography --- */
 .branding-text {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 3px;
   min-width: 0;
 }
 
 .branding-department {
   font-size: 0.68rem;
   font-weight: 700;
-  color: var(--navy-primary);
-  letter-spacing: 0.18em;
+  color: var(--saffron);
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  opacity: 0.7;
+  line-height: 1.1;
 }
 
 .branding-title {
-  font-size: 1.45rem;
+  font-size: 1.48rem;
   font-weight: 800;
-  color: var(--navy-primary);
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+  color: var(--navy-deep);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
   margin: 0;
 }
 
 .branding-subtitle {
-  font-size: 0.76rem;
-  color: #5a6e82;
-  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 500;
   letter-spacing: 0.01em;
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
-/* --- Right: Search + Sign In --- */
+/* --- Search & Sign In Actions --- */
 .header-right {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
   flex-shrink: 0;
 }
 
@@ -297,28 +367,28 @@
 .search-icon {
   position: absolute;
   left: 14px;
-  width: 16px;
-  height: 16px;
-  color: #8899aa;
+  width: 15px;
+  height: 15px;
+  color: #64748b;
   pointer-events: none;
 }
 
 .search-input {
-  width: 240px;
+  width: 250px;
   height: 40px;
-  padding: 0 16px 0 40px;
-  border: 1.5px solid #d1d9e2;
-  border-radius: var(--radius-pill);
+  padding: 0 16px 0 38px;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
   font-size: 0.85rem;
   font-family: inherit;
-  color: #1a2332;
-  background: var(--off-white);
+  color: var(--text-dark);
+  background: var(--white);
   outline: none;
   transition: all var(--transition-base);
 }
 
 .search-input::placeholder {
-  color: #9aabba;
+  color: #94a3b8;
 }
 
 .search-input:focus {
@@ -329,38 +399,43 @@
 
 .signin-btn {
   height: 40px;
-  padding: 0 28px;
-  background: linear-gradient(135deg, var(--saffron) 0%, #d97515 100%);
+  padding: 0 20px;
+  background-color: var(--navy-deep);
   color: var(--white);
   border: none;
   border-radius: var(--radius-md);
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-size: 0.85rem;
+  font-weight: 600;
   font-family: inherit;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   transition: all var(--transition-base);
-  letter-spacing: 0.02em;
-  box-shadow: 0 2px 8px rgba(232, 121, 29, 0.3);
-  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+.signin-icon {
+  width: 15px;
+  height: 15px;
 }
 
 .signin-btn:hover {
-  background: linear-gradient(135deg, #d97515 0%, #c06610 100%);
-  box-shadow: 0 4px 16px rgba(232, 121, 29, 0.4);
-  transform: translateY(-1px);
+  background-color: var(--saffron);
+  box-shadow: 0 4px 12px rgba(231, 126, 35, 0.2);
 }
 
 .signin-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(232, 121, 29, 0.3);
+  transform: translateY(1px);
 }
 
-/* ===================================================
-   TIER 3 — Primary Navigation
-   =================================================== */
+/* ==========================================================================
+   TIER 3 — Primary Navigation Bar
+   ========================================================================== */
 .primary-nav {
-  background: linear-gradient(180deg, var(--navy-primary) 0%, var(--navy-deep) 100%);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  background-color: var(--navy-primary);
+  border-top: 3.5px solid var(--saffron);
+  border-bottom: 2px solid var(--navy-deep);
 }
 
 .nav-container {
@@ -369,7 +444,8 @@
   padding: 0 2rem;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  height: 48px;
 }
 
 .nav-list {
@@ -378,6 +454,7 @@
   align-items: stretch;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 .nav-item {
@@ -388,13 +465,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 14px 22px;
-  font-size: 0.82rem;
+  padding: 0 22px;
+  font-size: 0.8rem;
   font-weight: 700;
-  color: var(--text-light);
+  color: #cbd5e1;
   text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   position: relative;
   transition: all var(--transition-base);
 }
@@ -403,218 +480,342 @@
   content: '';
   position: absolute;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) scaleX(0);
-  width: 60%;
+  left: 0;
+  width: 100%;
   height: 3px;
-  background: var(--saffron);
-  border-radius: 3px 3px 0 0;
+  background-color: var(--saffron);
+  transform: scaleX(0);
   transition: transform var(--transition-base);
+  transform-origin: center;
 }
 
 .nav-link:hover {
   color: var(--white);
-  background: rgba(255, 255, 255, 0.06);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .nav-link:hover::after {
-  transform: translateX(-50%) scaleX(1);
+  transform: scaleX(1);
 }
 
 .nav-link.active {
   color: var(--white);
-  background: var(--saffron);
-  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 .nav-link.active::after {
-  display: none;
+  transform: scaleX(1);
+  background-color: var(--gold-accent);
 }
 
-/* --- Hamburger (mobile) --- */
+/* --- Hamburger Menu (Mobile view Toggle) --- */
 .hamburger {
   display: none;
   flex-direction: column;
-  gap: 5px;
+  justify-content: space-between;
+  width: 22px;
+  height: 16px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
-  margin-left: auto;
+  padding: 0;
+  z-index: 1010;
 }
 
 .hamburger span {
   display: block;
-  width: 24px;
-  height: 2.5px;
-  background: var(--white);
-  border-radius: 2px;
+  width: 100%;
+  height: 2px;
+  background-color: var(--white);
+  border-radius: 1px;
   transition: all var(--transition-base);
 }
 
-/* ===================================================
-   HIGH CONTRAST MODE
-   =================================================== */
-.govt-navbar.high-contrast .utility-bar {
-  background: #000;
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
 }
 
-.govt-navbar.high-contrast .header-bar {
-  background: #fff;
-  border-bottom-color: #000;
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
 }
 
-.govt-navbar.high-contrast .branding-title {
-  color: #000;
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
-.govt-navbar.high-contrast .primary-nav {
-  background: #000;
+/* ==========================================================================
+   HIGH CONTRAST ACCESSIBILITY MODE
+   ========================================================================== */
+body.high-contrast .govt-navbar {
+  background: #000000 !important;
+  border-bottom: 2px solid #ffff00 !important;
 }
 
-.govt-navbar.high-contrast .nav-link {
-  color: #fff;
+body.high-contrast .utility-bar {
+  background: #000000 !important;
+  border-top: 3px solid #ffff00 !important;
+  border-bottom: 1px solid #ffff00 !important;
+  color: #ffffff !important;
 }
 
-.govt-navbar.high-contrast .nav-link.active {
-  background: #ff6600;
+body.high-contrast .utility-item,
+body.high-contrast .utility-divider,
+body.high-contrast .text-size-label,
+body.high-contrast .text-size-btn,
+body.high-contrast .lang-btn {
+  color: #ffffff !important;
+  border-color: #ffffff !important;
 }
 
-/* ===================================================
-   RESPONSIVE — Tablet & Mobile
-   =================================================== */
+body.high-contrast .lang-btn.active {
+  background: #ffff00 !important;
+  color: #000000 !important;
+  border-color: #ffff00 !important;
+}
+
+body.high-contrast .header-bar {
+  background: #000000 !important;
+  border-bottom: 1px solid #ffff00 !important;
+}
+
+body.high-contrast .hshec-logo-wrapper {
+  border-color: #ffff00 !important;
+}
+
+body.high-contrast .branding-department {
+  color: #ffff00 !important;
+}
+
+body.high-contrast .branding-title,
+body.high-contrast .branding-subtitle {
+  color: #ffffff !important;
+}
+
+body.high-contrast .search-input {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+body.high-contrast .search-input:focus {
+  border-color: #ffff00 !important;
+  outline: 2px solid #ffff00 !important;
+}
+
+body.high-contrast .signin-btn {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 1.5px solid #ffffff !important;
+}
+
+body.high-contrast .signin-btn:hover {
+  background: #ffff00 !important;
+  color: #000000 !important;
+  border-color: #ffff00 !important;
+}
+
+body.high-contrast .primary-nav {
+  background-color: #000000 !important;
+  border-top: 3.5px solid #ffff00 !important;
+  border-bottom: 2px solid #ffff00 !important;
+}
+
+body.high-contrast .nav-link {
+  color: #ffffff !important;
+}
+
+body.high-contrast .nav-link:hover {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+}
+
+body.high-contrast .nav-link.active {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+}
+
+body.high-contrast .nav-link::after {
+  background-color: #ffff00 !important;
+}
+
+body.high-contrast .hamburger span {
+  background-color: #ffffff !important;
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUTS — Adaptations
+   ========================================================================== */
+
+/* --- Tablet Devices --- */
 @media (max-width: 1024px) {
   .utility-container {
-    padding: 0 1rem;
+    padding: 0 1.25rem;
   }
 
   .header-container {
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1.25rem;
+    gap: 1.25rem;
   }
 
   .nav-container {
-    padding: 0 1rem;
+    padding: 0 1.25rem;
   }
 
   .branding-title {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
+  }
+
+  .branding-subtitle {
+    font-size: 0.72rem;
   }
 
   .search-input {
-    width: 180px;
+    width: 190px;
   }
 
   .nav-link {
-    padding: 12px 16px;
-    font-size: 0.78rem;
+    padding: 0 14px;
+    font-size: 0.75rem;
   }
 }
 
-@media (max-width: 768px) {
-  /* Utility bar: stack */
+/* --- Mobile Devices --- */
+@media (max-width: 868px) {
+  /* Stack Utility Bar */
   .utility-container {
     flex-direction: column;
-    padding: 6px 1rem;
-    gap: 4px;
+    padding: 8px 1.25rem;
+    gap: 6px;
+    align-items: center;
   }
 
   .utility-left,
   .utility-right {
     justify-content: center;
     flex-wrap: wrap;
+    width: 100%;
   }
 
-  /* Header: stack */
+  .utility-divider {
+    display: none;
+  }
+
+  /* Stack Header Bar */
   .header-container {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .header-left {
+    flex-direction: column;
+    align-items: center;
     gap: 0.75rem;
+    width: 100%;
+  }
+
+  .logos-group {
+    justify-content: center;
+  }
+
+  .branding-text {
+    align-items: center;
+  }
+
+  .branding-title {
+    font-size: 1.15rem;
   }
 
   .header-right {
     width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
 
   .search-wrapper {
     flex: 1;
+    min-width: 200px;
+    max-width: 320px;
   }
 
   .search-input {
     width: 100%;
   }
 
-  .emblem-wrapper {
-    width: 52px;
-    height: 52px;
+  .signin-btn {
+    flex-shrink: 0;
   }
 
-  .emblem-img {
-    width: 42px;
-    height: 42px;
-  }
-
-  .branding-title {
-    font-size: 1.05rem;
-  }
-
-  .branding-subtitle {
-    font-size: 0.7rem;
-  }
-
-  /* Nav: show hamburger, hide links (basic toggle) */
+  /* Responsive Slide Drawer Navigation */
   .hamburger {
     display: flex;
   }
 
   .nav-list {
     display: none;
-    flex-direction: column;
-    width: 100%;
     position: absolute;
-    top: 100%;
+    top: 48px;
     left: 0;
-    background: var(--navy-primary);
+    width: 100%;
+    height: auto;
+    background-color: var(--navy-primary);
+    flex-direction: column;
+    border-bottom: 2px solid var(--navy-deep);
+    z-index: 1005;
     box-shadow: var(--shadow-lg);
-    z-index: 999;
   }
 
   .nav-list.open {
     display: flex;
   }
 
-  .nav-container {
-    position: relative;
+  .nav-item {
+    width: 100%;
   }
 
   .nav-link {
-    padding: 14px 1.5rem;
-    justify-content: flex-start;
     width: 100%;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    height: 46px;
+    padding: 0 1.5rem;
+    justify-content: flex-start;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .nav-link::after {
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    transform: scaleY(1);
+    transform-origin: top;
   }
 }
 
 @media (max-width: 480px) {
-  .emblem-wrapper {
-    width: 44px;
-    height: 44px;
-  }
-
-  .emblem-img {
-    width: 36px;
-    height: 36px;
-  }
-
-  .branding-department {
-    font-size: 0.6rem;
-  }
-
   .branding-title {
-    font-size: 0.92rem;
+    font-size: 1.05rem;
   }
 
-  .signin-btn {
-    padding: 0 18px;
-    font-size: 0.82rem;
+  .branding-subtitle {
+    font-size: 0.68rem;
+  }
+
+  .hshec-logo-wrapper {
+    width: 52px;
+    height: 52px;
+  }
+
+  .emblem-wrapper {
+    width: 42px;
+    height: 46px;
   }
 }

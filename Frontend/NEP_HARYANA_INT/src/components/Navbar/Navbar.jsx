@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import emblemImg from "../../assets/emblem.png";
+import hshecLogo from "../../assets/hshec_logo.jpeg";
 import "./Navbar.css";
 
 function Navbar() {
@@ -9,6 +9,7 @@ function Navbar() {
   const [fontSize, setFontSize] = useState(16);
   const [highContrast, setHighContrast] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
     "HOME",
@@ -21,14 +22,66 @@ function Navbar() {
   ];
 
   const handleFontSize = (action) => {
-    if (action === "increase" && fontSize < 22) setFontSize(fontSize + 1);
-    if (action === "decrease" && fontSize > 12) setFontSize(fontSize - 1);
-    if (action === "reset") setFontSize(16);
+    let newSize = fontSize;
+    if (action === "increase" && fontSize < 22) newSize = fontSize + 1;
+    if (action === "decrease" && fontSize > 12) newSize = fontSize - 1;
+    if (action === "reset") newSize = 16;
+    setFontSize(newSize);
+    document.documentElement.style.fontSize = `${newSize}px`;
   };
 
   const toggleContrast = () => {
     setHighContrast(!highContrast);
     document.body.classList.toggle("high-contrast");
+  };
+
+  const handleNavClick = (e, item) => {
+    setActiveNav(item);
+    setIsMenuOpen(false); // Close mobile drawer
+    
+    if (item === "HOME") {
+      e.preventDefault();
+      navigate("/");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (item === "DASHBOARD") {
+      e.preventDefault();
+      navigate("/dashboard");
+    } else {
+      e.preventDefault();
+      const targetId = item.toLowerCase();
+      let elementId = targetId;
+      if (targetId === "about") elementId = "leadership-section";
+      if (targetId === "schemes") elementId = "schemes";
+      if (targetId === "colleges") elementId = "about-stats"; 
+      if (targetId === "notices") elementId = "news-events";
+      if (targetId === "contact") elementId = "contact"; // target footer contact
+      
+      const element = document.getElementById(elementId);
+      if (element) {
+        const offset = 140; // Navbar height offset
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      } else {
+        navigate(`/#${elementId}`);
+        setTimeout(() => {
+          const el = document.getElementById(elementId);
+          if (el) {
+            const offset = 140;
+            const elementPosition = el.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth"
+            });
+          }
+        }, 150);
+      }
+    }
   };
 
   return (
@@ -39,8 +92,13 @@ function Navbar() {
       {/* ===== TIER 1: Utility Bar ===== */}
       <div className="utility-bar" id="utility-bar">
         <div className="utility-container">
-          {/* Left side: Contact info */}
+          {/* Left side: Contact info + state link */}
           <div className="utility-left">
+            <span className="utility-item state-indicator">
+              <span className="india-flag-stub"></span>
+              <span>Government of Haryana</span>
+            </span>
+            <span className="utility-divider">|</span>
             <a
               href="tel:+911234567890"
               className="utility-item"
@@ -79,13 +137,6 @@ function Navbar() {
               </svg>
               <span>info@hshec.gov.in</span>
             </a>
-            <span className="utility-divider">|</span>
-            <span
-              className="utility-item utility-govt-name"
-              id="utility-govt-name"
-            >
-              Government of Haryana
-            </span>
           </div>
 
           {/* Right side: Accessibility & language controls */}
@@ -102,7 +153,7 @@ function Navbar() {
               className="utility-item text-size-controls"
               id="text-size-controls"
             >
-              <span className="text-size-label">T</span>
+              <span className="text-size-label">A</span>
               <button
                 onClick={() => handleFontSize("decrease")}
                 className="text-size-btn"
@@ -144,8 +195,8 @@ function Navbar() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                <circle cx="12" cy="12" r="3" />
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2v20M12 2a10 10 0 0 0 0 20z" fill="currentColor" />
               </svg>
               <span>{highContrast ? "Standard" : "High Contrast"}</span>
             </button>
@@ -168,14 +219,16 @@ function Navbar() {
       {/* ===== TIER 2: Header / Branding ===== */}
       <div className="header-bar" id="header-bar">
         <div className="header-container">
-          {/* Left: Emblem + Branding */}
+          {/* Left: Dual Logos + Branding Text */}
           <div className="header-left">
-            <div className="emblem-wrapper" id="emblem">
-              <img
-                src={emblemImg}
-                alt="Government of Haryana Emblem"
-                className="emblem-img"
-              />
+            <div className="logos-group">
+              <div className="hshec-logo-wrapper" id="hshec-logo" title="Haryana State Higher Education Council">
+                <img
+                  src={hshecLogo}
+                  alt="Haryana State Higher Education Council Logo"
+                  className="hshec-logo-img"
+                />
+              </div>
             </div>
             <div className="branding-text">
               <span className="branding-department">GOVERNMENT OF HARYANA</span>
@@ -183,8 +236,7 @@ function Navbar() {
                 Haryana State Higher Education Council
               </h1>
               <span className="branding-subtitle">
-                हरियाणा राज्य उच्च शिक्षा परिषद &nbsp;|&nbsp; National Education
-                Policy Portal
+                हरियाणा राज्य उच्च शिक्षा परिषद &nbsp;|&nbsp; National Education Policy Portal
               </span>
             </div>
           </div>
@@ -219,7 +271,18 @@ function Navbar() {
               id="btn-signin"
               onClick={() => navigate("/login")}
             >
-              Sign in
+              <svg
+                className="signin-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3" />
+              </svg>
+              <span>Sign in</span>
             </button>
           </div>
         </div>
@@ -232,7 +295,7 @@ function Navbar() {
         aria-label="Main navigation"
       >
         <div className="nav-container">
-          <ul className="nav-list">
+          <ul className={`nav-list ${isMenuOpen ? "open" : ""}`}>
             {navItems.map((item) => (
               <li key={item} className="nav-item">
                 <a
@@ -244,19 +307,7 @@ function Navbar() {
                         : `#${item.toLowerCase()}`
                   }
                   className={`nav-link ${activeNav === item ? "active" : ""}`}
-                  onClick={(e) => {
-                    if (item === "HOME" || item === "DASHBOARD") {
-                      e.preventDefault();
-                      setActiveNav(item);
-                      navigate(item === "HOME" ? "/" : "/dashboard");
-                    } else {
-                      // For other items, we might still want to prevent default if they are just scroll anchors
-                      // But if we are on a different page (like dashboard), scroll anchors won't work unless we go home first.
-                      // For now, let's just let them be anchors.
-                      e.preventDefault();
-                      setActiveNav(item);
-                    }
-                  }}
+                  onClick={(e) => handleNavClick(e, item)}
                   id={`nav-${item.toLowerCase()}`}
                 >
                   {item}
@@ -267,9 +318,10 @@ function Navbar() {
 
           {/* Hamburger for mobile */}
           <button
-            className="hamburger"
+            className={`hamburger ${isMenuOpen ? "open" : ""}`}
             id="hamburger"
             aria-label="Toggle navigation menu"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <span></span>
             <span></span>
