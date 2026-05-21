@@ -10,10 +10,42 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+def _load_env_file(env_path):
+    if not env_path.exists():
+        return
+
+    for raw_line in env_path.read_text(encoding='utf-8').splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith('#'):
+            continue
+
+        if line.startswith('export '):
+            line = line[len('export '):].lstrip()
+
+        key, separator, value = line.partition('=')
+        if not separator:
+            continue
+
+        key = key.strip()
+        if not key or key in os.environ:
+            continue
+
+        value = value.strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in {'"', "'"}:
+            value = value[1:-1]
+
+        os.environ[key] = value
+
+
+_load_env_file(BASE_DIR.parent / '.env')
+_load_env_file(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -120,6 +152,32 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
+def _get_bool_env(name, default=False):
+    return os.getenv(name, str(default)).strip().lower() in {'1', 'true', 'yes', 'on'}
+
+
+def _normalize_smtp_password(host, password):
+    if host.lower().endswith(('smtp.gmail.com', 'smtp.googlemail.com')):
+        return password.replace(' ', '')
+
+    return password
+
+
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+EMAIL_HOST = os.getenv('EMAIL_HOST') or (
+    'smtp.gmail.com' if EMAIL_HOST_USER.lower().endswith(('@gmail.com', '@googlemail.com')) else ''
+)
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = _get_bool_env('EMAIL_USE_TLS', True)
+EMAIL_USE_SSL = _get_bool_env('EMAIL_USE_SSL', False)
+EMAIL_HOST_PASSWORD = _normalize_smtp_password(EMAIL_HOST, os.getenv('EMAIL_HOST_PASSWORD', ''))
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER or 'no-reply@nepharyana.gov.in')
+FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:5173')
+PASSWORD_RESET_PATH = os.getenv('PASSWORD_RESET_PATH', '/reset-password/{uid}/{token}')
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',

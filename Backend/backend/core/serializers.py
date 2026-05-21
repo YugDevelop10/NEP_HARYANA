@@ -1,4 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
 from rest_framework import serializers
 
 from .models import College, CollegeProfile
@@ -77,3 +81,44 @@ class CollegeLoginSerializer(serializers.Serializer):
 
     def validate_email(self, value):
         return User.objects.normalize_email(value).lower()
+
+
+class PasswordResetRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        return User.objects.normalize_email(value).lower()
+
+    def get_user(self):
+        email = self.validated_data['email']
+        return User.objects.filter(email__iexact=email).first()
+
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    uid = serializers.CharField()
+    token = serializers.CharField()
+    password = serializers.CharField(min_length=8, write_only=True)
+    confirmPassword = serializers.CharField(min_length=8, write_only=True)
+
+    def validate(self, attrs):
+        if attrs['password'] != attrs['confirmPassword']:
+            raise serializers.ValidationError({'confirmPassword': 'Passwords do not match.'})
+
+        user = self._get_user(attrs['uid'])
+        if user is None:
+            raise serializers.ValidationError({'uid': 'Invalid or expired password reset link.'})
+
+        if not default_token_generator.check_token(user, attrs['token']):
+            raise serializers.ValidationError({'token': 'Invalid or expired password reset link.'})
+
+        attrs['user'] = user
+        return attrs
+
+    def _get_user(self, uid):
+        user_model = get_user_model()
+
+        try:
+            decoded_uid = force_str(urlsafe_base64_decode(uid))
+            return user_model.objects.get(pk=decoded_uid)
+        except (TypeError, ValueError, OverflowError, user_model.DoesNotExist):
+            return None

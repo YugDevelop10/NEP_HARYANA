@@ -162,6 +162,14 @@ function Signin() {
               </div>
             </div>
 
+            <div className={styles.formGroup}>
+              <p className={styles.loginPrompt} style={{ textAlign: "left" }}>
+                <Link to="/forgot-password" className={styles.loginLink}>
+                  Forgot password?
+                </Link>
+              </p>
+            </div>
+
             <div className={`${styles.formActions} ${styles.fullWidth}`}>
               <button
                 type="submit"

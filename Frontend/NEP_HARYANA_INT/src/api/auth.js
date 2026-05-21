@@ -55,6 +55,20 @@ export function loginCollege(payload) {
   });
 }
 
+export function requestPasswordReset(payload) {
+  return request("/auth/password-reset/", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export function confirmPasswordReset(payload) {
+  return request("/auth/password-reset-confirm/", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
 export function saveAuthSession(token, user) {
   localStorage.setItem(AUTH_TOKEN_KEY, token);
   localStorage.setItem(AUTH_USER_KEY, JSON.stringify(user));
