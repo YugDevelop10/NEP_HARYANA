@@ -1,16 +1,30 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import CollegeProfile
+from .models import College, CollegeProfile
+
+
+class CollegeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = College
+        fields = ['id', 'name', 'aishe_code']
 
 
 class CollegeProfileSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(source='user.email', read_only=True)
+    college_id = serializers.SerializerMethodField()
+
+    def get_college_id(self, obj):
+        return obj.college_id
 
     class Meta:
         model = CollegeProfile
         fields = [
+            'college_id',
+            'full_name',
             'college_name',
+            'aishe_code',
+            'role',
             'address',
             'city',
             'pin',
@@ -21,12 +35,9 @@ class CollegeProfileSerializer(serializers.ModelSerializer):
 
 
 class CollegeRegistrationSerializer(serializers.Serializer):
-    collegeName = serializers.CharField(max_length=255)
-    address = serializers.CharField(max_length=255)
-    city = serializers.CharField(max_length=120)
-    pin = serializers.CharField(max_length=12)
-    state = serializers.CharField(max_length=120)
-    website = serializers.URLField(required=False, allow_blank=True)
+    collegeId = serializers.PrimaryKeyRelatedField(source='college', queryset=College.objects.filter(is_active=True))
+    fullName = serializers.CharField(max_length=255)
+    role = serializers.ChoiceField(choices=CollegeProfile.Role.choices)
     email = serializers.EmailField()
     password = serializers.CharField(min_length=8, write_only=True)
 
@@ -39,16 +50,22 @@ class CollegeRegistrationSerializer(serializers.Serializer):
     def create(self, validated_data):
         password = validated_data.pop('password')
         email = validated_data.pop('email')
-        college_name = validated_data.pop('collegeName')
+        full_name = validated_data.pop('fullName').strip()
+        college = validated_data.pop('college')
+        role = validated_data.pop('role')
         user = User.objects.create_user(
             username=email,
             email=email,
             password=password,
-            first_name=college_name,
+            first_name=full_name,
         )
         CollegeProfile.objects.create(
             user=user,
-            college_name=college_name,
+            college=college,
+            full_name=full_name,
+            college_name=college.name,
+            aishe_code=college.aishe_code,
+            role=role,
             **validated_data,
         )
         return user

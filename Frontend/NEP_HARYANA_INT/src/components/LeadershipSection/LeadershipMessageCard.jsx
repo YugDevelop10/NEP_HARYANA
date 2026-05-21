@@ -1,10 +1,12 @@
-import styles from './LeadershipSection.module.css';
+import styles from "./LeadershipSection.module.css";
 
 function LeadershipMessageCard({ leader, index }) {
   return (
     <article className={styles.card}>
       <div className={styles.cardHeader}>
-        <span className={styles.cardIndex}>{String(index + 1).padStart(2, '0')}</span>
+        <span className={styles.cardIndex}>
+          {String(index + 1).padStart(2, "0")}
+        </span>
 
         <div className={styles.portraitFrame}>
           <img

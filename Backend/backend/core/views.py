@@ -7,8 +7,16 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import CollegeProfile
-from .serializers import CollegeLoginSerializer, CollegeProfileSerializer, CollegeRegistrationSerializer
+from .models import College, CollegeProfile
+from .serializers import CollegeLoginSerializer, CollegeProfileSerializer, CollegeRegistrationSerializer, CollegeSerializer
+
+
+class CollegeListView(APIView):
+	permission_classes = [AllowAny]
+
+	def get(self, request):
+		colleges = College.objects.filter(is_active=True).order_by('name')
+		return Response(CollegeSerializer(colleges, many=True).data)
 
 
 class RegisterView(APIView):
@@ -21,7 +29,7 @@ class RegisterView(APIView):
 		token, _ = Token.objects.get_or_create(user=user)
 		return Response(
 			{
-				'message': 'College account created successfully.',
+				'message': 'Institution account created successfully.',
 				'token': token.key,
 				'user': CollegeProfileSerializer(user.college_profile).data,
 			},
