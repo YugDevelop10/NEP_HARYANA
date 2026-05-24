@@ -185,7 +185,7 @@ function Signin() {
 
               <p className={styles.loginPrompt}>
                 Don't have an account?{" "}
-                <Link to="/signup" className={styles.loginLink}>
+                <Link to="/auth/signup" className={styles.loginLink}>
                   Register here
                 </Link>
               </p>

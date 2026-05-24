@@ -26,7 +26,7 @@ function Dashboard() {
     localStorage.removeItem(AUTH_USER_KEY);
     setShowNotifDropdown(false);
     setShowProfileDropdown(false);
-    navigate("/login");
+    navigate("/auth/login");
   };
 
   const menuItems = [

@@ -38,11 +38,12 @@ async function request(path, options = {}) {
 }
 
 export function registerCollege(payload) {
-  return request("/auth/register/", {
+  return request("/auth/signup/", {
     method: "POST",
     body: JSON.stringify(payload),
   });
 }
+
 
 export function fetchColleges() {
   return request("/colleges/");

@@ -49,7 +49,7 @@ function Navbar() {
       return;
     }
 
-    navigate("/login");
+    navigate("/auth/login");
   };
 
   const handleNavClick = (e, item) => {

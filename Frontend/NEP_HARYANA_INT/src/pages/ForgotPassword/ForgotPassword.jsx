@@ -77,7 +77,7 @@ function ForgotPassword() {
               </button>
 
               <div className={styles.helperLinks}>
-                <Link to="/login" className={styles.backLink}>
+                <Link to="/auth/login" className={styles.backLink}>
                   Back to sign in
                 </Link>
                 <span className={styles.fieldNote}>

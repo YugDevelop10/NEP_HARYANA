@@ -38,7 +38,7 @@ function ResetPassword() {
         message: response.message || "Password updated successfully.",
       });
       setFormData({ password: "", confirmPassword: "" });
-      setTimeout(() => navigate("/login"), 2200);
+      setTimeout(() => navigate("/auth/login"), 2200);
     } catch (error) {
       setStatus({
         type: "error",
@@ -243,7 +243,7 @@ function ResetPassword() {
               </button>
 
               <div className={styles.helperLinks}>
-                <Link to="/login" className={styles.backLink}>
+                <Link to="/auth/login" className={styles.backLink}>
                   Back to sign in
                 </Link>
                 <span className={styles.fieldNote}>

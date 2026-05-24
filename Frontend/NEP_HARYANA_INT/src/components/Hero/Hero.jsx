@@ -57,7 +57,7 @@ function Hero() {
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </a>
-            <Link to="/signup" className={styles.ctaSecondary} id="btn-college-login">
+            <Link to="/auth/signup" className={styles.ctaSecondary} id="btn-college-login">
               College Login
             </Link>
           </div>
