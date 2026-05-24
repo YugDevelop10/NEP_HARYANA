@@ -7,25 +7,26 @@ import styles from "./FormsHub.module.css";
 const FORM_CARDS = [
   {
     id: "nomination",
-    title: "Nomination Form & Indicator Submission",
-    subtitle: "Phase 2 core form for institution header and indicator data.",
+    title: "Section A: Institutional Nomination Header",
+    subtitle: "Phase 2 core form for institution profile and details.",
     status: "Active",
     action: "Open form",
     accent: "primary",
     routeLabel: "/college/forms/nomination/:formId",
   },
   {
+    id: "indicators",
+    title: "Section B: Per-Indicator Submissions Form",
+    subtitle: "Phase 2 proforma table for 20 indicators and file uploads.",
+    status: "Active",
+    action: "Open form",
+    accent: "primary",
+    routeLabel: "/college/forms/indicators/:formId",
+  },
+  {
     id: "faculty-declaration",
     title: "Faculty Declaration Form",
     subtitle: "Declaration and verification of faculty records.",
-    status: "Coming soon",
-    action: "Preview",
-    accent: "muted",
-  },
-  {
-    id: "compliance-annexure",
-    title: "Compliance Annexure Form",
-    subtitle: "Supporting annexure for policy and compliance submissions.",
     status: "Coming soon",
     action: "Preview",
     accent: "muted",
@@ -67,6 +68,36 @@ function FormsHub() {
     }
   };
 
+  const handleOpenIndicators = async () => {
+    setError("");
+    setLoadingFormId("indicators");
+
+    try {
+      const response = await openNominationHeaderForm();
+      const formId = response?.id;
+
+      if (!formId) {
+        throw new Error("Could not open indicators form.");
+      }
+
+      const savedUser = getSavedAuthUser();
+      const nameSlug = String(savedUser?.college_name || "college")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)+/g, "");
+      const codeSlug = String(savedUser?.aishe_code || "code")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)+/g, "");
+
+      navigate(`/institution/${nameSlug}/${codeSlug}/forms/indicators/${formId}`);
+    } catch (requestError) {
+      setError(requestError.message || "Could not open indicators form.");
+    } finally {
+      setLoadingFormId("");
+    }
+  };
+
   return (
     <section className={styles.formsSection}>
       <div className={styles.sectionHeader}>
@@ -84,7 +115,7 @@ function FormsHub() {
             <span>Available forms</span>
           </div>
           <div>
-            <strong>1</strong>
+            <strong>2</strong>
             <span>Live today</span>
           </div>
         </div>
@@ -94,7 +125,7 @@ function FormsHub() {
 
       <div className={styles.cardGrid}>
         {FORM_CARDS.map((card) => {
-          const isActive = card.id === "nomination";
+          const isActive = card.id === "nomination" || card.id === "indicators";
           const isLoading = loadingFormId === card.id;
 
           return (
@@ -114,7 +145,13 @@ function FormsHub() {
                 <button
                   type="button"
                   className={styles.cardButton}
-                  onClick={isActive ? handleOpenNomination : undefined}
+                  onClick={
+                    card.id === "nomination"
+                      ? handleOpenNomination
+                      : card.id === "indicators"
+                      ? handleOpenIndicators
+                      : undefined
+                  }
                   disabled={!isActive || isLoading}
                 >
                   {isLoading ? "Opening..." : card.action}

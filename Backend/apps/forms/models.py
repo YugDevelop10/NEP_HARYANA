@@ -43,3 +43,23 @@ class NominationHeader(models.Model):
 
     def __str__(self):
         return f"Nomination Header - {self.institution_name} ({self.academic_session})"
+
+def indicator_file_path(instance, filename):
+    return f'indicator_evidences/{instance.nomination_header.form_id}/ind_{instance.indicator_number}_{filename}'
+
+class IndicatorEntry(models.Model):
+    nomination_header = models.ForeignKey(NominationHeader, on_delete=models.CASCADE, related_name='indicators')
+    indicator_number = models.IntegerField()  # 1 to 20
+    status = models.BooleanField(default=False)  # Yes / No
+    data_ref_value = models.TextField(blank=True, default='')  # Text, range dropdown selection, percentage range, etc.
+    document_name = models.CharField(max_length=255, blank=True, default='')
+    page_number = models.IntegerField(null=True, blank=True)
+    uploaded_file = models.FileField(upload_to=indicator_file_path, null=True, blank=True)
+    uploaded_file_url = models.URLField(max_length=500, blank=True, default='')
+
+    class Meta:
+        unique_together = ('nomination_header', 'indicator_number')
+        ordering = ['indicator_number']
+
+    def __str__(self):
+        return f"Indicator {self.indicator_number} - Form {self.nomination_header.form_id}"

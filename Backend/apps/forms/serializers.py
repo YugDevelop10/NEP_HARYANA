@@ -40,3 +40,25 @@ class NominationHeaderSerializer(serializers.ModelSerializer):
         if request and request.user:
             validated_data['user'] = request.user
         return super().create(validated_data)
+
+from .models import IndicatorEntry
+
+class IndicatorEntrySerializer(serializers.ModelSerializer):
+    uploaded_file_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = IndicatorEntry
+        fields = [
+            'indicator_number', 
+            'status', 
+            'data_ref_value', 
+            'document_name', 
+            'page_number', 
+            'uploaded_file',
+            'uploaded_file_name',
+            'uploaded_file_url'
+        ]
+        read_only_fields = ['indicator_number', 'uploaded_file', 'uploaded_file_url']
+
+    def get_uploaded_file_name(self, obj):
+        return obj.uploaded_file.name.split('/')[-1] if obj.uploaded_file else ''

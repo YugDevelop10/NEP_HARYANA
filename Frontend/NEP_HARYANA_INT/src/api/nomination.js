@@ -52,3 +52,39 @@ export function saveNominationHeaderById(formId, payload) {
     body: JSON.stringify(payload),
   });
 }
+
+export function fetchIndicatorsByFormId(formId) {
+  return request(`/nomination-header/${formId}/indicators/`);
+}
+
+export function saveIndicators(formId, indicatorsList) {
+  return request(`/nomination-header/${formId}/indicators/save/`, {
+    method: "POST",
+    body: JSON.stringify(indicatorsList),
+  });
+}
+
+export function uploadIndicatorFile(formId, indicatorNum, file) {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const API_BASE_URL = (
+    import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api"
+  ).replace(/\/$/, "");
+  const token = localStorage.getItem(AUTH_TOKEN_KEY);
+  const authHeader = token ? { Authorization: `Token ${token}` } : {};
+
+  return fetch(`${API_BASE_URL}/nomination-header/${formId}/indicators/${indicatorNum}/upload/`, {
+    method: "POST",
+    headers: {
+      ...authHeader,
+    },
+    body: formData,
+  }).then(async (response) => {
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(data.detail || data.message || "File upload failed.");
+    }
+    return data;
+  });
+}

@@ -205,6 +205,19 @@ function NominationForm() {
     navigate(`/institution/${nameSlug}/${codeSlug}/dashboard`);
   };
 
+  const handleProceedToSectionB = () => {
+    const savedUser = getSavedAuthUser();
+    const nameSlug = String(savedUser?.college_name || "college")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+    const codeSlug = String(savedUser?.aishe_code || "code")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+    navigate(`/institution/${nameSlug}/${codeSlug}/forms/indicators/${formId}`);
+  };
+
   return (
     <main className={styles.pageShell}>
       <div className={styles.pageContainer}>
@@ -610,11 +623,21 @@ function NominationForm() {
             {/* Submit Action */}
             <div className={styles.formActions}>
               {isLocked ? (
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#166534", fontWeight: "700" }}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  <span>Submitted & Verification Pending</span>
+                <div style={{ display: "flex", width: "100%", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#166534", fontWeight: "700" }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span>Section A Saved & Locked</span>
+                  </div>
+                  <button
+                    type="button"
+                    className={styles.submitButton}
+                    onClick={handleProceedToSectionB}
+                    style={{ maxWidth: "300px" }}
+                  >
+                    Proceed to Section B (Indicators)
+                  </button>
                 </div>
               ) : (
                 <div className={styles.submitTypeRow}>
@@ -625,29 +648,21 @@ function NominationForm() {
                     disabled={isSubmitting}
                     onClick={() => setSubmitType("draft")}
                   >
-                    {isSubmitting && submitType === "draft" ? (
+                    {isSubmitting ? (
                       <>
                         <span className={styles.btnSpinner}></span>
                         Saving Draft...
                       </>
                     ) : (
-                      "Save Draft"
+                      "Save Section A Draft"
                     )}
                   </button>
                   <button
-                    type="submit"
+                    type="button"
                     className={styles.submitButton}
-                    disabled={isSubmitting}
-                    onClick={() => setSubmitType("final")}
+                    onClick={handleProceedToSectionB}
                   >
-                    {isSubmitting && submitType === "final" ? (
-                      <>
-                        <span className={styles.btnSpinner}></span>
-                        Submitting...
-                      </>
-                    ) : (
-                      "Submit Nomination"
-                    )}
+                    Proceed to Section B (Indicators)
                   </button>
                 </div>
               )}
