@@ -13,7 +13,7 @@ import { ProtectedRoute, GuestRoute } from "./components/ProtectedRoute/Protecte
 function App() {
   const location = useLocation();
   const isDashboard =
-    location.pathname === "/college/dashboard" ||
+    location.pathname.startsWith("/institution/") ||
     location.pathname === "/admin/dashboard";
 
   return (
@@ -30,7 +30,7 @@ function App() {
 
         {/* Protected Routes */}
         <Route
-          path="/college/dashboard"
+          path="/institution/:institutionName/:institutionAisheCode/dashboard"
           element={
             <ProtectedRoute allowedRoles={["principal"]}>
               <CollegeDashboard />

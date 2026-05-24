@@ -93,7 +93,15 @@ export function getDashboardPathForUser(user) {
   const role = String(user?.role || "").toLowerCase();
 
   if (role === "principal") {
-    return "/college/dashboard";
+    const nameSlug = String(user?.college_name || "college")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+    const codeSlug = String(user?.aishe_code || "code")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
+    return `/institution/${nameSlug}/${codeSlug}/dashboard`;
   }
 
   if (role === "admin") {
