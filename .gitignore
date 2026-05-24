@@ -1,0 +1,46 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+db.sqlite3
+*.log
+.env
+.env.*
+.venv/
+venv/
+env/
+myenv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+pip-wheel-metadata/
+*.egg-info/
+.eggs/
+build/
+dist/
+staticfiles/
+media/
+
+# Node / Vite
+node_modules/
+dist-ssr/
+.vite/
+Frontend/NEP_HARYANA_INT/node_modules/
+Frontend/NEP_HARYANA_INT/dist/
+Frontend/NEP_HARYANA_INT/dist-ssr/
+Frontend/NEP_HARYANA_INT/.vite/
+
+# Editor / OS files
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
