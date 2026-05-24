@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import CollegeDashboard from "./pages/CollegeDashboard/CollegeDashboard";
 import NominationForm from "./pages/CollegeDashboard/NominationForm/NominationForm";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
+import { ProtectedRoute, GuestRoute } from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   const location = useLocation();
@@ -24,17 +25,46 @@ function App() {
       {!isDashboard && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/auth/signup" element={<Signup />} />
-        <Route path="/auth/login" element={<Signin />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/college/dashboard" element={<CollegeDashboard />} />
+        
+        {/* Guest Routes */}
+        <Route path="/auth/signup" element={<GuestRoute><Signup /></GuestRoute>} />
+        <Route path="/auth/login" element={<GuestRoute><Signin /></GuestRoute>} />
+        <Route path="/auth/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
+        <Route path="/auth/reset-password/:uid/:token" element={<GuestRoute><ResetPassword /></GuestRoute>} />
+        
+        {/* Protected Routes */}
+        <Route 
+          path="/dashboard" 
+          element={
+            <ProtectedRoute allowedRoles={["committee"]}>
+              <Dashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/college/dashboard" 
+          element={
+            <ProtectedRoute allowedRoles={["principal"]}>
+              <CollegeDashboard />
+            </ProtectedRoute>
+          } 
+        />
         <Route
           path="/college/forms/nomination/:formId"
-          element={<NominationForm />}
+          element={
+            <ProtectedRoute allowedRoles={["principal"]}>
+              <NominationForm />
+            </ProtectedRoute>
+          }
         />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route 
+          path="/admin/dashboard" 
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } 
+        />
       </Routes>
       {!isDashboard && <Footer />}
     </>

@@ -57,14 +57,14 @@ export function loginCollege(payload) {
 }
 
 export function requestPasswordReset(payload) {
-  return request("/auth/password-reset/", {
+  return request("/auth/forgot-password/", {
     method: "POST",
     body: JSON.stringify(payload),
   });
 }
 
 export function confirmPasswordReset(payload) {
-  return request("/auth/password-reset-confirm/", {
+  return request("/auth/reset-password/", {
     method: "POST",
     body: JSON.stringify(payload),
   });

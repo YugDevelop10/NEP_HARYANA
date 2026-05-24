@@ -168,7 +168,7 @@ function Signin() {
 
             <div className={styles.formGroup}>
               <p className={styles.loginPrompt} style={{ textAlign: "left" }}>
-                <Link to="/forgot-password" className={styles.loginLink}>
+                <Link to="/auth/forgot-password" className={styles.loginLink}>
                   Forgot password?
                 </Link>
               </p>
