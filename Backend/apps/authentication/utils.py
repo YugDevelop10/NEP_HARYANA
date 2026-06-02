@@ -15,9 +15,12 @@ def generate_access_token(user):
     }
     return jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
 
+import uuid
+
 def generate_refresh_token(user):
     payload = {
         'user_id': user.id,
+        'jti': str(uuid.uuid4()),
         'exp': timezone.now() + datetime.timedelta(days=7),
         'iat': timezone.now(),
     }

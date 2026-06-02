@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 	# local apps
 	'apps.authentication',
 	'apps.admin_panel',
+	'apps.nominations',
 ]
 
 MIDDLEWARE = [
@@ -110,7 +111,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-if os.environ.get('DATABASE_URL'):
+import sys
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+elif os.environ.get('DATABASE_URL'):
 	DATABASES = {
 		'default': dj_database_url.config(
 			default=os.environ.get('DATABASE_URL'),
@@ -124,6 +133,7 @@ else:
 			'NAME': BASE_DIR / 'db.sqlite3',
 		}
 	}
+
 
 
 # Password hashing
@@ -186,3 +196,8 @@ if '@' not in DEFAULT_FROM_EMAIL:
 
 # Frontend Base URL
 FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:5173')
+
+# Media Files (Uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+

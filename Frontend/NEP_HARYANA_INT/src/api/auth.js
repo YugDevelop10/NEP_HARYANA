@@ -1,5 +1,5 @@
 const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api"
+  import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:8000/api`
 ).replace(/\/$/, "");
 
 let isRefreshing = false;
@@ -26,9 +26,9 @@ export async function request(path, options = {}) {
     ...options,
   });
 
-  // If unauthorized and it's not an auth flow endpoint, attempt to refresh tokens
+  // If unauthorized or forbidden (due to missing/expired cookie) and it's not an auth flow endpoint, attempt to refresh tokens
   if (
-    response.status === 401 &&
+    (response.status === 401 || response.status === 403) &&
     path !== "/auth/refresh/" &&
     path !== "/auth/login/" &&
     path !== "/auth/signup/"
