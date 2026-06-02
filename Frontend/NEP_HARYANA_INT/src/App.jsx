@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
@@ -7,7 +7,15 @@ import Signin from "./pages/Signin/Signin";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import CollegeDashboard from "./pages/CollegeDashboard/CollegeDashboard";
-import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
+
+// New Admin Panel imports
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminOverview from "./pages/Admin/AdminOverview";
+import CollegeManagement from "./pages/Admin/CollegeManagement";
+import CollegeDetail from "./pages/Admin/CollegeDetail";
+import Reports from "./pages/Admin/Reports";
+import Settings from "./pages/Admin/Settings";
+
 import {
   ProtectedRoute,
   GuestRoute,
@@ -18,7 +26,7 @@ function App() {
   const location = useLocation();
   const isDashboard =
     location.pathname.startsWith("/institution/") ||
-    location.pathname === "/admin/dashboard";
+    location.pathname.startsWith("/admin");
 
   return (
     <AuthProvider>
@@ -60,7 +68,7 @@ function App() {
           }
         />
 
-        {/* Protected Routes */}
+        {/* Protected Routes - College Dashboard */}
         <Route
           path="/institution/:institutionName/:institutionAisheCode/dashboard"
           element={
@@ -69,13 +77,30 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Protected Routes - DHE Admin Console */}
         <Route
-          path="/admin/dashboard"
           element={
             <ProtectedRoute allowedRoles={["admin"]}>
-              <AdminDashboard />
+              <AdminLayout />
             </ProtectedRoute>
           }
+        >
+          <Route path="/admin" element={<AdminOverview />} />
+          <Route path="/admin/colleges" element={<CollegeManagement />} />
+          <Route path="/admin/colleges/:id" element={<CollegeDetail />} />
+          <Route path="/admin/reports" element={<Reports />} />
+          <Route path="/admin/settings" element={<Settings />} />
+        </Route>
+
+        {/* Redirects */}
+        <Route
+          path="/admin/dashboard"
+          element={<Navigate to="/admin" replace />}
+        />
+        <Route
+          path="/admin/dashbpard"
+          element={<Navigate to="/admin" replace />}
         />
       </Routes>
       {!isDashboard && <Footer />}

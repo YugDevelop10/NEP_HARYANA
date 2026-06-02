@@ -15,19 +15,19 @@ import {
   Award
 } from 'lucide-react';
 import { 
-  getColleges, 
-  saveColleges, 
   calculateTotalScore, 
   getClassification, 
   PARAMETERS,
   CATEGORIES 
 } from '../../utils/mockData';
+import { fetchAdminInstitutions } from '../../api/admin';
 
 const CollegeDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [colleges, setColleges] = useState([]);
   const [college, setCollege] = useState(null);
+  const [loading, setLoading] = useState(true);
   
   // Tab states
   const [activeTab, setActiveTab] = useState('existing'); // 'existing' or 'new'
@@ -41,14 +41,24 @@ const CollegeDetail = () => {
   const [remarks, setRemarks] = useState('');
 
   useEffect(() => {
-    const list = getColleges() || [];
-    setColleges(list);
-    const found = list.find(c => c.id === id);
-    if (found) {
-      setCollege(found);
-      setTempScores({ ...found.scores });
-      setRemarks(found.remarks || '');
+    async function loadData() {
+      try {
+        const res = await fetchAdminInstitutions();
+        const list = res.institutions || [];
+        setColleges(list);
+        const found = list.find(c => String(c.id) === String(id));
+        if (found) {
+          setCollege(found);
+          setTempScores({ ...found.scores });
+          setRemarks(found.remarks || '');
+        }
+      } catch (err) {
+        console.error("Failed to load details:", err);
+      } finally {
+        setLoading(false);
+      }
     }
+    loadData();
   }, [id]);
 
   if (!college) {

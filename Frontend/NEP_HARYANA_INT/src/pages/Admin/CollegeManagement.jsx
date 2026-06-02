@@ -9,14 +9,15 @@ import {
   X
 } from 'lucide-react';
 import { 
-  getColleges, 
   calculateTotalScore, 
   getClassification 
 } from '../../utils/mockData';
+import { fetchAdminInstitutions } from '../../api/admin';
 
 const CollegeManagement = () => {
   const navigate = useNavigate();
   const [colleges, setColleges] = useState([]);
+  const [loading, setLoading] = useState(true);
   
   // Search and Filter States
   const [searchTerm, setSearchTerm] = useState('');
@@ -28,7 +29,17 @@ const CollegeManagement = () => {
   const [sortOrder, setSortOrder] = useState('desc'); // 'asc', 'desc'
 
   useEffect(() => {
-    setColleges(getColleges() || []);
+    async function loadData() {
+      try {
+        const res = await fetchAdminInstitutions();
+        setColleges(res.institutions || []);
+      } catch (err) {
+        console.error("Failed to load institutions:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
   }, []);
 
   // Districts and types list derived from data
@@ -110,6 +121,15 @@ const CollegeManagement = () => {
     link.click();
     document.body.removeChild(link);
   };
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-24 space-y-4">
+        <div className="w-10 h-10 border-4 border-slate-200 border-t-blue-600 rounded-full animate-spin" />
+        <p className="text-xs text-slate-400 font-bold uppercase tracking-wider animate-pulse">Loading Institutions...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 animate-fadeIn">

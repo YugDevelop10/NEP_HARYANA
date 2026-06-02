@@ -209,8 +209,8 @@ export function getDashboardPathForUser(user) {
   }
 
   if (role === "admin") {
-    return "/admin/dashboard";
+    return "/admin";
   }
 
-  return "/admin/dashboard";
+  return "/admin";
 }
