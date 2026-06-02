@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../Dashboard/Dashboard.module.css";
 import pageStyles from "./CollegeDashboard.module.css";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { fetchNominations } from "../../api/nomination";
+import NominationWorkspace from "./NominationWorkspace";
 
 function formatRole(role) {
   if (role === "principal") {
@@ -27,6 +29,32 @@ function CollegeDashboard() {
   const principalName = savedUser?.full_name || "Dr. Rajesh Kumar";
   const principalRole = formatRole(savedUser?.role);
   const aisheCode = savedUser?.aishe_code || "C-12345";
+  
+  // Forms loading state
+  const [formsList, setFormsList] = useState([]);
+  const [formsLoading, setFormsLoading] = useState(false);
+  const [formsError, setFormsError] = useState("");
+  const [selectedFormId, setSelectedFormId] = useState(null);
+
+  const loadFormsList = useCallback(async () => {
+    setFormsLoading(true);
+    setFormsError("");
+    try {
+      const data = await fetchNominations();
+      setFormsList(data);
+    } catch (err) {
+      console.error("Failed to load forms list:", err);
+      setFormsError(err.message || "Failed to load available forms.");
+    } finally {
+      setFormsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activeMenu === "Forms") {
+      loadFormsList();
+    }
+  }, [activeMenu, loadFormsList]);
 
   const handleLogout = async () => {
     await logout();
@@ -39,6 +67,10 @@ function CollegeDashboard() {
       title: "Dashboard",
       icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6",
     },
+    {
+      title: "Forms",
+      icon: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",
+    }
   ];
 
   return (
@@ -161,14 +193,16 @@ function CollegeDashboard() {
           </div>
         </header>
 
-        {activeMenu === "Dashboard" ? (
+        {selectedFormId ? (
+          <NominationWorkspace formId={selectedFormId} onBack={() => { setSelectedFormId(null); loadFormsList(); }} />
+        ) : activeMenu === "Dashboard" ? (
           <div className={pageStyles.overviewGrid}>
             <section className={pageStyles.welcomeCard}>
               <h3>HSHEC Principal Portal</h3>
               <p>
                 Welcome to the Haryana State Higher Education Council portal.
-                The nomination workflow and scoring modules have been removed
-                from this build.
+                The nomination workflow and scoring modules have been refactored
+                to use the secure JWT and evaluation engines.
               </p>
             </section>
 
@@ -193,6 +227,51 @@ function CollegeDashboard() {
                 </div>
               </div>
             </section>
+          </div>
+        ) : activeMenu === "Forms" ? (
+          <div style={{ padding: "24px" }}>
+            <h3 style={{ fontSize: "1.25rem", fontWeight: "700", marginBottom: "18px", color: "#1e293b" }}>Available Nomination Forms</h3>
+            {formsError && (
+              <div style={{ backgroundColor: "#fee2e2", borderLeft: "4px solid #ef4444", color: "#b91c1c", padding: "12px", borderRadius: "8px", fontSize: "0.875rem", marginBottom: "16px" }}>
+                {formsError}
+              </div>
+            )}
+            {formsLoading ? (
+              <p style={{ color: "#64748b", fontSize: "0.875rem" }}>Loading available forms...</p>
+            ) : formsList.length === 0 ? (
+              <p style={{ color: "#64748b", fontSize: "0.875rem" }}>No active forms available at the moment.</p>
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: "24px" }}>
+                {formsList.map((form) => (
+                  <div key={form.id} style={{ backgroundColor: "#ffffff", border: "1px solid #f1f5f9", borderRadius: "16px", padding: "24px", boxShadow: "0 4px 20px rgba(0,0,0,0.02)", display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: "180px" }}>
+                    <div>
+                      <span style={{ fontSize: "0.6875rem", backgroundColor: "#f1f5f9", padding: "4px 10px", borderRadius: "9999px", textTransform: "uppercase", fontWeight: "700", color: "#64748b" }}>{form.issued_by} • {form.academic_session}</span>
+                      <h4 style={{ fontSize: "0.9375rem", fontWeight: "700", marginTop: "12px", marginBottom: "16px", color: "#0f172a", lineHeight: "1.4" }}>{form.title}</h4>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <span style={{
+                        fontSize: "0.75rem",
+                        fontWeight: "700",
+                        padding: "6px 14px",
+                        borderRadius: "9999px",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.05em",
+                        backgroundColor: form.status === "submitted" ? "#d1fae5" : form.status === "draft" ? "#fef3c7" : "#f1f5f9",
+                        color: form.status === "submitted" ? "#065f46" : form.status === "draft" ? "#78350f" : "#475569"
+                      }}>{form.status.replace("_", " ")}</span>
+                      <button
+                        type="button"
+                        className={styles.secondaryBtn}
+                        style={{ padding: "8px 16px", fontSize: "0.8125rem", fontWeight: "600", borderColor: "#2563eb", color: "#2563eb", cursor: "pointer" }}
+                        onClick={() => setSelectedFormId(form.id)}
+                      >
+                        Open Form
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ) : null}
       </div>
