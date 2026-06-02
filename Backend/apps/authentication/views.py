@@ -9,7 +9,7 @@ import datetime
 
 from .models import College, User, RefreshToken
 from .serializers import CollegeSerializer, UserSerializer, RegisterSerializer, LoginSerializer
-from .utils import set_auth_cookies, clear_auth_cookies, rotate_refresh_token
+from .utils import generate_auth_tokens, rotate_refresh_token_header
 
 class CollegeListView(APIView):
     permission_classes = [AllowAny]
@@ -27,13 +27,12 @@ class RegisterView(APIView):
         if serializer.is_valid():
             user = serializer.save()
             user_data = UserSerializer(user).data
-            response = Response({
+            tokens = generate_auth_tokens(user)
+            return Response({
                 'user': user_data,
+                'tokens': tokens,
                 'message': 'Account created successfully.'
             }, status=status.HTTP_201_CREATED)
-            # Set HttpOnly secure cookies
-            set_auth_cookies(response, user)
-            return response
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -67,13 +66,12 @@ class LoginView(APIView):
                 cache.delete(lockout_key)
                 
                 user_data = UserSerializer(user).data
-                response = Response({
+                tokens = generate_auth_tokens(user)
+                return Response({
                     'user': user_data,
+                    'tokens': tokens,
                     'message': 'Signed in successfully.'
                 }, status=status.HTTP_200_OK)
-                # Set HttpOnly secure cookies
-                set_auth_cookies(response, user)
-                return response
             else:
                 # Failure: increment login attempts count
                 attempts = cache.get(attempts_key, 0) + 1
@@ -216,34 +214,31 @@ class LogoutView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        refresh_token = request.COOKIES.get('refresh_token')
+        refresh_token = request.data.get('refresh_token')
         if refresh_token:
             from .utils import hash_token
             hashed = hash_token(refresh_token)
             RefreshToken.objects.filter(token=hashed).update(is_revoked=True)
             
-        response = Response({'message': 'Logged out successfully.'}, status=status.HTTP_200_OK)
-        clear_auth_cookies(response)
-        return response
+        return Response({'message': 'Logged out successfully.'}, status=status.HTTP_200_OK)
 
 
 class RefreshTokenView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        refresh_token = request.COOKIES.get('refresh_token')
+        refresh_token = request.data.get('refresh_token')
         if not refresh_token:
-            return Response({'detail': 'Refresh token cookie is missing.'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'detail': 'Refresh token is required.'}, status=status.HTTP_400_BAD_REQUEST)
             
-        response = Response({'message': 'Token refreshed successfully.'}, status=status.HTTP_200_OK)
-        user = rotate_refresh_token(refresh_token, response)
-        if not user:
-            clear_auth_cookies(response)
-            response.status_code = status.HTTP_401_UNAUTHORIZED
-            response.data = {'detail': 'Invalid, expired, or reused refresh token.'}
-            return response
+        tokens = rotate_refresh_token_header(refresh_token)
+        if not tokens:
+            return Response({'detail': 'Invalid, expired, or reused refresh token.'}, status=status.HTTP_410_GONE)
             
-        return response
+        return Response({
+            'tokens': tokens,
+            'message': 'Token refreshed successfully.'
+        }, status=status.HTTP_200_OK)
 
 
 class MeView(APIView):

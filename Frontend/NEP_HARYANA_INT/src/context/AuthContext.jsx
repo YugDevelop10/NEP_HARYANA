@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { getCurrentUser, loginCollege, registerCollege, logoutCollege } from "../api/auth";
+import { getCurrentUser, loginCollege, registerCollege, logoutCollege, getAccessToken } from "../api/auth";
 
 const AuthContext = createContext(null);
 
@@ -8,6 +8,11 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   const fetchUser = async () => {
+    if (!getAccessToken()) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
     try {
       const data = await getCurrentUser();
       setUser(data);

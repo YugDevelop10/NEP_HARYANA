@@ -14,25 +14,60 @@ function onRefreshed() {
   refreshSubscribers = [];
 }
 
+// Token storage utilities
+export function getAccessToken() {
+  return localStorage.getItem("nep_haryana_access_token");
+}
+
+export function setAccessToken(token) {
+  if (token) {
+    localStorage.setItem("nep_haryana_access_token", token);
+  } else {
+    localStorage.removeItem("nep_haryana_access_token");
+  }
+}
+
+export function getRefreshToken() {
+  return localStorage.getItem("nep_haryana_refresh_token");
+}
+
+export function setRefreshToken(token) {
+  if (token) {
+    localStorage.setItem("nep_haryana_refresh_token", token);
+  } else {
+    localStorage.removeItem("nep_haryana_refresh_token");
+  }
+}
+
 export async function request(path, options = {}) {
-  // Always include credentials to send HttpOnly cookies
-  options.credentials = "include";
+  const headers = {
+    "Content-Type": "application/json",
+    ...(options.headers || {}),
+  };
+
+  const accessToken = getAccessToken();
+  if (accessToken) {
+    headers["Authorization"] = `Bearer ${accessToken}`;
+  }
 
   const response = await fetch(`${API_BASE_URL}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {}),
-    },
     ...options,
+    headers,
   });
 
-  // If unauthorized or forbidden (due to missing/expired cookie) and it's not an auth flow endpoint, attempt to refresh tokens
+  // If unauthorized/expired token (401 or 403) and not an auth flow endpoint, try to refresh
   if (
     (response.status === 401 || response.status === 403) &&
     path !== "/auth/refresh/" &&
     path !== "/auth/login/" &&
     path !== "/auth/signup/"
   ) {
+    const rToken = getRefreshToken();
+    if (!rToken) {
+      window.dispatchEvent(new Event("auth-session-expired"));
+      throw new Error("No refresh token available");
+    }
+
     if (!isRefreshing) {
       isRefreshing = true;
       try {
@@ -42,7 +77,8 @@ export async function request(path, options = {}) {
       } catch (err) {
         isRefreshing = false;
         refreshSubscribers = [];
-        // Broadcast custom event for logout state sync
+        setAccessToken(null);
+        setRefreshToken(null);
         window.dispatchEvent(new Event("auth-session-expired"));
         throw err;
       }
@@ -69,34 +105,74 @@ export async function request(path, options = {}) {
   return data;
 }
 
-export function registerCollege(payload) {
-  return request("/auth/signup/", {
+export async function registerCollege(payload) {
+  const data = await request("/auth/signup/", {
     method: "POST",
     body: JSON.stringify(payload),
   });
+  if (data.tokens) {
+    setAccessToken(data.tokens.access);
+    setRefreshToken(data.tokens.refresh);
+  }
+  return data;
 }
 
 export function fetchColleges() {
   return request("/colleges/");
 }
 
-export function loginCollege(payload) {
-  return request("/auth/login/", {
+export async function loginCollege(payload) {
+  const data = await request("/auth/login/", {
     method: "POST",
     body: JSON.stringify(payload),
   });
+  if (data.tokens) {
+    setAccessToken(data.tokens.access);
+    setRefreshToken(data.tokens.refresh);
+  }
+  return data;
 }
 
-export function refreshSession() {
-  return request("/auth/refresh/", {
+export async function refreshSession() {
+  const refreshToken = getRefreshToken();
+  if (!refreshToken) {
+    throw new Error("No refresh token found.");
+  }
+  const response = await fetch(`${API_BASE_URL}/auth/refresh/`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ refresh_token: refreshToken }),
   });
+
+  if (!response.ok) {
+    setAccessToken(null);
+    setRefreshToken(null);
+    throw new Error("Session expired.");
+  }
+
+  const data = await response.json();
+  if (data.tokens) {
+    setAccessToken(data.tokens.access);
+    setRefreshToken(data.tokens.refresh);
+  }
+  return data;
 }
 
-export function logoutCollege() {
-  return request("/auth/logout/", {
-    method: "POST",
-  });
+export async function logoutCollege() {
+  const refreshToken = getRefreshToken();
+  try {
+    await request("/auth/logout/", {
+      method: "POST",
+      body: JSON.stringify({ refresh_token: refreshToken }),
+    });
+  } catch (e) {
+    // Keep proceeding to clear local tokens even if request fails
+  } finally {
+    setAccessToken(null);
+    setRefreshToken(null);
+  }
 }
 
 export function getCurrentUser() {
