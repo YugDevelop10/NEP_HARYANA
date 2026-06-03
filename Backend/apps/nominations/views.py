@@ -10,6 +10,8 @@ from .models import Nomination
 from .serializers import NominationSerializer
 from .scoring import calculate_nomination_score
 
+from .scoring import AWARD_THRESHOLDS
+
 class NominationConfigView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -20,7 +22,8 @@ class NominationConfigView(APIView):
         
         return Response({
             'cloudinary_cloud_name': cloud_name,
-            'cloudinary_upload_preset': upload_preset
+            'cloudinary_upload_preset': upload_preset,
+            'award_thresholds': AWARD_THRESHOLDS
         }, status=status.HTTP_200_OK)
 
 from apps.authentication.models import College

@@ -1,0 +1,367 @@
+/* Premium AwardJourney CSS module */
+
+.journeyContainer {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.journeyContainer:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+  border-color: rgba(232, 121, 29, 0.25);
+}
+
+/* Glassmorphism Title Area */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  padding-bottom: 16px;
+}
+
+.headerTitle {
+  font-size: 1.25rem;
+  font-weight: 850;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.headerTitle svg {
+  color: #e8791d;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.scorePill {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Award Ladder */
+.ladder {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  margin: 40px 0 30px 0;
+  padding: 0 40px;
+}
+
+.ladderLine {
+  position: absolute;
+  top: 50%;
+  left: 80px;
+  right: 80px;
+  height: 6px;
+  background: #e2e8f0;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.ladderLineProgress {
+  height: 100%;
+  background: linear-gradient(90deg, #e8791d 0%, #fb923c 100%);
+  width: 0%;
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 12px rgba(232, 121, 29, 0.5);
+}
+
+.ladderStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.badgeCircle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  position: relative;
+}
+
+.ladderStep.unlocked .badgeCircle {
+  border-color: #e8791d;
+  background: radial-gradient(circle at center, #ffffff 60%, #fff7ed 100%);
+  box-shadow: 0 8px 20px rgba(232, 121, 29, 0.25);
+  transform: scale(1.08);
+}
+
+.ladderStep.unlocked.active .badgeCircle {
+  animation: pulseGlow 2s infinite alternate;
+  border-color: #f97316;
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 8px rgba(232, 121, 29, 0.3), 0 8px 20px rgba(232, 121, 29, 0.2); }
+  100% { box-shadow: 0 0 20px rgba(232, 121, 29, 0.7), 0 8px 24px rgba(232, 121, 29, 0.4); }
+}
+
+.badgeCircle svg {
+  width: 32px;
+  height: 32px;
+  color: #94a3b8;
+  transition: all 0.3s ease;
+}
+
+.ladderStep.unlocked .badgeCircle svg {
+  color: #e8791d;
+}
+
+/* Level Labels */
+.stepLabel {
+  font-size: 0.9rem;
+  font-weight: 750;
+  color: #64748b;
+  margin-top: 12px;
+  transition: color 0.3s ease;
+}
+
+.ladderStep.unlocked .stepLabel {
+  color: #0f172a;
+}
+
+.ladderStep.unlocked.active .stepLabel {
+  color: #e8791d;
+}
+
+.stepScore {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+.ladderStep.unlocked .stepScore {
+  color: #64748b;
+}
+
+/* Lock Icon Overlay */
+.lockOverlay {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  background: #64748b;
+  color: #ffffff;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 0.65rem;
+}
+
+.ladderStep.unlocked .lockOverlay {
+  background: #10b981;
+}
+
+/* Progress Section */
+.progressSection {
+  margin-top: 30px;
+  background: rgba(248, 250, 252, 0.6);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #f1f5f9;
+}
+
+.progressBarContainer {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, #e8791d 0%, #fb923c 100%);
+  border-radius: 9999px;
+  transition: width 0.5s ease-out;
+}
+
+.progressStats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  font-weight: 650;
+  color: #64748b;
+}
+
+.targetHighlight {
+  color: #e8791d;
+  font-weight: 750;
+}
+
+/* Motivational Message */
+.motivationMessage {
+  margin-top: 16px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #334155;
+  background: #fff7ed;
+  border-left: 4px solid #e8791d;
+  padding: 12px 16px;
+  border-radius: 0 12px 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 550;
+}
+
+/* Celebration Overlay */
+.celebrationOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.celebrationCard {
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 40px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transform: scale(0.9);
+  animation: popUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes popUp {
+  to { transform: scale(1); }
+}
+
+.trophyAnim {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 24px;
+  background: radial-gradient(circle, #fffbeb 30%, transparent 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  animation: pulseTrophy 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseTrophy {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.trophyAnim svg {
+  width: 60px;
+  height: 60px;
+  color: #f59e0b;
+  filter: drop-shadow(0 4px 10px rgba(245, 158, 11, 0.4));
+}
+
+.celebrationCard h2 {
+  font-size: 1.8rem;
+  font-weight: 850;
+  color: #0f172a;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.celebrationCard p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #475569;
+  margin-bottom: 30px;
+}
+
+.dismissBtn {
+  background: #e8791d;
+  color: #ffffff;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 750;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(232, 121, 29, 0.3);
+  transition: all 0.2s ease;
+}
+
+.dismissBtn:hover {
+  background: #f97316;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(232, 121, 29, 0.4);
+}
+
+/* CSS-based particle confetti effects */
+.confettiContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #f59e0b;
+  border-radius: 50%;
+  animation: fall 3s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(500px) rotate(360deg); opacity: 0; }
+}

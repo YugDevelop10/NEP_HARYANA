@@ -1,3 +1,24 @@
+AWARD_THRESHOLDS = [
+    {
+        "level": "Silver",
+        "min_score": 51,
+        "description": "Recognized for meeting key quality indicators across the nomination framework.",
+        "badge_color": "silver"
+    },
+    {
+        "level": "Gold",
+        "min_score": 75,
+        "description": "Exemplary implementation of institutional governance and core values.",
+        "badge_color": "gold"
+    },
+    {
+        "level": "Platinum",
+        "min_score": 91,
+        "description": "Outstanding leadership and state-level benchmarking in higher education.",
+        "badge_color": "platinum"
+    }
+]
+
 def calculate_nomination_score(answers):
     score = 0
     
@@ -146,13 +167,11 @@ def calculate_nomination_score(answers):
     elif pct > 0:
         score += 2
         
-    # Determine category
+    # Determine category dynamically from AWARD_THRESHOLDS
     category = "No Award"
-    if score > 90:
-        category = "Platinum"
-    elif score >= 75:
-        category = "Gold"
-    elif score > 50:
-        category = "Silver"
+    for threshold in sorted(AWARD_THRESHOLDS, key=lambda x: x["min_score"], reverse=True):
+        if score >= threshold["min_score"]:
+            category = threshold["level"]
+            break
         
     return score, category

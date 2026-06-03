@@ -26,6 +26,10 @@ export function fetchCloudinaryConfig() {
   return request("/nominations/config/");
 }
 
+export function fetchNominationConfig() {
+  return request("/nominations/config/");
+}
+
 export async function uploadEvidenceToCloudinary(file) {
   // 1. Fetch credentials from backend
   const config = await fetchCloudinaryConfig();
