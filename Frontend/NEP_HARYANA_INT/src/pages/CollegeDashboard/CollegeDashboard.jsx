@@ -6,6 +6,8 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import { fetchNominations, fetchNominationDetails, fetchMySubmissions } from "../../api/nomination";
 import NominationWorkspace from "./NominationWorkspace";
 import AwardJourney from "./AwardJourney";
+import { LayoutDashboard, FileText, CheckSquare, School } from "lucide-react";
+import hshecLogo from "../../assets/hshec_logo.jpeg";
 import {
   ResponsiveContainer,
   RadarChart,
@@ -255,90 +257,76 @@ function CollegeDashboard() {
   };
 
   const menuItems = [
-    {
-      title: "Dashboard",
-      icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6",
-    },
-    {
-      title: "Forms",
-      icon: "M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",
-    },
-    {
-      title: "My Submissions",
-      icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4",
-    }
+    { title: "Dashboard", icon: LayoutDashboard },
+    { title: "Forms", icon: FileText },
+    { title: "My Submissions", icon: CheckSquare },
   ];
 
   return (
     <div className={styles.dashboardLayout}>
-      <aside className={styles.sidebar}>
-        <div
-          className={styles.sidebarLogo}
-          onClick={() => {
-            setActiveMenu("Dashboard");
-            if (formId) {
-              navigate(`/institution/${instName}/${instAishe}/dashboard`);
-            }
-          }}
-          style={{ cursor: "pointer" }}
-        >
-          <svg
-            className={styles.logoIcon}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M12 14l9-5-9-5-9 5 9 5z" />
-            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A8.995 8.995 0 0112 21a8.995 8.995 0 01-6.825-4.943 12.083 12.083 0 01.665-6.479L12 14z" />
-            <path d="M12 14v7" />
-          </svg>
-          <div className={styles.logoText}>
-            <h1>HSHEC</h1>
-            <span>Principal Portal</span>
+      <aside className="peer fixed inset-y-0 left-0 w-20 hover:w-64 bg-white text-slate-800 flex flex-col z-20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-r border-slate-100 transition-all duration-300 ease-in-out group overflow-hidden">
+        {/* Brand Header */}
+        <div className="h-16 flex items-center px-4 border-b border-slate-100 bg-slate-50/30">
+          <div className="flex items-center space-x-3 w-full">
+            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200/60 flex items-center justify-center shadow-sm shrink-0 overflow-hidden p-1 transition-transform duration-300 group-hover:scale-105">
+              <img src={hshecLogo} alt="HSHEC Logo" className="w-full h-full object-contain" />
+            </div>
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap min-w-0">
+              <h1 className="text-xs font-bold tracking-tight text-slate-800 leading-none">HSHEC</h1>
+              <span className="text-[9px] text-blue-600 font-bold uppercase tracking-wider block mt-0.5">Principal Portal</span>
+            </div>
           </div>
         </div>
 
-        <nav className={styles.sidebarNav}>
-          {menuItems.map((item, index) => (
-            <button
-              key={index}
-              type="button"
-              className={`${styles.navItem} ${activeMenu === item.title ? styles.active : ""}`}
-              onClick={() => {
-                setActiveMenu(item.title);
-                if (formId) {
-                  navigate(`/institution/${instName}/${instAishe}/dashboard`);
-                }
-              }}
-            >
-              <svg
-                className={styles.navIcon}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d={item.icon} />
-              </svg>
-              <span>{item.title}</span>
-            </button>
-          ))}
+        {/* Nav Menu */}
+        <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1.5">
+          <span className="px-3.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+            Principal Portal
+          </span>
+          <ul className="space-y-1">
+            {menuItems.map((item, index) => {
+              const Icon = item.icon;
+              const isActive = activeMenu === item.title;
+              return (
+                <li key={index}>
+                  <button
+                    type="button"
+                    className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-300 text-sm font-medium relative group/item ${isActive
+                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 font-semibold'
+                        : 'text-slate-600 hover:bg-blue-50/50 hover:text-blue-600'
+                      }`}
+                    onClick={() => {
+                      setActiveMenu(item.title);
+                      if (formId) {
+                        navigate(`/institution/${instName}/${instAishe}/dashboard`);
+                      }
+                    }}
+                  >
+                    <Icon className={`w-5 h-5 shrink-0 transition-transform duration-300 group-hover/item:scale-110 ${isActive ? 'text-white' : 'text-slate-400 group-hover/item:text-blue-600'
+                      }`} />
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                      {item.title}
+                    </span>
+                    {/* Subtle hover/active indicator */}
+                    {isActive && (
+                      <span className="absolute right-3 w-1.5 h-1.5 rounded-full bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    )}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
         </nav>
 
-        <div className={styles.sidebarFooter}>
-          <div className={styles.collegeProfile}>
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0V5a2 2 0 012-2h2a2 2 0 012 2v16" />
-            </svg>
-            <div>
-              <h4>{collegeName}</h4>
-              <span>AISHE: {aisheCode}</span>
+        {/* Institution Profile Footer */}
+        <div className="p-4 border-t border-slate-100 bg-slate-50/40 backdrop-blur-md">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-100 to-indigo-50 border border-blue-200/50 flex items-center justify-center text-blue-600 font-bold shadow-sm shrink-0">
+              <School className="w-5 h-5 text-blue-600" />
+            </div>
+            <div className="min-w-0 flex-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+              <p className="text-xs font-semibold text-slate-800 truncate" title={collegeName}>{collegeName}</p>
+              <p className="text-[10px] text-blue-600 font-semibold truncate">AISHE: {aisheCode}</p>
             </div>
           </div>
         </div>
