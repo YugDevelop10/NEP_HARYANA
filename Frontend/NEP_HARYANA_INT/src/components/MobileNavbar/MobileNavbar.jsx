@@ -1,8 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import hshecLogo from "../../assets/hshec_logo.jpeg";
 import { getDashboardPathForUser } from "../../api/auth";
 import { useAuth } from "../../context/AuthContext.jsx";
+import { Search, LogIn, Menu, X, ArrowRight, Sun, Moon, Type, Shield, Award, MapPin } from "lucide-react";
 import styles from "./MobileNavbar.module.css";
 
 function MobileNavbar() {
@@ -79,7 +80,7 @@ function MobileNavbar() {
 
       const element = document.getElementById(elementId);
       if (element) {
-        const offset = 80; // Mobile navbar height offset (smaller than desktop)
+        const offset = 80;
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - offset;
 
@@ -94,8 +95,7 @@ function MobileNavbar() {
           if (el) {
             const offset = 80;
             const elementPosition = el.getBoundingClientRect().top;
-            const offsetPosition =
-              elementPosition + window.pageYOffset - offset;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
             window.scrollTo({
               top: offsetPosition,
               behavior: "smooth",
@@ -113,7 +113,7 @@ function MobileNavbar() {
         id="govt-mobile-navbar"
       >
         <div className={styles.headerContainer}>
-          {/* Brand/Logo group */}
+          {/* Brand Logo group */}
           <div className={styles.brandGroup} onClick={() => navigate("/")}>
             <div className={styles.logoWrapper}>
               <img
@@ -122,9 +122,9 @@ function MobileNavbar() {
                 className={styles.logoImg}
               />
             </div>
-            <div className={styles.brandText}>
-              <span className={styles.brandSub}>GOVT. OF HARYANA</span>
-              <span className={styles.brandTitle}>HSHEC Portal</span>
+            <div className={styles.brandInfo}>
+              <h1 className={styles.brandTitle}>HSHEC</h1>
+              <span className={styles.brandSubtitle}>State Higher Education Council</span>
             </div>
           </div>
 
@@ -133,27 +133,18 @@ function MobileNavbar() {
             <button
               className={styles.quickSignInBtn}
               onClick={handleSignInClick}
-              aria-label={savedUser ? "Go to Dashboard" : "Sign In"}
+              aria-label={savedUser ? "Dashboard" : "Sign In"}
             >
-              <svg
-                className={styles.icon}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
+              <span>{savedUser ? "Dashboard" : "Sign In"}</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
+            
             <button
               className={`${styles.hamburger} ${isDrawerOpen ? styles.hamburgerOpen : ""}`}
               onClick={() => setIsDrawerOpen(!isDrawerOpen)}
-              aria-label="Toggle navigation menu"
+              aria-label="Menu"
             >
-              <span></span>
-              <span></span>
-              <span></span>
+              {isDrawerOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -175,71 +166,59 @@ function MobileNavbar() {
       >
         <div className={styles.drawerHeader}>
           <div className={styles.drawerStateIndicator}>
-            <span className={styles.flagStub}></span>
+            <span className={styles.flagStub} />
             <span>Government of Haryana</span>
           </div>
           <button
             className={styles.closeBtn}
             onClick={() => setIsDrawerOpen(false)}
-            aria-label="Close menu"
+            aria-label="Close"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
+            <X className="w-5 h-5 text-slate-500" />
           </button>
         </div>
 
         <div className={styles.drawerContent}>
           {/* Search bar inside drawer */}
           <div className={styles.searchWrapper}>
-            <svg
-              className={styles.searchIcon}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
+            <Search className="w-4 h-4 text-slate-400" />
             <input
               type="text"
               className={styles.searchInput}
               placeholder="Search portal..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              aria-label="Search portal"
+              aria-label="Search"
             />
           </div>
 
           {/* Navigation Links */}
           <nav className={styles.navContainer}>
             <ul className={styles.navList}>
-              {navItems.map((item) => (
-                <li key={item} className={styles.navItem}>
-                  <a
-                    href={
-                      item === "HOME"
-                        ? "/"
-                        : item === "DASHBOARD"
-                          ? (savedUser ? getDashboardPathForUser(savedUser) : "/auth/login")
-                          : `#${item.toLowerCase()}`
-                    }
-                    className={`${styles.navLink} ${activeNav === item ? styles.navActive : ""}`}
-                    onClick={(e) => handleNavClick(e, item)}
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
+              {navItems.map((item) => {
+                const displayLabel = item === "HOME" ? "Home" : item === "ABOUT" ? "About" : item === "SCHEMES" ? "Schemes" : item === "COLLEGES" ? "Colleges" : item === "NOTICES" ? "Notices" : item === "DASHBOARD" ? "Dashboard" : "Contact";
+                return (
+                  <li key={item} className={styles.navItem}>
+                    <a
+                      href="#"
+                      className={`${styles.navLink} ${activeNav === item ? styles.navActive : ""}`}
+                      onClick={(e) => handleNavClick(e, item)}
+                    >
+                      {displayLabel}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
           {/* Accessibility Settings */}
           <div className={styles.accessibilityGroup}>
             <div className={styles.fontSizeSelector}>
-              <span className={styles.controlLabel}>Text Size</span>
+              <div className={styles.controlHeader}>
+                <Type className="w-4 h-4 text-slate-400" />
+                <span className={styles.controlLabel}>Text Size</span>
+              </div>
               <div className={styles.btnGroup}>
                 <button onClick={() => handleFontSize("decrease")}>A-</button>
                 <button onClick={() => handleFontSize("reset")}>A</button>
@@ -248,7 +227,10 @@ function MobileNavbar() {
             </div>
 
             <div className={styles.contrastSelector}>
-              <span className={styles.controlLabel}>Contrast</span>
+              <div className={styles.controlHeader}>
+                {highContrast ? <Sun className="w-4 h-4 text-slate-400" /> : <Moon className="w-4 h-4 text-slate-400" />}
+                <span className={styles.controlLabel}>Contrast Mode</span>
+              </div>
               <button
                 className={`${styles.contrastBtn} ${highContrast ? styles.active : ""}`}
                 onClick={toggleContrast}
@@ -265,7 +247,8 @@ function MobileNavbar() {
             className={styles.primaryActionBtn}
             onClick={handleSignInClick}
           >
-            {savedUser ? "Go to Dashboard" : "Sign In to Portal"}
+            <span>{savedUser ? "Go to Dashboard" : "Sign In to Portal"}</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>

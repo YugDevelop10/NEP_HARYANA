@@ -1,58 +1,119 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRight, Shield, Award, GraduationCap, CheckCircle } from 'lucide-react';
 import styles from './MobileHeroSection.module.css';
-import heroBg from '../../assets/hero-bg.png';
 
 function MobileHeroSection() {
   return (
-    <section className={styles.hero} id="mobile-hero-section">
-      {/* Background image layer with mobile specific scaling */}
-      <div
-        className={styles.bgImage}
-        style={{ backgroundImage: `url(${heroBg})` }}
-        aria-hidden="true"
-      />
-      {/* Gradient overlay optimized for mobile text readability */}
-      <div className={styles.overlay} aria-hidden="true" />
+    <section className={styles.heroSection} id="mobile-hero-section">
+      {/* Decorative background glows */}
+      <div className={styles.glowLeft} aria-hidden="true" />
+      <div className={styles.glowRight} aria-hidden="true" />
 
-      {/* Content */}
       <div className={styles.container}>
         <div className={styles.content}>
-          {/* Badge */}
-          <span className={styles.badge} id="nep-badge-mobile">
-            <span className={styles.badgeDot}>●</span>
-            NEP 2020 PORTAL
-          </span>
+          {/* Pulsing Badge */}
+          <div className={styles.badge}>
+            <span className={styles.badgePulse} />
+            <span className={styles.badgeText}>NEP 2020 Excellence Framework</span>
+          </div>
 
-          {/* Headline */}
-          <h2 className={styles.headline}>
-            Building a Future <span className={styles.highlight}>Ready</span> Higher Education in Haryana
-          </h2>
+          {/* Title */}
+          <h1 className={styles.title}>
+            Steering <span className={styles.gradientText}>Academic Quality</span> & Governance in Haryana
+          </h1>
 
           {/* Description */}
           <p className={styles.description}>
-            The Haryana State Higher Education Council (HSHEC) is steering policy, accreditation and academic excellence across all institutions of higher learning in the State.
+            The Haryana State Higher Education Council (HSHEC) centralizes evaluation and benchmarking metrics to empower state institutions.
           </p>
 
-          {/* CTA Buttons */}
-          <div className={styles.ctas}>
-            <a href="#schemes" className={styles.ctaPrimary} id="btn-explore-schemes-mobile">
-              Explore Schemes
-              <svg
-                className={styles.ctaArrow}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
+          {/* Action CTAs */}
+          <div className={styles.actionRow}>
+            <a href="#schemes" className={styles.btnPrimary}>
+              <span>Explore Schemes</span>
+              <ArrowRight className="w-4 h-4" />
             </a>
-            <Link to="/auth/signup" className={styles.ctaSecondary} id="btn-college-login-mobile">
-              College Login
+            <Link to="/auth/login" className={styles.btnSecondary}>
+              <span>Portal Login</span>
             </Link>
+          </div>
+
+          {/* Trust stats summary */}
+          <div className={styles.trustStrip}>
+            <div className={styles.trustItem}>
+              <Shield className="w-4 h-4 text-blue-600" />
+              <span>Statutory Authority</span>
+            </div>
+            <div className={styles.trustItem}>
+              <Award className="w-4 h-4 text-amber-500" />
+              <span>Digital Evaluation</span>
+            </div>
+          </div>
+
+          {/* Dashboard Mockup Card for Mobile (Clean and stacked) */}
+          <div className={styles.mockupWrapper}>
+            <div className={styles.mockupCard}>
+              {/* Mockup Header */}
+              <div className={styles.mockupHeader}>
+                <div className={styles.mockupWindowControls}>
+                  <span className={styles.winDotRed} />
+                  <span className={styles.winDotYellow} />
+                  <span className={styles.winDotGreen} />
+                </div>
+                <span className={styles.mockupUrl}>hshec.gov.in/portal</span>
+              </div>
+
+              {/* Mockup Content Panel */}
+              <div className={styles.mockupBody}>
+                {/* Dashboard top stats */}
+                <div className={styles.mockupTopRow}>
+                  <div className={styles.mockupMiniCard}>
+                    <span>TOTAL COLLEGES</span>
+                    <h3>184</h3>
+                  </div>
+                  <div className={styles.mockupMiniCard}>
+                    <span>EVALUATED</span>
+                    <h3 className={styles.textBlue}>142</h3>
+                  </div>
+                </div>
+
+                {/* Institution List simulation */}
+                <div className={styles.mockupList}>
+                  <div className={styles.mockupListItem}>
+                    <div className={styles.mockupListLeft}>
+                      <div className={styles.mockupListIconWrapper}>
+                        <GraduationCap className="w-3.5 h-3.5 text-blue-600" />
+                      </div>
+                      <div className={styles.mockupListText}>
+                        <h4>Govt College, Panchkula</h4>
+                        <span>AISHE: C-12345</span>
+                      </div>
+                    </div>
+                    <span className={`${styles.mockupBadge} ${styles.badgePlatinum}`}>Platinum</span>
+                  </div>
+
+                  <div className={styles.mockupListItem}>
+                    <div className={styles.mockupListLeft}>
+                      <div className={styles.mockupListIconWrapper}>
+                        <GraduationCap className="w-3.5 h-3.5 text-blue-600" />
+                      </div>
+                      <div className={styles.mockupListText}>
+                        <h4>GCW, Sec 14, Gurugram</h4>
+                        <span>AISHE: C-98765</span>
+                      </div>
+                    </div>
+                    <span className={`${styles.mockupBadge} ${styles.badgeGold}`}>Gold</span>
+                  </div>
+                </div>
+
+                {/* Submission status snippet */}
+                <div className={styles.mockupStatusFooter}>
+                  <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>Real-time score audit active (V2)</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
