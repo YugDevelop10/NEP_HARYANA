@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
+import NavbarV2 from "./components/NavbarV2/NavbarV2";
 import MobileNavbar from "./components/MobileNavbar/MobileNavbar";
 import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
@@ -35,7 +36,11 @@ function App() {
 
   return (
     <AuthProvider>
-      {!isDashboard && (isMobile ? <MobileNavbar /> : <Navbar />)}
+      {!isDashboard && (
+        location.pathname === "/v1"
+          ? (isMobile ? <MobileNavbar /> : <Navbar />)
+          : (isMobile ? <MobileNavbar /> : <NavbarV2 />)
+      )}
       <Routes>
         <Route path="/" element={<HomeV2 />} />
         <Route path="/v1" element={<Home />} />
