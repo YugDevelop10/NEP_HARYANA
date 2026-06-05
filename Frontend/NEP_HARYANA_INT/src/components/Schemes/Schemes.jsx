@@ -1,211 +1,216 @@
-import { useEffect, useRef, useCallback } from 'react';
-import styles from './Schemes.module.css';
-import { Award } from 'lucide-react';
+import { useState } from "react";
+import { Award, BookOpen, FileText, CheckCircle2, ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import styles from "./Schemes.module.css";
 
-// SVG Icons
-const IconLotus = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{color: 'var(--schemes-orange)'}} width="100%" height="100%">
-    <path d="M12 22c-4-4-6-8-6-12a6 6 0 0 1 12 0c0 4-2 8-6 12z" />
-    <path d="M12 10a4 4 0 0 0-4-4" />
-    <path d="M12 10a4 4 0 0 1 4-4" />
-    <path d="M12 2v2" />
-  </svg>
-);
-
-const IconGraduation = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{color: 'var(--schemes-navy)'}} width="100%" height="100%">
-    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-    <path d="M6 12v5c3 3 9 3 12 0v-5" />
-  </svg>
-);
-
-const IconTrophy = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{color: 'var(--schemes-gold)'}} width="100%" height="100%">
-    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-    <path d="M4 22h16" />
-    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 19.24 7 20v2" />
-    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 19.24 17 20v2" />
-    <path d="M18 2H6v7a6 6 0 0 0 12 0V2z" />
-  </svg>
-);
-
-// Intersection Observer Hook for animations
-function useScrollRevealMany(selector, staggerMs = 100) {
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const targets = container.querySelectorAll(selector);
-
-    if (prefersReduced) {
-      targets.forEach((el) => el.setAttribute('data-visible', ''));
-      return;
-    }
-
-    let revealIndex = 0;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const delay = revealIndex * staggerMs;
-            setTimeout(() => {
-              entry.target.setAttribute('data-visible', '');
-            }, delay);
-            revealIndex++;
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-    );
-
-    targets.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [selector, staggerMs]);
-
-  return containerRef;
-}
+const schemesData = [
+  {
+    id: "sanskriti",
+    badge: "Government of Haryana",
+    title: "NEP Scheme of Haryana",
+    shortDesc: "Promotes exceptional adherence to cultural values, academic discipline, and holistic institutional development.",
+    longDesc: "The NEP Scheme of Haryana is a flagship framework designed by the Department of Higher Education, Haryana. It recognizes colleges that actively foster an environment combining rigorous academic instruction with cultural heritage, community engagement, and character-building outcomes.",
+    status: "Accepting Submissions",
+    statusType: "active",
+    indicators: [
+      "Academic Discipline & Regularity",
+      "Promotion of Regional Heritage & Arts",
+      "Community Outreach & Extension Services",
+      "Holistic Character-Building Outcomes"
+    ],
+    ctaText: "Apply Online",
+    pdfLink: "#"
+  },
+  {
+    id: "nep",
+    badge: "National Education Policy",
+    title: "NEP 2020 Implementation Excellence Award",
+    shortDesc: "Evaluates credit systems, innovation hubs, internships, and multidisciplinary reforms.",
+    longDesc: "This scheme measures progress against the key directives of NEP 2020. Institutions are evaluated on their operationalization of the Academic Bank of Credits (ABC), local industry internships, multi-disciplinary course options, and local research innovation hubs.",
+    status: "Accepting Submissions",
+    statusType: "active",
+    indicators: [
+      "Academic Bank of Credits (ABC) Adoption",
+      "Research & Innovation Hub Setup",
+      "Student Internship & Apprenticeship Schemes",
+      "Multidisciplinary Curriculum Pathways"
+    ],
+    ctaText: "Apply Online",
+    pdfLink: "#"
+  },
+  {
+    id: "ranking",
+    badge: "HSHEC Evaluation",
+    title: "Institutional Performance Ranking",
+    shortDesc: "Classifies colleges into Platinum, Gold, and Silver tiers based on aggregate scoring.",
+    longDesc: "Under the Institutional Performance Ranking, all colleges in Haryana are evaluated across a unified grid of academic, infrastructure, and administrative metrics. The final score automatically assigns the institution to an excellence band.",
+    status: "Evaluation in Progress",
+    statusType: "pending",
+    indicators: [
+      "AISHE Verified Infrastructure Metrics",
+      "Faculty Strength & Qualification Ratios",
+      "Student Placement & Progress Rates",
+      "Administrative Transparency & Audits"
+    ],
+    ctaText: "View Criteria",
+    pdfLink: "#"
+  }
+];
 
 function Schemes() {
-  const containerRef = useScrollRevealMany('[data-reveal]');
+  const [activeTab, setActiveTab] = useState(schemesData[0].id);
+
+  const activeScheme = schemesData.find((s) => s.id === activeTab);
 
   return (
-    <section className={styles.section} id="schemes" ref={containerRef}>
+    <section className={styles.section} id="schemes">
       <div className={styles.container}>
-        
-        {/* Section Header */}
-        <div className={styles.header}>
-          <span className={styles.badge}>● ACTIVE SCHEMES</span>
-          <h2 className={styles.title}>Schemes Driving Excellence in Higher Education</h2>
-          <p className={styles.subtitle}>
-            Haryana's colleges are evaluated and rewarded under structured government schemes aligned with NEP 2020 goals.
+        {/* ===== Section Header ===== */}
+        <div className={styles.sectionHeader}>
+          <span className={styles.sectionBadge}>
+            <span className={styles.badgeDot}></span> EVALUATION SCHEMES
+          </span>
+          <h2 className={styles.sectionTitle}>
+            Evaluation Frameworks Driving Quality & Innovation
+          </h2>
+          <p className={styles.sectionSubtitle}>
+            Our structured schemes enable transparent benchmarking, resource allocation, and excellence recognition for higher education institutions in Haryana.
           </p>
         </div>
 
-        {/* Cards Grid */}
-        <div className={styles.grid}>
-          
-          {/* Card 1 — Model Sanskriti Scheme */}
-          <div className={`${styles.card} ${styles.cardFeatured}`} data-reveal>
-            <div className={styles.cardIcon}>
-              <IconLotus />
-            </div>
-            <div className={styles.cardContent}>
-              <span className={styles.cardBadge}>Government of Haryana</span>
-              <h3 className={styles.cardTitle}>Model Sanskriti Scheme</h3>
-              <p className={styles.cardDesc}>
-                An initiative to recognize and promote colleges that demonstrate exceptional adherence to cultural values, academic discipline, and holistic institutional development.
-              </p>
-              <div className={styles.tags}>
-                <span className={styles.tag}>Academic Excellence</span>
-                <span className={styles.tag}>Institutional Culture</span>
-                <span className={styles.tag}>Student Outcomes</span>
-              </div>
-              <div className={styles.cardFooter}>
-                <a href="#" className={`${styles.ctaBtn} ${styles.ctaBtnOrange}`}>
-                  Explore Scheme →
-                </a>
-                <span className={styles.statusPill}>
-                  <span className={styles.statusDot}>🟢</span> Accepting Submissions
-                </span>
-              </div>
-            </div>
+        {/* ===== Main Interactive Panel ===== */}
+        <div className={styles.interactivePanel}>
+          {/* Left Side: Scheme Selector List */}
+          <div className={styles.schemeSelector}>
+            {schemesData.map((scheme) => {
+              const isSelected = scheme.id === activeTab;
+              return (
+                <button
+                  key={scheme.id}
+                  onClick={() => setActiveTab(scheme.id)}
+                  className={`${styles.selectorButton} ${isSelected ? styles.selectorButtonActive : ""
+                    }`}
+                >
+                  <div className={styles.selectorMeta}>
+                    <span className={styles.selectorBadge}>{scheme.badge}</span>
+                    <span
+                      className={`${styles.statusLabel} ${scheme.statusType === "active"
+                        ? styles.statusActive
+                        : styles.statusPending
+                        }`}
+                    >
+                      {scheme.status}
+                    </span>
+                  </div>
+                  <h3 className={styles.selectorTitle}>{scheme.title}</h3>
+                  <p className={styles.selectorDesc}>{scheme.shortDesc}</p>
+                  <ChevronRight className={styles.selectorCaret} />
+                </button>
+              );
+            })}
           </div>
 
-          {/* Card 2 — NEP 2020 Implementation Excellence Award */}
-          <div className={`${styles.card} ${styles.cardRegularNavy}`} data-reveal>
-            <div className={styles.cardIcon}>
-              <IconGraduation />
-            </div>
-            <div className={styles.cardContent}>
-              <span className={styles.cardBadge}>National Education Policy</span>
-              <h3 className={styles.cardTitle}>NEP 2020 Implementation Excellence Award</h3>
-              <p className={styles.cardDesc}>
-                Colleges are assessed on NEP-related indicators including internships, research cells, innovation hubs, academic reforms, credit systems, and multidisciplinary programs.
-              </p>
-              <div className={styles.tags}>
-                <span className={styles.tag}>Research & Innovation</span>
-                <span className={styles.tag}>Internships</span>
-                <span className={styles.tag}>Academic Reforms</span>
-              </div>
-              <div className={styles.cardFooter}>
-                <a href="#" className={`${styles.ctaBtn} ${styles.ctaBtnNavy}`}>
-                  Explore Scheme →
-                </a>
-                <span className={styles.statusPill}>
-                  <span className={styles.statusDot}>🟢</span> Accepting Submissions
-                </span>
-              </div>
-            </div>
-          </div>
+          {/* Right Side: Featured Scheme Details */}
+          <div className={styles.detailsPanel}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeScheme.id}
+                initial={{ opacity: 0, x: 15 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -15 }}
+                transition={{ duration: 0.3 }}
+                className={styles.detailsContent}
+              >
+                <div className={styles.detailsHeader}>
+                  <span className={styles.detailBadge}>{activeScheme.badge}</span>
+                  <h3 className={styles.detailTitle}>{activeScheme.title}</h3>
+                </div>
 
-          {/* Card 3 — Institutional Performance Ranking */}
-          <div className={`${styles.card} ${styles.cardRegularGold}`} data-reveal>
-            <div className={styles.cardIcon}>
-              <IconTrophy />
-            </div>
-            <div className={styles.cardContent}>
-              <span className={styles.cardBadge}>HSHEC Evaluation</span>
-              <h3 className={styles.cardTitle}>Institutional Performance Ranking</h3>
-              <p className={styles.cardDesc}>
-                Institutions are automatically ranked as Platinum, Gold, or Silver based on their total score across all submitted indicators — enabling transparent benchmarking.
-              </p>
-              <div className={styles.tags}>
-                <span className={styles.tag}>Platinum</span>
-                <span className={styles.tag}>Gold</span>
-                <span className={styles.tag}>Silver</span>
-              </div>
-              <div className={styles.cardFooter}>
-                <a href="#" className={`${styles.ctaBtn} ${styles.ctaBtnGold}`}>
-                  View Criteria →
-                </a>
-                <span className={styles.statusPill}>
-                  <span className={styles.statusDot}>🟡</span> Evaluation in Progress
-                </span>
-              </div>
-            </div>
-          </div>
+                <p className={styles.detailDesc}>{activeScheme.longDesc}</p>
 
-        </div>
+                <div className={styles.indicatorsSection}>
+                  <h4 className={styles.indicatorsHeading}>
+                    Core Evaluation Indicators
+                  </h4>
+                  <div className={styles.indicatorsGrid}>
+                    {activeScheme.indicators.map((ind, i) => (
+                      <div key={i} className={styles.indicatorItem}>
+                        <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+                        <span>{ind}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
-        {/* Evaluation Tier Visual */}
-        <div className={styles.tiersContainer} data-reveal>
-          <div className={styles.tier}>
-            <div className={`${styles.tierIconWrapper} ${styles.platinumIcon}`}>
-              <Award className={styles.tierIconSvg} />
-            </div>
-            <h4 className={styles.tierTitle}>Platinum</h4>
-            <p className={styles.tierDesc}>
-              Highest Score Band<br/>
-              Top institutional benchmark
-            </p>
-          </div>
-          <div className={styles.tier}>
-            <div className={`${styles.tierIconWrapper} ${styles.goldIcon}`}>
-              <Award className={styles.tierIconSvg} />
-            </div>
-            <h4 className={styles.tierTitle}>Gold</h4>
-            <p className={styles.tierDesc}>
-              Mid-Level Performance<br/>
-              Consistent quality
-            </p>
-          </div>
-          <div className={styles.tier}>
-            <div className={`${styles.tierIconWrapper} ${styles.silverIcon}`}>
-              <Award className={styles.tierIconSvg} />
-            </div>
-            <h4 className={styles.tierTitle}>Silver</h4>
-            <p className={styles.tierDesc}>
-              Entry-Level Recognition<br/>
-              Active participation
-            </p>
+                <div className={styles.detailsActions}>
+                  <button className={styles.btnApply}>
+                    {activeScheme.ctaText} →
+                  </button>
+                  <button className={styles.btnDownload}>
+                    <FileText className="w-4 h-4" /> Download Guidelines (PDF)
+                  </button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
 
+        {/* ===== Bottom Section: Excellence Tiers Visual ===== */}
+        <div className={styles.tiersWrapper}>
+          <div className={styles.tiersHeader}>
+            <h3 className={styles.tiersHeading}>Accreditation Excellence Tiers</h3>
+            <p className={styles.tiersSubtitle}>
+              Colleges are classified into three levels based on verified scorecard audits
+            </p>
+          </div>
+
+          <div className={styles.tiersGrid}>
+            <div className={`${styles.tierCard} ${styles.tierPlatinum}`}>
+              <div className={styles.tierIconBox}>
+                <Award className="w-6 h-6" />
+              </div>
+              <h4 className={styles.tierName}>Platinum Tier</h4>
+              <p className={styles.tierLimit}>Score Band: 85% and above</p>
+              <p className={styles.tierDescription}>
+                Exceptional quality governance, exemplary infrastructure, and optimal NEP indicator execution.
+              </p>
+            </div>
+
+            <div className={`${styles.tierCard} ${styles.tierGold}`}>
+              <div className={styles.tierIconBox}>
+                <Award className="w-6 h-6" />
+              </div>
+              <h4 className={styles.tierName}>Gold Tier</h4>
+              <p className={styles.tierLimit}>Score Band: 65% – 84%</p>
+              <p className={styles.tierDescription}>
+                Satisfactory compliance with academic guidelines and active implementation of digital processes.
+              </p>
+            </div>
+
+            <div className={`${styles.tierCard} ${styles.tierSilver}`}>
+              <div className={styles.tierIconBox}>
+                <Award className="w-6 h-6" />
+              </div>
+              <h4 className={styles.tierName}>Silver Tier</h4>
+              <p className={styles.tierLimit}>Score Band: 50% – 64%</p>
+              <p className={styles.tierDescription}>
+                Adherence to basic regulatory standards with roadmap setup for quality benchmarking.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* ===== Bottom Call To Action ===== */}
+        <div className={styles.ctaStrip}>
+          <h3 className={styles.ctaTitle}>Ready to begin your institution's audit?</h3>
+          <p className={styles.ctaText}>
+            Ensure all records are compiled and self-assessment forms are completed before portal submissions.
+          </p>
+          <div className={styles.ctaButtons}>
+            <button className={styles.ctaBtnFilled}>Portal Login</button>
+            <button className={styles.ctaBtnOutlined}>Help Desk Support</button>
+          </div>
+        </div>
       </div>
     </section>
   );

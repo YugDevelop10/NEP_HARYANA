@@ -1,493 +1,502 @@
-/* ============================================
-   Schemes Section — CSS Module
-   ============================================ */
-
-/* ---------- Design Tokens ---------- */
-:root {
-  --schemes-navy: #0a1628;
-  --schemes-orange: #f97316;
-  --schemes-gold: #d97706;
-  --schemes-white: #ffffff;
-  --schemes-bg: #fafaf8;
-  --schemes-text-main: #0d1b2a;
-  --schemes-text-muted: #5a6e82;
-  --schemes-font-serif: 'Playfair Display', 'Georgia', serif;
-  --schemes-font-sans: 'DM Sans', 'Inter', system-ui, sans-serif;
-}
-
 .section {
-  background: var(--schemes-bg);
-  padding: 90px 0;
+  background-color: #ffffff;
+  padding: 5.5rem 0;
+  border-top: 1px solid #ebdcd0;
   position: relative;
-  overflow: hidden;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1.5rem;
 }
 
-/* ---------- Section Header ---------- */
-.header {
+/* ===== Section Header ===== */
+.sectionHeader {
   text-align: center;
-  margin-bottom: 60px;
+  max-width: 800px;
+  margin: 0 auto 4rem auto;
 }
 
-.badge {
-  display: inline-block;
-  background: rgba(249, 115, 22, 0.1);
-  color: var(--schemes-orange);
-  font-family: var(--schemes-font-sans);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  padding: 6px 14px;
-  border-radius: 50px;
-  margin-bottom: 16px;
-}
-
-.title {
-  font-family: var(--schemes-font-serif);
-  font-size: clamp(2rem, 4vw, 2.8rem);
-  font-weight: 700;
-  color: var(--schemes-text-main);
-  margin: 0 0 16px 0;
-  line-height: 1.2;
-}
-
-.subtitle {
-  font-family: var(--schemes-font-sans);
-  font-size: 1.05rem;
-  color: var(--schemes-text-muted);
-  max-width: 700px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
-/* ---------- Cards Grid ---------- */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
-  margin-bottom: 60px;
-}
-
-/* ---------- Individual Card ---------- */
-.card {
-  background: var(--schemes-white);
-  border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.6s ease;
-  border-left: 4px solid var(--card-accent);
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.card[data-visible] {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
-}
-
-.cardFeatured {
-  grid-column: 1 / -1;
-  --card-accent: var(--schemes-orange);
-  flex-direction: row;
-  align-items: center;
-  gap: 40px;
-}
-
-.cardRegularNavy {
-  --card-accent: var(--schemes-navy);
-}
-
-.cardRegularGold {
-  --card-accent: var(--schemes-gold);
-}
-
-.cardIcon {
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-bottom: 24px;
-}
-
-.cardFeatured .cardIcon {
-  margin-bottom: 0;
-  width: 80px;
-  height: 80px;
-}
-
-.cardContent {
-  flex: 1;
-}
-
-.cardBadge {
-  font-family: var(--schemes-font-sans);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--schemes-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 8px;
-  display: block;
-}
-
-.cardTitle {
-  font-family: var(--schemes-font-serif);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--schemes-text-main);
-  margin: 0 0 16px 0;
-  line-height: 1.3;
-}
-
-.cardFeatured .cardTitle {
-  font-size: 1.8rem;
-}
-
-.cardDesc {
-  font-family: var(--schemes-font-sans);
-  font-size: 0.95rem;
-  color: var(--schemes-text-muted);
-  line-height: 1.6;
-  margin: 0 0 24px 0;
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 30px;
-}
-
-.tag {
-  background: #f1f5f9;
-  color: var(--schemes-text-main);
-  padding: 4px 12px;
-  border-radius: 50px;
-  font-family: var(--schemes-font-sans);
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-.cardFeatured .tag {
-  background: rgba(249, 115, 22, 0.08);
-  color: var(--schemes-orange);
-}
-
-.cardRegularNavy .tag {
-  background: rgba(10, 22, 40, 0.06);
-  color: var(--schemes-navy);
-}
-
-.cardRegularGold .tag {
-  background: rgba(217, 119, 6, 0.08);
-  color: var(--schemes-gold);
-}
-
-.cardFooter {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: auto;
-}
-
-.ctaBtn {
-  font-family: var(--schemes-font-sans);
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 8px 20px;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.ctaBtnOrange {
-  color: var(--schemes-orange);
-  border: 1px solid var(--schemes-orange);
-}
-
-.ctaBtnOrange:hover {
-  background: var(--schemes-orange);
-  color: var(--schemes-white);
-}
-
-.ctaBtnNavy {
-  color: var(--schemes-navy);
-  border: 1px solid var(--schemes-navy);
-}
-
-.ctaBtnNavy:hover {
-  background: var(--schemes-navy);
-  color: var(--schemes-white);
-}
-
-.ctaBtnGold {
-  color: var(--schemes-gold);
-  border: 1px solid var(--schemes-gold);
-}
-
-.ctaBtnGold:hover {
-  background: var(--schemes-gold);
-  color: var(--schemes-white);
-}
-
-.statusPill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--schemes-font-sans);
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--schemes-text-muted);
-}
-
-.statusDot {
-  font-size: 10px;
-}
-
-/* ---------- Tiers Visual ---------- */
-.tiersContainer {
-  background: #f1f5f9;
-  border-radius: 12px;
-  padding: 40px;
-  display: flex;
-  gap: 30px;
-  justify-content: space-between;
-  margin-bottom: 60px;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.tiersContainer[data-visible] {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.tier {
-  flex: 1;
-  text-align: center;
-  position: relative;
-}
-
-.tier:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  right: -15px;
-  top: 10%;
-  height: 80%;
-  width: 1px;
-  background: rgba(0, 0, 0, 0.08);
-}
-
-.tierIcon {
-  font-size: 2rem;
-  margin-bottom: 12px;
-  display: inline-block;
-}
-
-.tierTitle {
-  font-family: var(--schemes-font-sans);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--schemes-text-main);
-  margin: 0 0 6px 0;
-}
-
-.tierDesc {
-  font-family: var(--schemes-font-sans);
-  font-size: 0.85rem;
-  color: var(--schemes-text-muted);
-  margin: 0;
-  line-height: 1.5;
-}
-
-/* ---------- Bottom CTA Strip ---------- */
-.bottomCta {
-  background: var(--schemes-navy);
-  margin: 0 -2rem -90px -2rem; /* Extend to section edges */
-  padding: 60px 2rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-}
-
-.bottomCtaTitle {
-  font-family: var(--schemes-font-serif);
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: var(--schemes-white);
-  margin: 0;
-}
-
-.bottomCtaButtons {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.btnFilled {
-  background: var(--schemes-orange);
-  color: var(--schemes-white);
-  font-family: var(--schemes-font-sans);
-  font-size: 0.95rem;
-  font-weight: 600;
-  padding: 12px 28px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.sectionBadge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  background-color: rgba(96, 11, 11, 0.06);
+  color: #600b0b;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  border-radius: 4px;
+  text-transform: uppercase;
 }
 
-.btnFilled:hover {
-  background: #ea670c;
-  transform: translateY(-2px);
-}
-
-.btnOutlined {
-  background: transparent;
-  color: var(--schemes-white);
-  font-family: var(--schemes-font-sans);
-  font-size: 0.95rem;
-  font-weight: 600;
-  padding: 12px 28px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btnOutlined:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: var(--schemes-white);
-  transform: translateY(-2px);
-}
-
-/* ---------- Responsive ---------- */
-@media (max-width: 992px) {
-  .cardFeatured {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-  }
-  
-  .tiersContainer {
-    flex-direction: column;
-    gap: 40px;
-    padding: 30px;
-  }
-  
-  .tier:not(:last-child)::after {
-    right: 10%;
-    top: auto;
-    bottom: -20px;
-    width: 80%;
-    height: 1px;
-  }
-}
-
-@media (max-width: 768px) {
-  .section {
-    padding: 60px 0;
-  }
-  
-  .grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .cardFeatured {
-    grid-column: auto;
-  }
-  
-  .cardFooter {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-  
-  .bottomCta {
-    margin: 0 -2rem -60px -2rem;
-  }
-  
-  .bottomCtaTitle {
-    font-size: 1.5rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .card, .tiersContainer {
-    transition: none;
-    opacity: 1;
-    transform: none;
-  }
-  
-  .card:hover {
-    transform: none;
-  }
-}
-
-.tierIconWrapper {
-  width: 56px;
-  height: 56px;
+.badgeDot {
+  width: 6px;
+  height: 6px;
+  background-color: #600b0b;
   border-radius: 50%;
-  display: inline-flex;
+}
+
+.sectionTitle {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #111111;
+  margin-top: 1rem;
+  line-height: 1.25;
+}
+
+.sectionSubtitle {
+  font-size: 1.02rem;
+  color: #555555;
+  line-height: 1.6;
+  margin-top: 0.8rem;
+}
+
+/* ===== Asymmetrical Interactive Panel ===== */
+.interactivePanel {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  background-color: #fdfaf6; /* Soft warm cream canvas */
+  border: 1px solid #ebdcd0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 4.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+/* Left Side: Tabs Selector */
+.schemeSelector {
+  display: flex;
+  flex-direction: column;
+  background-color: #fcf6ef;
+  border-right: 1px solid #ebdcd0;
+}
+
+.selectorButton {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #ebdcd0;
+  padding: 1.8rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.selectorButton:last-child {
+  border-bottom: none;
+}
+
+.selectorButton:hover {
+  background-color: rgba(96, 11, 11, 0.02);
+}
+
+.selectorButtonActive {
+  background-color: #ffffff !important;
+}
+
+.selectorButtonActive::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: #600b0b;
+}
+
+.selectorMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.selectorBadge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #600b0b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statusLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.statusActive {
+  background-color: #e6f4ea;
+  color: #137333;
+}
+
+.statusPending {
+  background-color: #fef7e0;
+  color: #b06000;
+}
+
+.selectorTitle {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111111;
+  line-height: 1.3;
+}
+
+.selectorDesc {
+  font-size: 0.88rem;
+  color: #555555;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+.selectorCaret {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: #a0aec0;
+  transition: transform 0.2s ease, color 0.2s ease;
+  opacity: 0;
+}
+
+.selectorButtonActive .selectorCaret {
+  opacity: 1;
+  color: #600b0b;
+  transform: translateY(-50%) translateX(4px);
+}
+
+/* Right Side: Details Canvas */
+.detailsPanel {
+  background-color: #ffffff;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.detailsContent {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.detailsHeader {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #ebdcd0;
+  padding-bottom: 1.2rem;
+}
+
+.detailBadge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #666666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.detailTitle {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #111111;
+  margin-top: 4px;
+}
+
+.detailDesc {
+  font-size: 0.98rem;
+  color: #4a5568;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.indicatorsSection {
+  margin-bottom: 2.5rem;
+}
+
+.indicatorsHeading {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #600b0b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+}
+
+.indicatorsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.indicatorItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: #333333;
+  font-weight: 500;
+}
+
+.detailsActions {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.btnApply {
+  background-color: #600b0b;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btnApply:hover {
+  background-color: #4a0707;
+}
+
+.btnDownload {
+  background-color: #ffffff;
+  color: #333333;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.btnDownload:hover {
+  background-color: #f9f9f9;
+}
+
+/* ===== Bottom Section: Excellence Tiers Visual ===== */
+.tiersWrapper {
+  margin-bottom: 5.5rem;
+}
+
+.tiersHeader {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.tiersHeading {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #111111;
+}
+
+.tiersSubtitle {
+  font-size: 0.95rem;
+  color: #555555;
+  margin-top: 4px;
+}
+
+.tiersGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.tierCard {
+  background-color: #fdfaf6;
+  border: 1px solid #ebdcd0;
+  border-radius: 4px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tierCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(96, 11, 11, 0.05);
+}
+
+.tierIconBox {
+  background-color: rgba(96, 11, 11, 0.06);
+  color: #600b0b;
+  border: 1px solid rgba(96, 11, 11, 0.15);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-  transition: transform 0.3s ease;
+  margin-bottom: 1.2rem;
 }
 
-.tier:hover .tierIconWrapper {
-  transform: scale(1.1) rotate(5deg);
+.tierName {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111111;
 }
 
-.tierIconSvg {
-  width: 26px;
-  height: 26px;
+.tierLimit {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #600b0b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 2px 0 10px 0;
 }
 
-/* Platinum Tier Colors */
-.platinumIcon {
-  background: rgba(148, 163, 184, 0.12);
-  color: #64748b;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+.tierDescription {
+  font-size: 0.88rem;
+  color: #555555;
+  line-height: 1.5;
 }
 
-/* Gold Tier Colors */
-.goldIcon {
-  background: rgba(245, 158, 11, 0.12);
-  color: #d97706;
-  border: 1px solid rgba(245, 158, 11, 0.2);
+/* Specific Accent Tiers (optional tweaks) */
+.tierPlatinum {
+  border-top: 3px solid #600b0b;
 }
 
-/* Silver Tier Colors */
-.silverIcon {
-  background: rgba(200, 150, 110, 0.12);
-  color: #b45309;
-  border: 1px solid rgba(200, 150, 110, 0.2);
+.tierGold {
+  border-top: 3px solid #600b0b;
+}
+
+.tierSilver {
+  border-top: 3px solid #600b0b;
+}
+
+/* ===== Bottom Call To Action ===== */
+.ctaStrip {
+  background: linear-gradient(135deg, #600b0b 0%, #4a0707 50%, #300303 100%);
+  border-top: 2px solid #eaded2;
+  border-radius: 4px;
+  padding: 3.5rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 20px rgba(96, 11, 11, 0.12);
+}
+
+.ctaTitle {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.ctaText {
+  font-size: 1rem;
+  color: #eaded2;
+  max-width: 600px;
+  line-height: 1.5;
+  margin-bottom: 1.2rem;
+}
+
+.ctaButtons {
+  display: flex;
+  gap: 12px;
+}
+
+.ctaBtnFilled {
+  background-color: #eaded2;
+  color: #600b0b;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.ctaBtnFilled:hover {
+  background-color: #ffffff;
+}
+
+.ctaBtnFilled:active {
+  transform: scale(0.98);
+}
+
+.ctaBtnOutlined {
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.ctaBtnOutlined:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 992px) {
+  .interactivePanel {
+    grid-template-columns: 1fr;
+  }
+  .schemeSelector {
+    border-right: none;
+    border-bottom: 1px solid #ebdcd0;
+  }
+  .selectorCaret {
+    display: none !important;
+  }
+  .tiersGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .sectionTitle {
+    font-size: 1.8rem;
+  }
+  .detailsPanel {
+    padding: 1.8rem;
+  }
+  .detailTitle {
+    font-size: 1.45rem;
+  }
+  .detailsActions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .btnApply, .btnDownload {
+    width: 100%;
+    justify-content: center;
+  }
+  .ctaButtons {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+  .ctaBtnFilled, .ctaBtnOutlined {
+    width: 100%;
+    justify-content: center;
+  }
 }
