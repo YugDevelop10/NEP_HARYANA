@@ -23,11 +23,18 @@ import {
 } from "./components/ProtectedRoute/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext.jsx";
 
+// Screening Committee Dashboard imports
+import CommitteeLayout from "./components/Committee/CommitteeLayout";
+import CommitteeOverview from "./pages/Committee/CommitteeOverview";
+import CommitteeSubmissions from "./pages/Committee/CommitteeSubmissions";
+import CommitteeReviewDetail from "./pages/Committee/CommitteeReviewDetail";
+
 function App() {
   const location = useLocation();
   const isDashboard =
     location.pathname.startsWith("/institution/") ||
-    location.pathname.startsWith("/admin");
+    location.pathname.startsWith("/admin") ||
+    location.pathname.startsWith("/committee");
 
   return (
     <AuthProvider>
@@ -103,6 +110,20 @@ function App() {
           <Route path="/admin/scoring" element={<Scoring />} />
           <Route path="/admin/reports" element={<Reports />} />
           <Route path="/admin/settings" element={<Settings />} />
+        </Route>
+
+        {/* Protected Routes - Screening Committee Console */}
+        <Route
+          element={
+            <ProtectedRoute allowedRoles={["committee"]}>
+              <CommitteeLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/committee" element={<CommitteeOverview />} />
+          <Route path="/committee/submissions" element={<CommitteeSubmissions />} />
+          <Route path="/committee/submissions/:id" element={<CommitteeReviewDetail />} />
+          <Route path="/committee/history" element={<CommitteeSubmissions onlyHistory={true} />} />
         </Route>
 
         {/* Redirects */}

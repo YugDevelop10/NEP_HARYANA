@@ -68,10 +68,45 @@ def get_institutions_summary():
 
             status_str = nom.status or ("Pending Review" if nom.is_submitted else "Draft")
 
+        # Map parameter IDs to corresponding indicator evidence URLs
+        docs_dict = {}
+        if has_app:
+            answers = nom.answers or {}
+            param_to_indicator_map = {
+                "p1": "indicator_2",
+                "p2": "indicator_3",
+                "p3": "indicator_4",
+                "p4": "indicator_5",
+                "p5": "indicator_7",
+                "p6": "indicator_9",
+                "p7": "indicator_11",
+                "p8": "indicator_12",
+                "p9": "indicator_14",
+                "p10": "indicator_15",
+                "p11": "indicator_16",
+                "p12": "indicator_18",
+                "p13": "indicator_19",
+                "p14": "indicator_20",
+                "p15": "indicator_1",
+                "p16": "indicator_6",
+                "p17": "indicator_8",
+                "p18": "indicator_10",
+                "p19": "indicator_13",
+                "p20": "indicator_17"
+            }
+            for param_id, ind_key in param_to_indicator_map.items():
+                ind_data = answers.get(ind_key, {})
+                url = ind_data.get("evidence_url")
+                if url:
+                    docs_dict[param_id] = url
+        else:
+            docs_dict = {f"p{i}": "" for i in range(1, 21)}
+
         institutions.append(
             {
                 "id": str(college.id),
                 "college_id": college.id,
+                "docs": docs_dict,
                 "name": college.name,
                 "aishe": college.aishe_code,
                 "aishe_code": college.aishe_code,

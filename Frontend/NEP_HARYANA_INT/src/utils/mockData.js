@@ -39,9 +39,9 @@ export const calculateTotalScore = (scores) => {
 
 // Help helper to get classification badge
 export const getClassification = (score) => {
-  if (score >= 80) return { name: 'Platinum', color: '#7C3AED', bg: 'bg-purple-100 text-purple-800 border-purple-300' };
-  if (score >= 60) return { name: 'Gold', color: '#D97706', bg: 'bg-amber-100 text-amber-800 border-amber-300' };
-  if (score >= 40) return { name: 'Silver', color: '#6B7280', bg: 'bg-slate-100 text-slate-800 border-slate-300' };
+  if (score >= 91) return { name: 'Platinum', color: '#7C3AED', bg: 'bg-purple-100 text-purple-800 border-purple-300' };
+  if (score >= 75) return { name: 'Gold', color: '#D97706', bg: 'bg-amber-100 text-amber-800 border-amber-300' };
+  if (score >= 51) return { name: 'Silver', color: '#6B7280', bg: 'bg-slate-100 text-slate-800 border-slate-300' };
   return { name: 'No Award', color: '#EF4444', bg: 'bg-red-100 text-red-800 border-red-300' };
 };
 

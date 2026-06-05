@@ -46,7 +46,7 @@ const CollegeManagement = ({ onlySubmitted = false }) => {
   const districts = [...new Set(colleges.map(c => c.district))].sort();
   const types = [...new Set(colleges.map(c => c.type))].sort();
   const classifications = ['Platinum', 'Gold', 'Silver', 'No Award'];
-  const statuses = ['Approved', 'Pending Review', 'Rejected', 'Sent Back'];
+  const statuses = ['Approved', 'Pending Review', 'Recommended', 'Not Recommended', 'Rejected', 'Sent Back'];
 
   // Handle clear all filters
   const handleClearFilters = () => {
@@ -344,6 +344,8 @@ const CollegeManagement = ({ onlySubmitted = false }) => {
                     <td className="px-6 py-4.5 whitespace-nowrap">
                       <span className={`text-[9px] font-extrabold tracking-wide uppercase px-2.5 py-1 rounded-full ${
                         college.status === 'Approved' ? 'bg-emerald-100 text-emerald-800' :
+                        college.status === 'Recommended' ? 'bg-indigo-100 text-indigo-800' :
+                        college.status === 'Not Recommended' ? 'bg-rose-100 text-rose-800' :
                         college.status === 'Pending Review' ? 'bg-blue-100 text-blue-800' :
                         college.status === 'Sent Back' ? 'bg-amber-100 text-amber-800' :
                         'bg-red-100 text-red-800'

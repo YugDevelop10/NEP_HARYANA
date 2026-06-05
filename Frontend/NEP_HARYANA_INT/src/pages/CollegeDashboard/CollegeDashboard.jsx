@@ -405,6 +405,51 @@ function CollegeDashboard() {
             ) : (
               <>
                 <AwardJourney score={nomination?.score || 0} award={nomination?.award_category || "No Award"} />
+                {nomination?.status === "Clarification Requested" && (
+                  <div
+                    style={{
+                      backgroundColor: "#fee2e2",
+                      border: "1px solid #fca5a5",
+                      borderRadius: "16px",
+                      padding: "20px",
+                      marginBottom: "24px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "8px",
+                      boxShadow: "0 4px 15px rgba(239, 68, 68, 0.05)",
+                      borderLeft: "6px solid #ef4444"
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "#b91c1c" }}>
+                      <span style={{ fontSize: "1.25rem" }}>⚠️</span>
+                      <h4 style={{ fontWeight: "800", margin: 0, fontSize: "0.95rem", textTransform: "uppercase", letterSpacing: "0.02em" }}>
+                        Action Required: Clarification Requested
+                      </h4>
+                    </div>
+                    <p style={{ fontSize: "0.875rem", color: "#991b1b", margin: 0, lineHeight: "1.5", fontWeight: "500" }}>
+                      The Screening Committee has requested clarification regarding your submitted nomination. Specific fields have been unlocked for editing.
+                    </p>
+                    <div style={{ marginTop: "4px" }}>
+                      <button
+                        type="button"
+                        style={{
+                          backgroundColor: "#ef4444",
+                          color: "#ffffff",
+                          border: "none",
+                          padding: "8px 20px",
+                          borderRadius: "10px",
+                          fontSize: "0.8125rem",
+                          fontWeight: "700",
+                          cursor: "pointer",
+                          boxShadow: "0 2px 8px rgba(239, 68, 68, 0.2)"
+                        }}
+                        onClick={() => navigate(`/institution/${instName}/${instAishe}/dashboard/forms/nep-excellence-nomination-2025`)}
+                      >
+                        Respond to Clarification
+                      </button>
+                    </div>
+                  </div>
+                )}
                 <div className={pageStyles.overviewGrid}>
                   <section className={pageStyles.welcomeCard}>
                     <h3>HSHEC Principal Portal</h3>
@@ -690,9 +735,17 @@ function CollegeDashboard() {
                           padding: "6px 14px",
                           borderRadius: "9999px",
                           textTransform: "uppercase",
-                          backgroundColor: sub.is_submitted ? "#d1fae5" : "#fef3c7",
-                          color: sub.is_submitted ? "#065f46" : "#78350f"
-                        }}>{sub.is_submitted ? "Submitted" : "Draft"}</span>
+                          backgroundColor: sub.status === "Clarification Requested" 
+                            ? "#fee2e2" 
+                            : sub.is_submitted 
+                              ? "#d1fae5" 
+                              : "#fef3c7",
+                          color: sub.status === "Clarification Requested"
+                            ? "#ef4444"
+                            : sub.is_submitted
+                              ? "#065f46"
+                              : "#78350f"
+                        }}>{sub.status === "Clarification Requested" ? "Clarification Requested" : sub.is_submitted ? "Submitted" : "Draft"}</span>
                       </div>
 
                       <div>

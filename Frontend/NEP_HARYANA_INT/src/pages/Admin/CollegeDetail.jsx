@@ -304,13 +304,15 @@ const CollegeDetail = () => {
                         <span>{hasDoc ? 'Uploaded' : 'No Doc'}</span>
                       </span>
                       {hasDoc && (
-                        <button
-                          onClick={() => handleViewDoc(param)}
-                          className="p-1 text-slate-400 hover:text-[#1D4ED8] hover:bg-white rounded border border-transparent hover:border-slate-200 cursor-pointer"
+                        <a
+                          href={college.docs[param.id]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-1 text-slate-400 hover:text-[#1D4ED8] hover:bg-white rounded border border-transparent hover:border-slate-200 cursor-pointer flex items-center justify-center"
                           title="View Proof File"
                         >
                           <Eye className="w-3.5 h-3.5" />
-                        </button>
+                        </a>
                       )}
                     </div>
 
@@ -408,6 +410,8 @@ const CollegeDetail = () => {
                       <div>
                         <span className={`h-8 w-8 rounded-full flex items-center justify-center ring-4 ring-white ${
                           hist.status === 'Approved' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' :
+                          hist.status === 'Recommended' ? 'bg-indigo-50 text-indigo-600 border border-indigo-200' :
+                          hist.status === 'Not Recommended' ? 'bg-rose-50 text-rose-600 border border-rose-200' :
                           hist.status === 'Submitted' ? 'bg-indigo-50 text-indigo-600 border border-indigo-200' :
                           hist.status === 'Pending Review' ? 'bg-blue-50 text-blue-600 border border-blue-200' :
                           hist.status === 'Sent Back' ? 'bg-amber-50 text-amber-600 border border-amber-200' :
@@ -418,7 +422,11 @@ const CollegeDetail = () => {
                       </div>
                       <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                         <div>
-                          <p className="text-xs font-bold text-slate-700">Status: {hist.status}</p>
+                          <p className="text-xs font-bold text-slate-700">
+                            Status: {hist.status === 'Recommended' ? 'Recommended by Committee' :
+                                     hist.status === 'Not Recommended' ? 'Not Recommended by Committee' :
+                                     hist.status}
+                          </p>
                           <span className="text-[10px] text-slate-400 font-bold block mt-0.5">{hist.user}</span>
                         </div>
                         <div className="text-right text-[10px] whitespace-nowrap text-slate-400 font-bold">

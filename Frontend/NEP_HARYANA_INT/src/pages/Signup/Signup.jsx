@@ -119,10 +119,13 @@ function Signup() {
       const payload = {
         fullName: formData.fullName,
         email: formData.email,
-        collegeId: Number(formData.collegeId),
         role: formData.role,
         password: formData.password,
       };
+
+      if (formData.role !== "admin" && formData.role !== "committee") {
+        payload.collegeId = Number(formData.collegeId);
+      }
 
       const response = await register(payload);
       setStatus({
@@ -198,7 +201,7 @@ function Signup() {
               />
             </div>
 
-            {formData.role !== "admin" && (
+            {formData.role !== "admin" && formData.role !== "committee" && (
               <div className={`${styles.formGroup} ${styles.fullWidth}`}>
                 <label htmlFor="collegeId">Institution Name</label>
                 <select
@@ -223,7 +226,7 @@ function Signup() {
               </div>
             )}
 
-            {formData.role !== "admin" && (
+            {formData.role !== "admin" && formData.role !== "committee" && (
               <div className={styles.formGroup}>
                 <label htmlFor="aisheCode">AISHE Code</label>
                 <input
@@ -251,11 +254,12 @@ function Signup() {
                 required
               >
                 <option value="principal">College Principal</option>
+                <option value="committee">Screening Committee</option>
                 <option value="admin">DHE Admin</option>
               </select>
             </div>
 
-            {formData.role !== "admin" && (
+            {formData.role !== "admin" && formData.role !== "committee" && (
               <div className={`${styles.formGroup} ${styles.fullWidth}`}>
                 {selectedCollege && (
                   <p className={styles.selectedInstitution}>

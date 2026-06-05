@@ -417,11 +417,15 @@ const AdminOverview = () => {
                               <div className="flex items-center space-x-2 mt-1">
                                 <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full uppercase ${
                                   col.status === 'Approved' ? 'bg-emerald-100 text-emerald-800' :
+                                  col.status === 'Recommended' ? 'bg-indigo-100 text-indigo-800' :
+                                  col.status === 'Not Recommended' ? 'bg-rose-100 text-rose-800' :
                                   col.status === 'Pending Review' ? 'bg-blue-100 text-blue-800' :
                                   col.status === 'Sent Back' ? 'bg-amber-100 text-amber-800' :
                                   'bg-red-100 text-red-800'
                                 }`}>
-                                  {col.status}
+                                  {col.status === 'Recommended' ? 'Recommended by Committee' :
+                                   col.status === 'Not Recommended' ? 'Not Recommended by Committee' :
+                                   col.status}
                                 </span>
                                 <span className="text-[10px] text-slate-400 font-bold">{totalScore} Marks</span>
                               </div>

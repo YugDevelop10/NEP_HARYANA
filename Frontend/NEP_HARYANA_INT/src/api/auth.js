@@ -213,5 +213,9 @@ export function getDashboardPathForUser(user) {
     return "/admin";
   }
 
+  if (role === "committee") {
+    return "/committee";
+  }
+
   return "/admin";
 }

@@ -28,6 +28,8 @@ class UserSerializer(serializers.ModelSerializer):
             return obj.college.name
         if obj.role == 'admin':
             return "Higher Education Department"
+        if obj.role == 'committee':
+            return "Screening Committee"
         return "Govt College Example"
 
     def get_aishe_code(self, obj):
@@ -35,12 +37,14 @@ class UserSerializer(serializers.ModelSerializer):
             return obj.college.aishe_code
         if obj.role == 'admin':
             return "DHE-HR"
+        if obj.role == 'committee':
+            return "SC-HR"
         return "C-12345"
 
 class RegisterSerializer(serializers.Serializer):
     fullName = serializers.CharField(required=True)
     email = serializers.EmailField(required=True)
-    collegeId = serializers.IntegerField(required=True)
+    collegeId = serializers.IntegerField(required=False, allow_null=True)
     role = serializers.ChoiceField(choices=User.ROLE_CHOICES, required=True)
     password = serializers.CharField(write_only=True, required=True)
 
@@ -50,16 +54,31 @@ class RegisterSerializer(serializers.Serializer):
         return value
 
     def validate_collegeId(self, value):
-        if not College.objects.filter(id=value).exists():
-            raise serializers.ValidationError("Selected institution does not exist.")
+        if value is not None:
+            if not College.objects.filter(id=value).exists():
+                raise serializers.ValidationError("Selected institution does not exist.")
         return value
 
+    def validate(self, attrs):
+        role = attrs.get('role')
+        college_id = attrs.get('collegeId')
+        if role == 'principal' and college_id is None:
+            raise serializers.ValidationError({"collegeId": "Institution is required for College Principal role."})
+        return attrs
+
     def create(self, validated_data):
-        college = College.objects.get(id=validated_data['collegeId'])
+        role = validated_data['role']
+        college_id = validated_data.get('collegeId')
+        college = None
+        if role == 'principal' and college_id is not None:
+            college = College.objects.get(id=college_id)
+        elif college_id is not None:
+            college = College.objects.filter(id=college_id).first()
+
         user = User.objects.create_user(
             email=validated_data['email'],
             full_name=validated_data['fullName'],
-            role=validated_data['role'],
+            role=role,
             password=validated_data['password'],
             college=college
         )

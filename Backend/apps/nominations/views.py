@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.conf import settings
 import os
 
-from .models import Nomination
+from .models import Nomination, ClarificationRequest
 from .serializers import NominationSerializer
 from .scoring import calculate_nomination_score
 
@@ -103,7 +103,23 @@ class NominationSaveView(APIView):
             return Response({'detail': 'Nomination not found.'}, status=status.HTTP_404_NOT_FOUND)
             
         if nom.is_submitted:
-            return Response({'detail': 'This nomination has already been submitted and cannot be edited.'}, status=status.HTTP_400_BAD_REQUEST)
+            if nom.status == "Clarification Requested":
+                active_req = ClarificationRequest.objects.filter(nomination=nom, status="Pending").first()
+                if not active_req:
+                    return Response({'detail': 'This nomination has already been submitted and cannot be edited.'}, status=status.HTTP_400_BAD_REQUEST)
+                
+                allowed_fields = active_req.fields_to_edit or []
+                incoming_answers = request.data.get('answers', {})
+                
+                # Check for changes outside allowed fields
+                for key, val in incoming_answers.items():
+                    current_val = nom.answers.get(key)
+                    if current_val != val and key not in allowed_fields:
+                        return Response({
+                            'detail': f'You are only allowed to edit fields requested for clarification: {", ".join(allowed_fields)}'
+                        }, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({'detail': 'This nomination has already been submitted and cannot be edited.'}, status=status.HTTP_400_BAD_REQUEST)
             
         # Update basic info fields safely (avoid overwriting with empty/null values if they are already populated)
         head_name = request.data.get('head_name')
