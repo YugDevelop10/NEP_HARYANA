@@ -23,57 +23,28 @@ function NavbarV2() {
     },
     {
       name: "About",
-      path: null,
-      scrollId: "leadership-section",
-      submenu: [
-        { name: "About Council", scrollId: "leadership-section" },
-        { name: "Leadership", scrollId: "leadership-section" },
-      ],
+      path: "/about",
+      scrollId: null,
     },
     {
       name: "Institutions",
-      path: null,
-      scrollId: "about-stats",
-      submenu: [
-        { name: "Colleges", scrollId: "about-stats" },
-        { name: "Statistics", scrollId: "about-stats" },
-      ],
+      path: "/institutions",
+      scrollId: null,
     },
     {
       name: "Notifications",
-      path: null,
-      scrollId: "news-events",
-      submenu: [
-        { name: "Notices", scrollId: "news-events" },
-        { name: "Press Releases", scrollId: "news-events" },
-      ],
+      path: "/notifications",
+      scrollId: null,
     },
     {
       name: "Schemes",
       path: null,
       scrollId: "schemes",
-      submenu: [
-        { name: "NEP Schemes", scrollId: "schemes" },
-        { name: "Scholarships", scrollId: "schemes" },
-      ],
-    },
-    {
-      name: "Publications",
-      path: null,
-      scrollId: "news-events", // Fallback scroll target
-      submenu: [
-        { name: "Reports", scrollId: "news-events" },
-        { name: "Guidelines", scrollId: "news-events" },
-      ],
     },
     {
       name: "Contact",
       path: null,
       scrollId: "contact",
-      submenu: [
-        { name: "Reach Us", scrollId: "contact" },
-        { name: "Directory", scrollId: "contact" },
-      ],
     },
   ];
 
@@ -137,6 +108,10 @@ function NavbarV2() {
       e.preventDefault();
       navigate("/");
       window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (item.path) {
+      e.preventDefault();
+      navigate(item.path);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else if (item.scrollId) {
       e.preventDefault();
       performScroll(item.scrollId);
@@ -147,7 +122,12 @@ function NavbarV2() {
     e.preventDefault();
     setIsMenuOpen(false);
     setActiveDropdown(null);
-    performScroll(subitem.scrollId);
+    if (subitem.path) {
+      navigate(subitem.path);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (subitem.scrollId) {
+      performScroll(subitem.scrollId);
+    }
   };
 
   return (
@@ -275,16 +255,11 @@ function NavbarV2() {
 
           <ul className={`v2-nav-list ${isMenuOpen ? "open" : ""}`}>
             {navItems.map((item) => {
-              const hasSubmenu = item.submenu && item.submenu.length > 0;
               const isActive = activeNav === item.name;
               return (
                 <li
                   key={item.name}
-                  className={`v2-nav-item ${hasSubmenu ? "has-submenu" : ""} ${
-                    isActive ? "active" : ""
-                  }`}
-                  onMouseEnter={() => !isMenuOpen && setActiveDropdown(item.name)}
-                  onMouseLeave={() => !isMenuOpen && setActiveDropdown(null)}
+                  className={`v2-nav-item ${isActive ? "active" : ""}`}
                 >
                   <a
                     href={item.path || "#"}
@@ -292,26 +267,7 @@ function NavbarV2() {
                     onClick={(e) => handleNavClick(e, item)}
                   >
                     {item.name}
-                    {hasSubmenu && <span className="v2-caret">˅</span>}
                   </a>
-                  {hasSubmenu && (
-                    <ul
-                      className={`v2-dropdown-menu ${
-                        activeDropdown === item.name ? "show" : ""
-                      }`}
-                    >
-                      {item.submenu.map((subitem) => (
-                        <li key={subitem.name}>
-                          <a
-                            href="#"
-                            onClick={(e) => handleSubmenuClick(e, subitem)}
-                          >
-                            {subitem.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
                 </li>
               );
             })}

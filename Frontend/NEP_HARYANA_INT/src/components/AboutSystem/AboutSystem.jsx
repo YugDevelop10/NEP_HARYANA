@@ -221,7 +221,7 @@ function AboutSystem() {
             <p className={styles.missionBody}>
               The Haryana State Higher Education Council, under the mandate of
               NEP&nbsp;2020, is replacing manual, document-heavy evaluation
-              processes with a centralized digital platform. ShikshaSetu brings
+              processes with a centralized digital platform. NEP Excellence Awards Portal brings
               efficiency, accuracy, and transparency to institutional assessment
               — empowering colleges with streamlined submissions and providing
               government administrators with real-time, data-driven oversight

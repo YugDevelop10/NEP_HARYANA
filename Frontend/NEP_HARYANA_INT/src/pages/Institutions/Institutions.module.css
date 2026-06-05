@@ -1,0 +1,315 @@
+/* ============================================
+   Institutions Page — CSS Module
+   ============================================ */
+
+.pageShell {
+  min-height: 80vh;
+  padding: 140px 0 80px 0;
+  background: #fdfaf6;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #333333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ---------- Hero Header ---------- */
+.heroSection {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.accentLine {
+  width: 60px;
+  height: 3px;
+  background: #600b0b;
+  border-radius: 2px;
+  margin: 0 auto 20px auto;
+}
+
+.pageTitle {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: #600b0b;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.01em;
+}
+
+.pageSubtitle {
+  font-size: 1.1rem;
+  color: #555555;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ---------- Filters Area ---------- */
+.filterSection {
+  margin-bottom: 2rem;
+}
+
+.filterBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  background: #ffffff;
+  padding: 1.25rem 2rem;
+  border: 1px solid #ebdcd0;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(96, 11, 11, 0.01);
+}
+
+.searchWrapper {
+  position: relative;
+  flex: 1;
+  min-width: 280px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #c29b68;
+  width: 18px;
+  height: 18px;
+}
+
+.searchInput {
+  width: 100%;
+  height: 46px;
+  padding: 0 1rem 0 2.75rem;
+  border-radius: 10px;
+  border: 1.5px solid #ebdcd0;
+  font-size: 0.92rem;
+  color: #111111;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background: #fdfaf6;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #600b0b;
+  box-shadow: 0 0 0 4px rgba(96, 11, 11, 0.05);
+}
+
+.typeFilter {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  height: 42px;
+  padding: 0 1.25rem;
+  border-radius: 10px;
+  border: 1px solid #ebdcd0;
+  background: #ffffff;
+  color: #555555;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filterBtn:hover {
+  background: #f9f5f0;
+  color: #600b0b;
+}
+
+.activeFilterBtn {
+  background: #600b0b;
+  border-color: #600b0b;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(96, 11, 11, 0.15);
+}
+
+/* ---------- Grid Listing Area ---------- */
+.listSection {
+  margin-bottom: 4rem;
+}
+
+.resultsCount {
+  font-size: 0.85rem;
+  color: #666666;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+.institutionsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 1.5rem;
+}
+
+.collegeCard {
+  background: #ffffff;
+  border: 1px solid #ebdcd0;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.collegeCard:hover {
+  transform: translateY(-2px);
+  border-color: #600b0b;
+  box-shadow: 0 8px 25px rgba(96, 11, 11, 0.04);
+}
+
+.cardHeader {
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.iconFrame {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(96, 11, 11, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buildingIcon {
+  color: #600b0b;
+  width: 22px;
+  height: 22px;
+}
+
+.typeBadge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #c29b68;
+  background: #fdfaf6;
+  border: 1px solid #ebdcd0;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cardBody {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  flex: 1;
+}
+
+.collegeName {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111111;
+  line-height: 1.4;
+  margin: 0 0 12px 0;
+  min-height: 48px;
+}
+
+.metaRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #555555;
+}
+
+.metaIcon {
+  color: #c29b68;
+  width: 14px;
+  height: 14px;
+}
+
+.remarksText {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #666666;
+  background: #fdfaf6;
+  border: 1px solid #ebdcd0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin: 12px 0 0 0;
+}
+
+.remarksText strong {
+  color: #600b0b;
+}
+
+.cardFooter {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #ebdcd0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fdfaf6;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.statusLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statusApproved {
+  color: #166534;
+}
+
+.statusPending {
+  color: #d97706;
+}
+
+.statusActionNeeded {
+  color: #b91c1c;
+}
+
+.viewDetails {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #c29b68;
+}
+
+.noResults {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #ffffff;
+  border: 1px solid #ebdcd0;
+  border-radius: 20px;
+}
+
+.noResults h3 {
+  font-size: 1.25rem;
+  color: #600b0b;
+  margin: 0 0 8px 0;
+}
+
+.noResults p {
+  color: #666666;
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .institutionsGrid {
+    grid-template-columns: 1fr;
+  }
+}
