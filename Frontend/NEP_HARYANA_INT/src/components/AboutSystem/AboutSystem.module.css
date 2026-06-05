@@ -5,21 +5,21 @@
 
 /* ---------- Design Tokens (local) ---------- */
 :root {
-  --as-navy: #0a1628;
-  --as-navy-light: #0d1b2a;
-  --as-orange: #f97316;
-  --as-orange-glow: rgba(249, 115, 22, 0.18);
+  --as-navy: #600b0b;
+  --as-navy-light: #4a0707;
+  --as-orange: #600b0b;
+  --as-orange-glow: rgba(96, 11, 11, 0.06);
   --as-white: #ffffff;
-  --as-gray-bg: #f5f7fa;
-  --as-gray-border: #e3e8ef;
-  --as-text-primary: #0d1b2a;
-  --as-text-secondary: #3a4d63;
-  --as-text-muted: #7a8b9e;
-  --as-font-serif: 'Playfair Display', 'Georgia', serif;
-  --as-font-sans: 'DM Sans', 'Inter', system-ui, sans-serif;
-  --as-font-heading: 'Inter', 'DM Sans', system-ui, sans-serif;
-  --as-radius: 10px;
-  --as-section-pad: 90px;
+  --as-gray-bg: #fdfaf6;
+  --as-gray-border: #ebdcd0;
+  --as-text-primary: #111111;
+  --as-text-secondary: #333333;
+  --as-text-muted: #555555;
+  --as-font-serif: 'Georgia', serif;
+  --as-font-sans: 'Inter', system-ui, sans-serif;
+  --as-font-heading: 'Inter', system-ui, sans-serif;
+  --as-radius: 4px;
+  --as-section-pad: 80px;
 }
 
 /* ===================================================
@@ -59,9 +59,9 @@
 }
 
 .missionAccent {
-  width: 50px;
+  width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, var(--as-orange) 0%, #e8791d 100%);
+  background: #600b0b;
   border-radius: 2px;
   margin: 0 auto 20px auto;
 }
@@ -137,7 +137,7 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, var(--as-orange) 0%, #fb923c 100%);
+  background: #600b0b;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -162,8 +162,8 @@
 .pillarIcon {
   width: 52px;
   height: 52px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(249, 115, 22, 0.05) 100%);
+  border-radius: 4px;
+  background: rgba(96, 11, 11, 0.06);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -172,7 +172,7 @@
 }
 
 .pillarCard:hover .pillarIcon {
-  background: linear-gradient(135deg, rgba(249, 115, 22, 0.18) 0%, rgba(249, 115, 22, 0.08) 100%);
+  background: rgba(96, 11, 11, 0.12);
 }
 
 .pillarIcon svg {
@@ -215,9 +215,9 @@
 }
 
 .rolesSectionAccent {
-  width: 50px;
+  width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, var(--as-orange) 0%, #e8791d 100%);
+  background: #600b0b;
   border-radius: 2px;
   margin: 0 auto 20px auto;
 }
@@ -298,11 +298,11 @@
 }
 
 .rolePanelCollege .roleIconWrap {
-  background: rgba(249, 115, 22, 0.15);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .rolePanelAdmin .roleIconWrap {
-  background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(249, 115, 22, 0.05) 100%);
+  background: rgba(96, 11, 11, 0.06);
 }
 
 .roleIconWrap svg {
@@ -337,11 +337,11 @@
 }
 
 .rolePanelCollege .rolePanelSubtitle {
-  color: var(--as-orange);
+  color: #eaded2;
 }
 
 .rolePanelAdmin .rolePanelSubtitle {
-  color: var(--as-orange);
+  color: #600b0b;
 }
 
 /* Bullet list */
@@ -384,11 +384,11 @@
 }
 
 .rolePanelCollege .bulletIcon {
-  background: rgba(249, 115, 22, 0.2);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .rolePanelAdmin .bulletIcon {
-  background: rgba(249, 115, 22, 0.1);
+  background: rgba(96, 11, 11, 0.06);
 }
 
 .bulletIcon svg {
@@ -406,10 +406,11 @@
    PART 4 — Stats Bar
    =================================================== */
 .statsSection {
-  background: linear-gradient(135deg, var(--as-navy) 0%, #0f2240 50%, #132c52 100%);
+  background: linear-gradient(135deg, #600b0b 0%, #4a0707 50%, #300303 100%);
   padding: 64px 0;
   position: relative;
   overflow: hidden;
+  border-top: 1.5px solid #eaded2;
 }
 
 /* Decorative glow */
@@ -421,7 +422,7 @@
   width: 500px;
   height: 300px;
   border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(249, 115, 22, 0.1) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(234, 222, 210, 0.12) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -471,7 +472,7 @@
 }
 
 .statNumberAccent {
-  color: var(--as-orange);
+  color: #eaded2;
 }
 
 .statLabel {

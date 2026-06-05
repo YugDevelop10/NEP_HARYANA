@@ -56,10 +56,10 @@ function HeroV2() {
                 <span className={styles.statutoryIcon}>🏛️</span> STATUTORY BODY · GOVERNMENT OF HARYANA
               </div>
               <h1 className={styles.title}>
-                Advancing higher education across Haryana with integrity and purpose.
+                NEP Excellence Awards Portal
               </h1>
               <p className={styles.description}>
-                The Haryana State Higher Education Council coordinates policy, planning, and quality assurance for universities and colleges in the State — fostering academic excellence, equitable access, and research-led growth in alignment with the National Education Policy.
+                NEP Excellence Awards Haryana is a centralized digital platform that enables colleges and higher education institutions to submit academic, administrative, and performance data through structured online workflows. An initiative of the Haryana State Higher Education Council (HSHEC), this platform enables colleges and universities to digitally submit institutional data, supporting documents, and evaluation records through a centralized system. It streamlines assessment, verification, and reporting processes while enhancing transparency, accuracy, and governance across Haryana's higher education ecosystem.
               </p>
               <div className={styles.actions}>
                 <button
@@ -96,7 +96,7 @@ function HeroV2() {
                     LEAD US FROM DARKNESS TO THE LIGHT OF KNOWLEDGE
                   </p>
                 </div>
-                
+
                 <div className={styles.statsGrid}>
                   <div className={styles.statItem}>
                     <h4 className={styles.statVal}>180+</h4>

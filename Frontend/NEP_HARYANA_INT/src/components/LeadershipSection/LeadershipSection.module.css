@@ -6,12 +6,12 @@
   background:
     radial-gradient(
       circle at top left,
-      rgba(249, 115, 22, 0.04),
+      rgba(96, 11, 11, 0.03),
       transparent 34%
     ),
     radial-gradient(
       circle at top right,
-      rgba(244, 196, 99, 0.04),
+      rgba(234, 222, 210, 0.35),
       transparent 28%
     ),
     #ffffff;
@@ -66,9 +66,9 @@
   width: fit-content;
   padding: 0.55rem 0.95rem;
   border-radius: 999px;
-  background: rgba(249, 115, 22, 0.08);
-  border: 1px solid rgba(249, 115, 22, 0.15);
-  color: #ea580c;
+  background: rgba(96, 11, 11, 0.06);
+  border: 1px solid rgba(96, 11, 11, 0.15);
+  color: #600b0b;
   font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -76,13 +76,13 @@
 }
 
 .sectionTitle {
-  max-width: 18ch;
+  max-width: 28ch;
   margin: 0;
   font-family: "Georgia", "Times New Roman", serif;
-  font-size: clamp(2.2rem, 4.3vw, 4rem);
-  line-height: 1.06;
-  letter-spacing: -0.03em;
-  color: #0f172a;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #111111;
 }
 
 .sectionLead {
@@ -102,9 +102,9 @@
 .highlightPill {
   padding: 0.72rem 1rem;
   border-radius: 999px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  color: #475569;
+  background: #fbf9f6;
+  border: 1px solid #ebdcd0;
+  color: #555555;
   font-size: 0.92rem;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -134,12 +134,8 @@
   position: absolute;
   inset: 0 auto auto 0;
   width: 100%;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    rgba(249, 115, 22, 0.9),
-    rgba(244, 196, 99, 0.95)
-  );
+  height: 3px;
+  background: #600b0b;
 }
 
 .cardHeader {
@@ -156,9 +152,9 @@
   min-width: 3rem;
   height: 3rem;
   border-radius: 999px;
-  background: rgba(249, 115, 22, 0.08);
-  border: 1px solid rgba(249, 115, 22, 0.15);
-  color: #ea580c;
+  background: rgba(96, 11, 11, 0.06);
+  border: 1px solid rgba(96, 11, 11, 0.15);
+  color: #600b0b;
   font-size: 0.88rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -171,10 +167,10 @@
   border-radius: 24px;
   background: linear-gradient(
     135deg,
-    rgba(249, 115, 22, 0.88),
-    rgba(244, 196, 99, 0.86)
+    #600b0b,
+    #eaded2
   );
-  box-shadow: 0 14px 30px rgba(249, 115, 22, 0.08);
+  box-shadow: 0 14px 30px rgba(96, 11, 11, 0.06);
 }
 
 .portraitImg {
@@ -192,7 +188,7 @@
 
 .cardEyebrow {
   margin: 0 0 0.35rem;
-  color: #f59e0b;
+  color: #600b0b;
   font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -230,7 +226,7 @@
   position: absolute;
   top: -0.65rem;
   left: 0;
-  color: rgba(245, 158, 11, 0.95);
+  color: rgba(96, 11, 11, 0.15);
   font-family: "Georgia", "Times New Roman", serif;
   font-size: 4.3rem;
   line-height: 1;
@@ -289,7 +285,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(245, 158, 11, 0.95),
+    #600b0b,
     transparent
   );
 }
