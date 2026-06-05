@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { confirmPasswordReset } from "../../api/auth";
+import hshecLogo from "../../assets/hshec_logo.jpeg";
 import styles from "../AuthRecovery/AuthRecovery.module.css";
 
 function ResetPassword() {
@@ -54,6 +55,9 @@ function ResetPassword() {
       <div className={styles.pageGlow} aria-hidden="true" />
       <div className={styles.pageContainer}>
         <section className={styles.recoveryCard} aria-labelledby="reset-password-title">
+          <div className={styles.logoWrapper}>
+            <img src={hshecLogo} alt="HSHEC Logo" className={styles.logoImage} />
+          </div>
           <span className={styles.badge}>Set new password</span>
           <h1 id="reset-password-title" className={styles.title}>
             Create a new password for your account
