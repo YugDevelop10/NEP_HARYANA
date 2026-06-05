@@ -25,55 +25,26 @@ function NavbarV2() {
       name: "About",
       path: "/about",
       scrollId: null,
-      submenu: [
-        { name: "About Council & Portal", path: "/about" },
-        { name: "Leadership Messages", scrollId: "leadership-section" },
-      ],
     },
     {
       name: "Institutions",
       path: "/institutions",
       scrollId: null,
-      submenu: [
-        { name: "Colleges List", path: "/institutions" },
-        { name: "Statistics", scrollId: "about-stats" },
-      ],
     },
     {
       name: "Notifications",
-      path: null,
-      scrollId: "news-events",
-      submenu: [
-        { name: "Notices", scrollId: "news-events" },
-        { name: "Press Releases", scrollId: "news-events" },
-      ],
+      path: "/notifications",
+      scrollId: null,
     },
     {
       name: "Schemes",
       path: null,
       scrollId: "schemes",
-      submenu: [
-        { name: "NEP Schemes", scrollId: "schemes" },
-        { name: "Scholarships", scrollId: "schemes" },
-      ],
-    },
-    {
-      name: "Publications",
-      path: null,
-      scrollId: "news-events", // Fallback scroll target
-      submenu: [
-        { name: "Reports", scrollId: "news-events" },
-        { name: "Guidelines", scrollId: "news-events" },
-      ],
     },
     {
       name: "Contact",
       path: null,
       scrollId: "contact",
-      submenu: [
-        { name: "Reach Us", scrollId: "contact" },
-        { name: "Directory", scrollId: "contact" },
-      ],
     },
   ];
 
@@ -284,16 +255,11 @@ function NavbarV2() {
 
           <ul className={`v2-nav-list ${isMenuOpen ? "open" : ""}`}>
             {navItems.map((item) => {
-              const hasSubmenu = item.submenu && item.submenu.length > 0;
               const isActive = activeNav === item.name;
               return (
                 <li
                   key={item.name}
-                  className={`v2-nav-item ${hasSubmenu ? "has-submenu" : ""} ${
-                    isActive ? "active" : ""
-                  }`}
-                  onMouseEnter={() => !isMenuOpen && setActiveDropdown(item.name)}
-                  onMouseLeave={() => !isMenuOpen && setActiveDropdown(null)}
+                  className={`v2-nav-item ${isActive ? "active" : ""}`}
                 >
                   <a
                     href={item.path || "#"}
@@ -301,26 +267,7 @@ function NavbarV2() {
                     onClick={(e) => handleNavClick(e, item)}
                   >
                     {item.name}
-                    {hasSubmenu && <span className="v2-caret">˅</span>}
                   </a>
-                  {hasSubmenu && (
-                    <ul
-                      className={`v2-dropdown-menu ${
-                        activeDropdown === item.name ? "show" : ""
-                      }`}
-                    >
-                      {item.submenu.map((subitem) => (
-                        <li key={subitem.name}>
-                          <a
-                            href="#"
-                            onClick={(e) => handleSubmenuClick(e, subitem)}
-                          >
-                            {subitem.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
                 </li>
               );
             })}
