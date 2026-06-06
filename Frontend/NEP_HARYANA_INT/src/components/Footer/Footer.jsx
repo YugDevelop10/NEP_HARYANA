@@ -168,7 +168,6 @@ function Footer() {
       <div className={styles.footerBottom}>
         <div className={styles.bottomContainer}>
           <p className={styles.bottomText}>© 2026 Haryana State Higher Education Council. All rights reserved.</p>
-          <p className={styles.bottomText}>Designed, developed & maintained by HSHEC IT Division</p>
         </div>
       </div>
     </footer>

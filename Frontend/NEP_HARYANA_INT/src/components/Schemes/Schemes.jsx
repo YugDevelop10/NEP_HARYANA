@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Award, BookOpen, FileText, CheckCircle2, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./Schemes.module.css";
@@ -58,6 +59,7 @@ const schemesData = [
 ];
 
 function Schemes() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(schemesData[0].id);
 
   const activeScheme = schemesData.find((s) => s.id === activeTab);
@@ -207,7 +209,7 @@ function Schemes() {
             Ensure all records are compiled and self-assessment forms are completed before portal submissions.
           </p>
           <div className={styles.ctaButtons}>
-            <button className={styles.ctaBtnFilled}>Portal Login</button>
+            <button className={styles.ctaBtnFilled} onClick={() => navigate("/auth/login")}>Portal Login</button>
             <button className={styles.ctaBtnOutlined}>Help Desk Support</button>
           </div>
         </div>
